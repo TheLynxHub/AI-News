@@ -2,6 +2,7 @@ import {Button, Checkbox, InputGroup, ScrollShadow, Spinner, Switch, TextField} 
 import {SiGithub, SiYoutube} from '@icons-pack/react-simple-icons';
 import TabModal from '@lynx/components/TabModal';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
+import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
 import {
   Clock,
   ExternalLink,
@@ -97,15 +98,13 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
       });
 
     // Listen for state updates in real-time
-    const cleanup = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
+    return extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state) {
         setSources(state.sources || []);
         setCache(state.cache || []);
         setLastFetched(state.lastFetched || 0);
       }
     });
-
-    return cleanup;
   }, [isOpen]);
 
   // Handle feed refresh
@@ -232,11 +231,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
       }
 
       // 3. Source enabled list filter
-      if (selectedSourceIds[item.sourceId] === false) {
-        return false;
-      }
-
-      return true;
+      return selectedSourceIds[item.sourceId];
     });
   }, [cache, searchQuery, typeFilter, selectedSourceIds]);
 
@@ -247,7 +242,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-divider shrink-0">
           <div className="flex flex-col">
             <h2 className="text-lg font-extrabold tracking-tight flex items-center gap-2 text-foreground">
-              <Globe className="size-5 text-accent animate-pulse" /> AI News Hub
+              <Plain2 className="size-5 text-accent animate-pulse" /> AI News Hub
             </h2>
             <p className="text-xs text-muted-foreground">
               Your dashboard for artificial intelligence headlines, blogs, and channels.
@@ -370,14 +365,14 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                       }>
                       <span
                         className={
-                          'text-[10px] font-extrabold uppercase ' + 'text-muted-foreground tracking-wider select-none'
+                          'text-[10px] font-extrabold uppercase ' + 'text-semi-muted tracking-wider select-none'
                         }>
                         Filter Sources:
                       </span>
                       {sources.map(src => (
                         <Checkbox
                           key={src.id}
-                          isSelected={selectedSourceIds[src.id] !== false}
+                          isSelected={selectedSourceIds[src.id]}
                           onChange={selected => setSelectedSourceIds(prev => ({...prev, [src.id]: selected}))}>
                           <Checkbox.Content className="flex items-center gap-1.5">
                             <Checkbox.Control>
