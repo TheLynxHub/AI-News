@@ -253,13 +253,13 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
               variant="ghost"
               onPress={handleRefresh}
               isDisabled={refreshing || loading}
-              className="size-8 min-w-0 p-0 rounded-lg text-foreground hover:bg-content2">
+              className="size-8 min-w-0 p-0 rounded-lg text-foreground hover:bg-surface-secondary">
               <RefreshCw className={`size-4 ${refreshing ? 'animate-spin text-accent' : ''}`} />
             </Button>
             <Button
               variant="ghost"
               onPress={() => onOpenChange(false)}
-              className="size-8 min-w-0 p-0 rounded-lg text-foreground hover:bg-content2">
+              className="size-8 min-w-0 p-0 rounded-lg text-foreground hover:bg-surface-secondary">
               <X className="size-4" />
             </Button>
           </div>
@@ -268,7 +268,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
         {/* Modal Main Area */}
         <div className="flex flex-1 overflow-hidden">
           {/* Sidebar Navigation */}
-          <div className="w-56 border-r border-divider bg-content1/20 p-4 flex flex-col gap-1.5 shrink-0">
+          <div className="w-56 border-r border-divider bg-surface/20 p-4 flex flex-col gap-1.5 shrink-0">
             <Button
               onPress={() => setActiveTab('feed')}
               variant={activeTab === 'feed' ? 'primary' : 'ghost'}
@@ -290,7 +290,8 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
 
             <div
               className={
-                'mt-auto p-3 bg-content2/30 border border-divider ' + 'rounded-2xl flex flex-col gap-1 select-none'
+                'mt-auto p-3 bg-surface-secondary/30 border border-divider ' +
+                'rounded-2xl flex flex-col gap-1 select-none'
               }>
               <span
                 className={
@@ -334,7 +335,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                       </InputGroup>
                     </TextField>
 
-                    <div className="flex bg-content2 p-0.5 rounded-xl border border-divider shrink-0">
+                    <div className="flex bg-surface-secondary p-0.5 rounded-xl border border-divider shrink-0">
                       <Button
                         onPress={() => setTypeFilter('all')}
                         variant={typeFilter === 'all' ? 'primary' : 'ghost'}
@@ -361,7 +362,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                     <div
                       className={
                         'flex flex-wrap items-center gap-x-4 gap-y-1.5 px-2 py-1.5 ' +
-                        'bg-content1 border-b border-divider rounded-xl'
+                        'bg-surface border-b border-divider rounded-xl'
                       }>
                       <span
                         className={
@@ -401,7 +402,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                       {filteredItems.map(item => (
                         <div
                           className={
-                            'group bg-content1 hover:bg-content2 border border-divider ' +
+                            'group bg-surface hover:bg-surface-secondary border border-divider ' +
                             'hover:border-accent rounded-2xl flex p-4 transition-all ' +
                             'duration-200 relative overflow-hidden cursor-pointer ' +
                             'shadow-sm hover:shadow-md'
@@ -411,7 +412,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                           {item.thumbnail ? (
                             <div
                               className={
-                                'w-28 h-20 relative shrink-0 overflow-hidden bg-content2 ' +
+                                'w-28 h-20 relative shrink-0 overflow-hidden bg-surface-secondary ' +
                                 'rounded-xl mr-4 self-center'
                               }>
                               <img
@@ -500,14 +501,14 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
               /* SOURCES TAB */
               <div className="flex-1 flex overflow-hidden p-6 gap-6">
                 {/* Add Custom Source form */}
-                <div className={'w-1/2 flex flex-col bg-content1 border border-divider ' + 'p-5 rounded-2xl shrink-0'}>
+                <div className={'w-1/2 flex flex-col bg-surface border border-divider ' + 'p-5 rounded-2xl shrink-0'}>
                   <h3 className="text-sm font-extrabold text-foreground mb-1">Add Feed Source</h3>
                   <p className="text-[11px] text-muted-foreground mb-4">
                     Type a website URL to discover its feed, or enter a YouTube channel link.
                   </p>
 
                   <form onSubmit={handleAddSource} className="flex flex-col gap-4">
-                    <div className="flex bg-content2 p-0.5 rounded-xl border border-divider w-full shrink-0">
+                    <div className="flex bg-surface-secondary p-0.5 rounded-xl border border-divider w-full shrink-0">
                       <Button
                         type="button"
                         onPress={() => setAddType('website')}
@@ -566,12 +567,16 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                       {sources.map(src => (
                         <div
                           className={
-                            'bg-content1 border border-divider p-3 ' +
+                            'bg-surface border border-divider p-3 ' +
                             'rounded-2xl flex items-center justify-between gap-4'
                           }
                           key={src.id}>
                           <div className="flex items-center gap-3 min-w-0">
-                            <div className="size-9 rounded-full bg-content2 flex items-center justify-center shrink-0">
+                            <div
+                              className={
+                                'size-9 rounded-full bg-surface-secondary ' +
+                                'flex items-center justify-center shrink-0'
+                              }>
                               {src.type === 'youtube' ? (
                                 <SiYoutube className="size-4.5 text-red-600" />
                               ) : (
@@ -623,7 +628,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
             ) : (
               /* REQUEST TAB */
               <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-xl mx-auto justify-center">
-                <div className="bg-content1 border border-divider p-6 rounded-2xl flex flex-col">
+                <div className="bg-surface border border-divider p-6 rounded-2xl flex flex-col">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="size-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                       <Send className="size-5" />

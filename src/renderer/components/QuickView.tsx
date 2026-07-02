@@ -63,12 +63,12 @@ export default function QuickView() {
         {[1, 2, 3].map(n => (
           <div
             key={n}
-            className={'w-72 min-w-[288px] h-20 bg-content1 border border-divider ' + 'rounded-xl flex animate-pulse'}>
-            <div className="w-20 h-full bg-content2 rounded-l-xl shrink-0" />
+            className={'w-72 min-w-[288px] h-20 bg-surface border border-divider ' + 'rounded-xl flex animate-pulse'}>
+            <div className="w-20 h-full bg-surface-secondary rounded-l-xl shrink-0" />
             <div className="flex-1 flex flex-col p-2.5 gap-y-1.5 justify-between">
-              <div className="h-3 bg-content2 rounded w-16" />
-              <div className="h-4 bg-content2 rounded w-full" />
-              <div className="h-2.5 bg-content2 rounded w-12" />
+              <div className="h-3 bg-surface-secondary rounded w-16" />
+              <div className="h-4 bg-surface-secondary rounded w-full" />
+              <div className="h-2.5 bg-surface-secondary rounded w-12" />
             </div>
           </div>
         ))}
@@ -94,14 +94,14 @@ export default function QuickView() {
         {items.map(item => (
           <div
             className={
-              'w-72 min-w-[288px] h-20 bg-content1 border border-divider ' +
+              'w-72 min-w-[288px] h-20 bg-surface border border-divider ' +
               'hover:border-accent rounded-xl flex transition-all duration-200 ' +
               'relative overflow-hidden cursor-pointer shadow-sm hover:shadow-md'
             }
             key={item.id}
             onClick={() => handleCardClick(item.link)}>
             {item.thumbnail ? (
-              <div className="w-20 h-full relative shrink-0 overflow-hidden bg-content2">
+              <div className="w-20 h-full relative shrink-0 overflow-hidden bg-surface-secondary">
                 <img
                   className={
                     'w-full h-full object-cover rounded-l-xl ' + 'transition-transform duration-500 hover:scale-105'
