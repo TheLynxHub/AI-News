@@ -14,5 +14,5 @@ export function InitialExtensions(lynxAPI: ExtensionRendererApi, rendererIpc: Re
   lynxAPI.customizePages.others.add.cardsContainer(NewsCard);
 
   // Add the news Quick View carousel to the top of the Home page
-  lynxAPI.customizePages.home.add.top(QuickView);
+  lynxAPI.customizePages.home.add.scrollTop(QuickView);
 }

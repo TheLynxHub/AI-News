@@ -44,6 +44,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
   const [lastFetched, setLastFetched] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [homeView, setHomeView] = useState<'default' | 'compact'>('default');
 
   // Search and filter states
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,6 +76,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
           setCache(state.cache || []);
           setLastFetched(state.lastFetched || 0);
           setSelectedSourceIds(defaultSelections(state.sources || []));
+          setHomeView(state.homeView || 'default');
         }
         setLoading(false);
       })
@@ -89,6 +91,9 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
         setSources(state.sources || []);
         setCache(state.cache || []);
         setLastFetched(state.lastFetched || 0);
+        if (state.homeView) {
+          setHomeView(state.homeView);
+        }
       }
     });
   }, [isOpen]);
@@ -125,6 +130,22 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
       }
     } catch (err) {
       console.error('Failed to toggle source:', err);
+    }
+  };
+
+  // Toggle home view layout preference
+  const handleToggleHomeView = async (view: 'default' | 'compact') => {
+    setHomeView(view);
+    try {
+      const state = await extensionIpc.lynxIpc.invoke<any>('lynxhub-ai-news:update-home-view', view);
+      if (state) {
+        setSources(state.sources || []);
+        setCache(state.cache || []);
+        setLastFetched(state.lastFetched || 0);
+        setHomeView(state.homeView || 'default');
+      }
+    } catch (err) {
+      console.error('Failed to update home view preference:', err);
     }
   };
 
@@ -541,6 +562,30 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                       )}
                     </Button>
                   </form>
+
+                  {/* Preferences Section */}
+                  <div className="mt-6 pt-5 border-t border-divider flex flex-col gap-3">
+                    <h4 className="text-xs font-extrabold text-foreground tracking-wide uppercase select-none">
+                      Layout Preferences
+                    </h4>
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-xs font-bold text-foreground">Compact Home Layout</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          Use compact cards on the home page instead of the coverflow carousel.
+                        </span>
+                      </div>
+                      <Switch
+                        isSelected={homeView === 'compact'}
+                        onChange={val => handleToggleHomeView(val ? 'compact' : 'default')}>
+                        <Switch.Content>
+                          <Switch.Control>
+                            <Switch.Thumb />
+                          </Switch.Control>
+                        </Switch.Content>
+                      </Switch>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Sources List panel */}

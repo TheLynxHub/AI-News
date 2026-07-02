@@ -48,6 +48,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   storageManager.getCustomData('ai-news::sources');
   storageManager.getCustomData('ai-news::cache');
   storageManager.getCustomData('ai-news::lastFetched');
+  storageManager.getCustomData('ai-news::homeView');
 
   const parser = new Parser({
     customFields: {
@@ -77,6 +78,11 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   const getLastFetched = (): number => {
     const lf = storageManager.getCustomData('ai-news::lastFetched');
     return typeof lf === 'number' ? lf : 0;
+  };
+
+  const getHomeView = (): 'default' | 'compact' => {
+    const view = storageManager.getCustomData('ai-news::homeView');
+    return view === 'compact' ? 'compact' : 'default';
   };
 
   // Extract video ID from youtube feeds
@@ -245,6 +251,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
       sources,
       cache: newMergedCache,
       lastFetched: Date.now(),
+      homeView: getHomeView(),
     });
   };
 
@@ -271,6 +278,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         sources: getSources(),
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
+        homeView: getHomeView(),
       };
     });
 
@@ -281,6 +289,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         sources: getSources(),
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
+        homeView: getHomeView(),
       };
     });
 
@@ -294,6 +303,28 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         sources: getSources(),
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
+        homeView: getHomeView(),
+      };
+    });
+
+    // Update homepage view preference
+    ipcMain.handle('lynxhub-ai-news:update-home-view', (_, view: 'default' | 'compact') => {
+      storageManager.setCustomData('ai-news::homeView', view);
+      storageManager.write();
+
+      // Broadcast update to renderer process
+      appManager.sendMessage('lynxhub-ai-news:state-updated', {
+        sources: getSources(),
+        cache: getCachedItems(),
+        lastFetched: getLastFetched(),
+        homeView: view,
+      });
+
+      return {
+        sources: getSources(),
+        cache: getCachedItems(),
+        lastFetched: getLastFetched(),
+        homeView: view,
       };
     });
 
