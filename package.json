@@ -1,11 +1,13 @@
 {
-  "name": "lynxhub-extension-template",
+  "name": "lynxhub-ai-news",
   "version": "1.0.0",
   "author": {
-    "name": "Your Name",
-    "url": "https://github.com/your-username"
+    "name": "KindaBrazy"
   },
-  "homepage": "https://github.com/your-username/lynxhub-extension-template",
-  "repository": "https://github.com/your-username/lynxhub-extension-template",
-  "type": "module"
+  "homepage": "https://github.com/KindaBrazy/LynxHub-AI-News",
+  "repository": "https://github.com/KindaBrazy/LynxHub-AI-News",
+  "type": "module",
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
 }
