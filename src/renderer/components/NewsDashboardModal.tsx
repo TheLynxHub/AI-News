@@ -361,8 +361,8 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                   {sources.length > 0 && (
                     <div
                       className={
-                        'flex flex-wrap items-center gap-x-4 gap-y-1.5 px-2 py-1.5 ' +
-                        'bg-surface border-b border-divider rounded-xl'
+                        'flex flex-wrap items-center gap-x-4 gap-y-1.5 px-2 py-2 ' +
+                        'bg-surface-secondary border-b border-divider rounded-xl'
                       }>
                       <span
                         className={
