@@ -97,11 +97,50 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     return match ? match[1] : '';
   };
 
+  // Extract Open Graph or Twitter image from page HTML
+  const extractOgImage = (html: string): string => {
+    if (!html) return '';
+    const ogImageRegex = /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i;
+    const ogImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i;
+    const match = html.match(ogImageRegex) || html.match(ogImageRegexAlt);
+    if (match) return match[1];
+
+    const twitterImageRegex = /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i;
+    const twitterImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i;
+    const matchTwitter = html.match(twitterImageRegex) || html.match(twitterImageRegexAlt);
+    return matchTwitter ? matchTwitter[1] : '';
+  };
+
+  // Fetch article webpage and parse the Open Graph image
+  const fetchOgImage = async (url: string): Promise<string> => {
+    if (!url) return '';
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
+        },
+        timeout: 3000,
+      });
+      return extractOgImage(res.data);
+    } catch (err: any) {
+      console.warn(`AI News: Failed to scrape OG image for ${url}:`, err.message);
+      return '';
+    }
+  };
+
   // Background feeds update logic
   const fetchAndCacheAllFeeds = async (force = false) => {
     const sources = getSources();
     const currentCache = getCachedItems();
     const now = Date.now();
+
+    // Index existing thumbnails to avoid re-scraping
+    const existingThumbnails = new Map<string, string>();
+    for (const item of currentCache) {
+      if (item.thumbnail) {
+        existingThumbnails.set(item.id, item.thumbnail);
+      }
+    }
 
     // Check rate limit (only fetch every 5 mins unless forced)
     if (!force && now - getLastFetched() < 5 * 60 * 1000) {
@@ -132,6 +171,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         const parsedItems: NewsItem[] = [];
 
         const itemsToProcess = feed.items.slice(0, 40); // Cap at 40 items per source
+        let scrapeCount = 0;
         for (const item of itemsToProcess) {
           let thumbnail = '';
           let snippet = item.contentSnippet || item.content || '';
@@ -139,16 +179,22 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
             snippet = snippet.substring(0, 247) + '...';
           }
 
-          if (src.type === 'youtube') {
+          const id = item.guid || (item as any).id || item.link || Math.random().toString(36).substring(7);
+
+          if (existingThumbnails.has(id)) {
+            thumbnail = existingThumbnails.get(id)!;
+          } else if (src.type === 'youtube') {
             const videoId = getYoutubeVideoId(item);
             if (videoId) {
               thumbnail = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
             }
           } else {
             thumbnail = extractImageFromHtml(item.content || '') || item.enclosure?.url || '';
+            if (!thumbnail && item.link && scrapeCount < 10) {
+              scrapeCount++;
+              thumbnail = await fetchOgImage(item.link);
+            }
           }
-
-          const id = item.guid || (item as any).id || item.link || Math.random().toString(36).substring(7);
 
           parsedItems.push({
             id,
