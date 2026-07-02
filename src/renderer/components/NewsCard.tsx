@@ -19,12 +19,10 @@ export default function NewsCard() {
         icon={<Globe className="size-6 text-accent" />}
         footer={<div className="text-[10px] text-accent font-semibold hover:underline">Open Feed</div>}
       />
-      {modalState.isOpen && (
-        <NewsDashboardModal
-          isOpen={modalState.isOpen}
-          onOpenChange={isOpen => (isOpen ? modalState.open() : modalState.close())}
-        />
-      )}
+      <NewsDashboardModal
+        isOpen={modalState.isOpen}
+        onOpenChange={isOpen => (isOpen ? modalState.open() : modalState.close())}
+      />
     </>
   );
 }

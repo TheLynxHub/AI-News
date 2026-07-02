@@ -241,8 +241,8 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
   }, [cache, searchQuery, typeFilter, selectedSourceIds]);
 
   return (
-    <TabModal size="cover" isOpen={isOpen} onOpenChange={onOpenChange} containerClassName="border border-divider">
-      <div className="flex flex-col h-full bg-background text-foreground">
+    <TabModal size="cover" isOpen={isOpen} dialogClassName="p-0" onOpenChange={onOpenChange}>
+      <div className="flex flex-col h-full">
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-divider shrink-0">
           <div className="flex flex-col">
@@ -325,7 +325,12 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                 {/* Search and Quick Filters */}
                 <div className="flex flex-col gap-3 shrink-0">
                   <div className="flex gap-3">
-                    <TextField className="flex-1" value={searchQuery} onChange={setSearchQuery} fullWidth>
+                    <TextField
+                      className="flex-1"
+                      variant="secondary"
+                      value={searchQuery}
+                      onChange={setSearchQuery}
+                      fullWidth>
                       <InputGroup>
                         <InputGroup.Prefix>
                           <Search className="size-4 text-muted-foreground" />
