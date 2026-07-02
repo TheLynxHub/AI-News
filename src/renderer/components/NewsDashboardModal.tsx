@@ -2,22 +2,8 @@ import {Button, Checkbox, InputGroup, ScrollShadow, Spinner, Switch, TextField} 
 import {SiGithub, SiYoutube} from '@icons-pack/react-simple-icons';
 import TabModal from '@lynx/components/TabModal';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
-import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
-import {
-  Clock,
-  ExternalLink,
-  Globe,
-  Info,
-  Play,
-  Plus,
-  RefreshCw,
-  Search,
-  Send,
-  Settings,
-  Trash2,
-  Video,
-  X,
-} from 'lucide-react';
+import {Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
+import {Clock, ExternalLink, Info, Play, Plus, RefreshCw, Search, Send, Settings, Trash2, Video, X} from 'lucide-react';
 import {useEffect, useMemo, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
@@ -273,7 +259,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
               onPress={() => setActiveTab('feed')}
               variant={activeTab === 'feed' ? 'primary' : 'ghost'}
               className="w-full justify-start gap-3 text-xs font-bold rounded-xl">
-              <Globe className="size-4" /> News Feed
+              <Earth className="size-4" /> News Feed
             </Button>
             <Button
               onPress={() => setActiveTab('sources')}
@@ -391,7 +377,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                 <ScrollShadow className="flex-1 pr-2 scrollbar-hide">
                   {filteredItems.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center p-8 text-center select-none">
-                      <Globe className="size-12 text-muted-foreground/30 mb-2" />
+                      <Earth className="size-12 text-muted-foreground/30 mb-2" />
                       <h3 className="text-sm font-extrabold text-foreground/80">No stories found</h3>
                       <p className="text-xs text-muted-foreground mt-1 max-w-sm">
                         Try modifying search keywords or active filters.
@@ -443,7 +429,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                               {item.type === 'youtube' ? (
                                 <SiYoutube className="size-7 text-red-600" />
                               ) : (
-                                <Globe className="size-7 text-accent" />
+                                <Earth className="size-7 text-accent" />
                               )}
                             </div>
                           )}
@@ -462,7 +448,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                                 {item.type === 'youtube' ? (
                                   <SiYoutube className="size-4 text-red-600 shrink-0" />
                                 ) : (
-                                  <Globe className="size-3.5 text-accent shrink-0" />
+                                  <Earth className="size-3.5 text-accent shrink-0" />
                                 )}
                               </div>
                               <h3
@@ -514,7 +500,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                         onPress={() => setAddType('website')}
                         variant={addType === 'website' ? 'primary' : 'ghost'}
                         className="flex-1 text-[10px] font-bold py-1.5 rounded-lg">
-                        <Globe className="size-3 mr-1" /> Website Blog
+                        <Earth className="size-3 mr-1" /> Website Blog
                       </Button>
                       <Button
                         type="button"
@@ -580,7 +566,7 @@ export default function NewsDashboardModal({isOpen, onOpenChange}: Props) {
                               {src.type === 'youtube' ? (
                                 <SiYoutube className="size-4.5 text-red-600" />
                               ) : (
-                                <Globe className="size-4 text-accent" />
+                                <Earth className="size-4 text-accent" />
                               )}
                             </div>
                             <div className="flex flex-col min-w-0">

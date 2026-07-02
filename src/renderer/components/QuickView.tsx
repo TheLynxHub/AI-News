@@ -1,7 +1,6 @@
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
-import {ClockCircle, DocumentText, Play} from '@solar-icons/react-perf/BoldDuotone';
-import {Globe} from 'lucide-react';
+import {ClockCircle, DocumentText, Earth, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useEffect, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
@@ -87,7 +86,7 @@ export default function QuickView() {
           className={
             'text-[10px] font-bold text-accent uppercase tracking-widest ' + 'flex items-center gap-1 select-none'
           }>
-          <Globe className="size-3 text-accent" /> What's Happening in AI
+          <Earth className="size-3 text-accent" /> What's Happening in AI
         </span>
       </div>
       <div className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1">
@@ -152,7 +151,7 @@ export default function QuickView() {
                 {item.type === 'youtube' ? (
                   <SiYoutube className="size-3.5 text-red-600 shrink-0" />
                 ) : (
-                  <Globe className="size-3 text-accent shrink-0" />
+                  <Earth className="size-3 text-accent shrink-0" />
                 )}
               </div>
 
