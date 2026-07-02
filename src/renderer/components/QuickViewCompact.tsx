@@ -1,3 +1,4 @@
+import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {ClockCircle, DocumentText, Earth, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
@@ -50,9 +51,7 @@ export default function QuickViewCompact() {
   }, []);
 
   const handleCardClick = (link: string) => {
-    if (link) {
-      extensionIpc.application.send.openUrlDefaultBrowser(link);
-    }
+    if (link) extensionIpc.application.send.openUrlDefaultBrowser(link);
   };
 
   if (loading) {
@@ -88,13 +87,13 @@ export default function QuickViewCompact() {
           <Plain2 className="size-3 text-accent" /> AI NEWS
         </span>
       </div>
-      <div className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1">
+      <ScrollShadow orientation="horizontal" className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4">
         {items.map(item => (
           <div
             className={
-              'w-72 min-w-[288px] h-20 bg-surface border border-divider ' +
-              'hover:border-accent rounded-xl flex transition-all duration-200 ' +
-              'relative overflow-hidden cursor-pointer shadow-sm hover:shadow-md'
+              'w-72 min-w-[288px] h-20 bg-surface-secondary border ' +
+              'hover:border-accent/50 rounded-xl flex transition-all duration-200 ' +
+              'relative overflow-hidden cursor-pointer'
             }
             key={item.id}
             onClick={() => handleCardClick(item.link)}>
@@ -102,7 +101,7 @@ export default function QuickViewCompact() {
               <div className="w-20 h-full relative shrink-0 overflow-hidden bg-surface-secondary">
                 <img
                   className={
-                    'w-full h-full object-cover rounded-l-xl ' + 'transition-transform duration-500 hover:scale-105'
+                    'w-full h-full object-cover rounded-l-xl transition-transform duration-500 hover:scale-105'
                   }
                   loading="lazy"
                   alt={item.title}
@@ -172,7 +171,7 @@ export default function QuickViewCompact() {
             </div>
           </div>
         ))}
-      </div>
+      </ScrollShadow>
     </div>
   );
 }

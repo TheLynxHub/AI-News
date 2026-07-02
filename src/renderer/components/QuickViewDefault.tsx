@@ -258,7 +258,7 @@ export default function QuickViewDefault() {
               className={
                 `absolute w-64 sm:w-96 h-48 sm:h-60 rounded-3xl ` +
                 `transition-all duration-800 ease-[cubic-bezier(0.2,0.8,0.2,1)] ` +
-                `overflow-hidden bg-surface-secondary border-2 border-white/5 dark:border-white/10 ` +
+                `overflow-hidden bg-surface-secondary border border-border ` +
                 `${cardStyles} ${isCenter ? 'hover:scale-[1.02] cursor-pointer ring-1 ring-white/20' : ''}`
               }
               key={item.id}>
