@@ -1,6 +1,6 @@
 import {useOverlayState} from '@heroui/react';
 import {ToolsCard} from '@lynx/components/ToolsCard';
-import {Globe} from 'lucide-react';
+import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
 
 import NewsDashboardModal from './NewsDashboardModal';
 
@@ -16,7 +16,7 @@ export default function NewsCard() {
         }
         title="AI News"
         onPress={() => modalState.open()}
-        icon={<Globe className="size-6 text-accent" />}
+        icon={<Plain2 className="size-7 text-indigo-500" />}
         footer={<div className="text-[10px] text-accent font-semibold hover:underline">Open Feed</div>}
       />
       <NewsDashboardModal
