@@ -1,6 +1,6 @@
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
-import {ClockCircle, DocumentText, Earth, Play} from '@solar-icons/react-perf/BoldDuotone';
+import {ClockCircle, DocumentText, Earth, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useEffect, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
@@ -41,13 +41,12 @@ export default function QuickViewCompact() {
       });
 
     // Listen for updates
-    const cleanup = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
+
+    return extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state && Array.isArray(state.cache)) {
         setItems(state.cache.slice(0, 5));
       }
     });
-
-    return cleanup;
   }, []);
 
   const handleCardClick = (link: string) => {
@@ -86,7 +85,7 @@ export default function QuickViewCompact() {
           className={
             'text-[10px] font-bold text-accent uppercase tracking-widest ' + 'flex items-center gap-1 select-none'
           }>
-          <Earth className="size-3 text-accent" /> What's Happening in AI
+          <Plain2 className="size-3 text-accent" /> AI NEWS
         </span>
       </div>
       <div className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1">

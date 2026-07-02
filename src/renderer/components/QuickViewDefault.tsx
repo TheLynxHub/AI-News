@@ -1,6 +1,7 @@
+import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
-import {ClockCircle, DocumentText, Earth, Play} from '@solar-icons/react-perf/BoldDuotone';
+import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useCallback, useEffect, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
@@ -109,32 +110,46 @@ export default function QuickViewDefault() {
   // Masterpiece Loading Skeleton
   if (loading) {
     return (
-      <div
-        className={
-          'w-full flex flex-col gap-3 py-6 px-4 relative h-95 sm:h-105 overflow-hidden items-center justify-center'
-        }>
+      <div className={'w-full flex flex-col gap-3 py-4 relative h-72 overflow-hidden items-center justify-center'}>
+        {/* Left card skeleton (translated) */}
         <div
           className={
-            'absolute translate-x-[-75%] sm:translate-x-[-85%] scale-[0.85] z-20 ' +
-            'w-70 sm:w-105 h-55 sm:h-70 rounded-4xl bg-surface-secondary/40 animate-pulse'
-          }
-        />
-        <div
-          className={
-            'absolute translate-x-0 scale-100 z-30 w-70 sm:w-105 h-55 ' +
-            'sm:h-70 rounded-4xl bg-surface border border-divider shadow-2xl ' +
-            'animate-pulse flex flex-col justify-end p-6 gap-3'
+            'absolute translate-x-[-65%] sm:translate-x-[-75%] scale-[0.85] z-20 ' +
+            'w-64 sm:w-96 h-48 sm:h-60 rounded-3xl opacity-40 overflow-hidden'
           }>
-          <div className="w-24 h-4 bg-surface-secondary rounded-full" />
-          <div className="w-full h-8 bg-surface-secondary rounded-lg" />
-          <div className="w-3/4 h-8 bg-surface-secondary rounded-lg" />
+          <Skeleton className="w-full h-full" />
         </div>
+
+        {/* Center card skeleton (active) */}
         <div
           className={
-            'absolute translate-x-[75%] sm:translate-x-[85%] scale-[0.85] z-20 ' +
-            'w-70 sm:w-105 h-55 sm:h-70 rounded-4xl bg-surface-secondary/40 animate-pulse'
-          }
-        />
+            'absolute translate-x-0 scale-100 z-30 w-64 sm:w-96 h-48 sm:h-60 ' +
+            'rounded-3xl border border-divider shadow-2xl ' +
+            'bg-surface flex flex-col justify-end p-5 sm:p-7 gap-2 overflow-hidden'
+          }>
+          {/* Skeleton overlay inside card */}
+          <div className="absolute inset-0 p-5 sm:p-7 flex flex-col justify-end gap-3 z-10">
+            {/* Top source badge skeleton */}
+            <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+              <Skeleton className="w-20 h-5 rounded-full" />
+              <Skeleton className="size-8 sm:size-9 rounded-full" />
+            </div>
+            {/* Title skeletons */}
+            <Skeleton className="w-full h-5 sm:h-6 rounded-lg" />
+            <Skeleton className="w-3/4 h-5 sm:h-6 rounded-lg" />
+            {/* Time ago skeleton */}
+            <Skeleton className="w-20 h-4 rounded-md mt-1" />
+          </div>
+        </div>
+
+        {/* Right card skeleton (translated) */}
+        <div
+          className={
+            'absolute translate-x-[65%] sm:translate-x-[75%] scale-[0.85] z-20 ' +
+            'w-64 sm:w-96 h-48 sm:h-60 rounded-3xl opacity-40 overflow-hidden'
+          }>
+          <Skeleton className="w-full h-full" />
+        </div>
       </div>
     );
   }
@@ -142,7 +157,7 @@ export default function QuickViewDefault() {
   if (items.length === 0) return null;
 
   return (
-    <div className="w-full flex flex-col py-4 relative group overflow-hidden h-90">
+    <div className="w-full flex flex-col py-4 relative group overflow-hidden h-72">
       {/* Header section */}
       <div className="relative z-40 flex items-center justify-between px-6 mb-4">
         <span
@@ -150,7 +165,7 @@ export default function QuickViewDefault() {
             'text-[11px] font-black text-foreground/90 uppercase tracking-[0.2em] ' +
             'flex items-center gap-2 select-none drop-shadow-sm'
           }>
-          <Earth className="size-4 text-accent" /> What's Happening in AI
+          <Plain2 className="size-4 text-accent" /> AI NEWS
         </span>
 
         {/* Navigation Dots */}
@@ -177,7 +192,7 @@ export default function QuickViewDefault() {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative w-full h-65 sm:h-80 flex items-center justify-center">
+        className="relative w-full h-56 sm:h-72 flex items-center justify-center">
         {/* Floating Controls */}
         <button
           onClick={e => {
@@ -241,8 +256,8 @@ export default function QuickViewDefault() {
                 else goToIndex(index, e);
               }}
               className={
-                `absolute w-70 sm:w-105 h-55 sm:h-70 rounded-3xl ` +
-                `sm:rounded-4xl transition-all duration-800 ease-[cubic-bezier(0.2,0.8,0.2,1)] ` +
+                `absolute w-64 sm:w-96 h-48 sm:h-60 rounded-3xl ` +
+                `transition-all duration-800 ease-[cubic-bezier(0.2,0.8,0.2,1)] ` +
                 `overflow-hidden bg-surface-secondary border-2 border-white/5 dark:border-white/10 ` +
                 `${cardStyles} ${isCenter ? 'hover:scale-[1.02] cursor-pointer ring-1 ring-white/20' : ''}`
               }
@@ -280,60 +295,58 @@ export default function QuickViewDefault() {
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
 
               {/* Top Badges */}
-              <div
-                className={
-                  'absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 ' +
-                  'flex justify-between items-start z-10'
-                }>
+              <div className={'absolute top-4 left-4 right-4 ' + 'flex justify-between items-start z-10'}>
                 <span
                   className={
-                    'px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 ' +
+                    'px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 ' +
                     'text-[9px] sm:text-[10px] font-extrabold text-white uppercase tracking-widest ' +
-                    'max-w-35 truncate shadow-sm'
+                    'max-w-30 truncate shadow-sm'
                   }>
                   {item.sourceName}
                 </span>
                 <div
                   className={
-                    'flex items-center justify-center size-8 sm:size-10 rounded-full bg-black/40 ' +
+                    'flex items-center justify-center size-8 sm:size-9 rounded-full bg-black/40 ' +
                     'backdrop-blur-md border border-white/10 text-white shadow-lg'
                   }>
                   {item.type === 'youtube' ? (
-                    <Play className="size-4 sm:size-5 ml-0.5 text-red-500" />
+                    <Play className="size-3.5 sm:size-4 ml-0.5 text-red-500" />
                   ) : (
-                    <DocumentText className="size-4 sm:size-5 text-blue-400" />
+                    <DocumentText className="size-3.5 sm:size-4 text-blue-400" />
                   )}
                 </div>
               </div>
 
               {/* Bottom Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7 flex flex-col gap-2 z-10">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 pb-6 sm:pb-7 flex flex-col gap-1.5 z-10">
                 <h4
                   className={
-                    'text-white font-extrabold text-base sm:text-xl leading-tight ' +
-                    'line-clamp-2 sm:line-clamp-3 drop-shadow-xl'
+                    'text-white font-extrabold text-sm sm:text-base leading-tight ' + 'line-clamp-2 drop-shadow-xl'
                   }>
                   {item.title}
                 </h4>
                 <div
                   className={
-                    'flex items-center gap-1.5 text-[10px] sm:text-xs text-white/70 ' + 'font-semibold tracking-wide'
+                    'flex items-center gap-1.5 text-[9px] sm:text-[10px] text-white/70 ' + 'font-semibold tracking-wide'
                   }>
-                  <ClockCircle className="size-3 sm:size-3.5" />
+                  <ClockCircle className="size-3" />
                   {formatTimeAgo(item.isoDate)}
                 </div>
               </div>
 
               {/* Glowing Auto-Scroll Timer (Only active on the centered item) */}
               {isCenter && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-black/40 backdrop-blur-sm z-20">
+                <div className={'absolute bottom-0 inset-x-0 h-px bg-black/30 backdrop-blur-xs z-20 overflow-hidden'}>
                   <div
                     style={{
                       width: `${progress}%`,
                       transition: isHovered ? 'none' : `width ${UPDATE_INTERVAL}ms linear`,
                     }}
-                    className="h-full bg-linear-to-r from-accent to-accent-light relative">
-                    <div className="absolute top-0 right-0 bottom-0 w-8 bg-white/50 blur-xs" />
+                    className={
+                      'h-full bg-linear-to-r from-white/10 via-white/50 to-white ' +
+                      'relative shadow-[0_0_8px_rgba(var(--accent),0.6)] rounded-full'
+                    }>
+                    <div className="absolute top-0 right-0 bottom-0 w-8 bg-white/40 blur-xs" />
                   </div>
                 </div>
               )}
