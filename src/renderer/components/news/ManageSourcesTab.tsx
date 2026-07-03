@@ -1,9 +1,10 @@
-import {Button, InputGroup, ScrollShadow, Spinner, Switch, TextField} from '@heroui/react';
+import {Button, ButtonGroup, Chip, InputGroup, ScrollShadow, Spinner, Switch, TextField} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import LynxSwitch from '@lynx/components/LynxSwitch';
 import {NewsSource} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
-import {Plus, Trash2, Video} from 'lucide-react';
-import {FormEvent, useState} from 'react';
+import {Plus, Trash2} from 'lucide-react';
+import {SubmitEvent, useState} from 'react';
 
 interface ManageSourcesTabProps {
   sources: NewsSource[];
@@ -29,7 +30,7 @@ export default function ManageSourcesTab({
   const [addError, setAddError] = useState('');
   const [addSuccess, setAddSuccess] = useState('');
 
-  const handleAddSource = async (e: FormEvent) => {
+  const handleAddSource = async (e: SubmitEvent) => {
     e.preventDefault();
     if (!addUrl.trim()) return;
 
@@ -51,35 +52,35 @@ export default function ManageSourcesTab({
   return (
     <div className="flex-1 flex overflow-hidden p-6 gap-6">
       {/* Add Custom Source form */}
-      <div className={'w-1/2 flex flex-col bg-surface border border-border ' + 'p-5 rounded-2xl shrink-0'}>
+      <div className={'w-1/2 flex flex-col shrink-0'}>
         <h3 className="text-sm font-extrabold text-foreground mb-1">Add Feed Source</h3>
         <p className="text-[11px] text-muted mb-4">
           Type a website URL to discover its feed, or enter a YouTube channel link.
         </p>
 
         <form onSubmit={handleAddSource} className="flex flex-col gap-4">
-          <div className="flex bg-surface-secondary p-0.5 rounded-xl border border-border w-full shrink-0">
+          <ButtonGroup className="bg-surface rounded-3xl shadow-surface" fullWidth>
             <Button
               type="button"
               onPress={() => setAddType('website')}
-              variant={addType === 'website' ? 'primary' : 'ghost'}
-              className="flex-1 text-[10px] font-bold py-1.5 rounded-lg">
-              <Earth className="size-3 mr-1" /> Website Blog
+              variant={addType === 'website' ? 'primary' : 'ghost'}>
+              <Earth className="size-4" /> Website Blog
             </Button>
             <Button
               type="button"
               onPress={() => setAddType('youtube')}
-              variant={addType === 'youtube' ? 'primary' : 'ghost'}
-              className="flex-1 text-[10px] font-bold py-1.5 rounded-lg">
-              <Video className="size-3 mr-1" /> YouTube Channel
+              variant={addType === 'youtube' ? 'primary' : 'ghost'}>
+              <SiYoutube className="size-4 text-red-700" /> YouTube Channel
             </Button>
-          </div>
+          </ButtonGroup>
 
           <TextField value={addUrl} onChange={setAddUrl} fullWidth>
             <InputGroup>
               <InputGroup.Input
                 placeholder={
-                  addType === 'website' ? 'e.g. venturebeat.com/category/ai' : 'e.g. @mreflow or channel link'
+                  addType === 'website'
+                    ? 'e.g. techcrunch.com/category/artificial-intelligence'
+                    : 'e.g. @theAIsearch or channel link'
                 }
                 disabled={adding}
               />
@@ -89,18 +90,14 @@ export default function ManageSourcesTab({
           {addError && <p className="text-[11px] text-danger font-bold">{addError}</p>}
           {addSuccess && <p className="text-[11px] text-success font-bold">{addSuccess}</p>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            isDisabled={adding || !addUrl.trim()}
-            className="w-full text-xs font-bold rounded-xl mt-2 justify-center">
+          <Button type="submit" variant="primary" isDisabled={adding || !addUrl.trim()} fullWidth>
             {adding ? (
               <>
-                <Spinner size="sm" color="current" className="mr-2" /> Saving source...
+                <Spinner size="sm" color="current" /> Saving source...
               </>
             ) : (
               <>
-                <Plus className="size-4 mr-2" /> Add News Source
+                <Plus /> Add News Source
               </>
             )}
           </Button>
@@ -111,44 +108,38 @@ export default function ManageSourcesTab({
           <h4 className="text-xs font-extrabold text-foreground tracking-wide uppercase select-none">
             Layout Preferences
           </h4>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-xs font-bold text-foreground">Compact Home Layout</span>
-              <span className="text-[10px] text-muted">
-                Use compact cards on the home page instead of the coverflow carousel.
-              </span>
-            </div>
-            <Switch isSelected={homeView === 'compact'} onChange={val => onToggleHomeView(val ? 'compact' : 'default')}>
-              <Switch.Content>
-                <Switch.Control>
-                  <Switch.Thumb />
-                </Switch.Control>
-              </Switch.Content>
-            </Switch>
-          </div>
+          <LynxSwitch
+            description={
+              <span className="text-[11px]">Use compact cards on the home page instead of the coverflow carousel.</span>
+            }
+            title="Compact Home Layout"
+            enabled={homeView === 'compact'}
+            onEnabledChange={val => onToggleHomeView(val ? 'compact' : 'default')}
+          />
         </div>
       </div>
 
       {/* Sources List panel */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <h3 className="text-sm font-extrabold text-foreground mb-2 shrink-0">Active Sources ({sources.length})</h3>
-        <ScrollShadow className="flex-1 pr-2 scrollbar-hide">
+        <h3 className="text-sm font-extrabold text-foreground mb-2 shrink-0">
+          Active Sources{' '}
+          <Chip size="sm" color="accent">
+            {sources.length}
+          </Chip>
+        </h3>
+        <ScrollShadow className="flex-1 pr-2">
           <div className="flex flex-col gap-3">
             {sources.map(src => (
               <div
-                className={
-                  'bg-surface border border-border p-3 ' + 'rounded-2xl flex items-center justify-between gap-4'
-                }
-                key={src.id}>
+                key={src.id}
+                onClick={() => onToggleSource(src.id, !src.enabled)}
+                className={'bg-surface p-3 cursor-pointer rounded-3xl flex items-center justify-between gap-4'}>
                 <div className="flex items-center gap-3 min-w-0">
-                  <div
-                    className={
-                      'size-9 rounded-full bg-surface-secondary ' + 'flex items-center justify-center shrink-0'
-                    }>
+                  <div className={'size-9 rounded-full bg-surface-secondary flex items-center justify-center shrink-0'}>
                     {src.type === 'youtube' ? (
                       <SiYoutube className="size-4.5 text-red-600" />
                     ) : (
-                      <Earth className="size-4 text-accent" />
+                      <Earth className="size-4.5 text-accent" />
                     )}
                   </div>
                   <div className="flex flex-col min-w-0">
