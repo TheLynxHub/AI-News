@@ -2,7 +2,7 @@ import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {ClockCircle, DocumentText, Earth, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
 
@@ -25,6 +25,9 @@ function formatTimeAgo(dateStr: string) {
 export default function QuickViewCompact() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({isDragging: false, startX: 0, scrollLeft: 0, moved: false});
 
   useEffect(() => {
     // Fetch initial state
@@ -50,7 +53,31 @@ export default function QuickViewCompact() {
     });
   }, []);
 
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    dragState.current = {isDragging: true, startX: e.clientX, scrollLeft: el.scrollLeft, moved: false};
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = scrollRef.current;
+    if (!el || !dragState.current.isDragging) return;
+    const dx = e.clientX - dragState.current.startX;
+    if (Math.abs(dx) > 5) dragState.current.moved = true;
+    el.scrollLeft = dragState.current.scrollLeft - dx;
+  };
+
+  const handlePointerUp = () => {
+    dragState.current.isDragging = false;
+  };
+
+  const handlePointerLeave = () => {
+    dragState.current.isDragging = false;
+  };
+
   const handleCardClick = (link: string) => {
+    if (dragState.current.moved) return; // suppress click after drag
     if (link) extensionIpc.application.send.openUrlDefaultBrowser(link);
   };
 
@@ -85,7 +112,15 @@ export default function QuickViewCompact() {
           <Plain2 className="size-3 text-accent" /> AI NEWS
         </span>
       </div>
-      <ScrollShadow orientation="horizontal" className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4">
+      <ScrollShadow
+        ref={scrollRef}
+        orientation="horizontal"
+        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4 cursor-grab select-none"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onPointerLeave={handlePointerLeave}>
         {items.map(item => (
           <div
             className={

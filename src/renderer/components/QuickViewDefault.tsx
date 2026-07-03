@@ -2,7 +2,7 @@ import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
 
@@ -84,6 +84,34 @@ export default function QuickViewDefault() {
     setProgress(0);
   };
 
+  // ---- Drag / Swipe Support ----
+  const SWIPE_THRESHOLD = 40; // px needed to trigger slide change
+  const dragRef = useRef({active: false, startX: 0, moved: false});
+
+  const handleCarouselPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    dragRef.current = {active: true, startX: e.clientX, moved: false};
+  };
+
+  const handleCarouselPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    if (Math.abs(e.clientX - dragRef.current.startX) > 5) dragRef.current.moved = true;
+  };
+
+  const handleCarouselPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    dragRef.current.active = false;
+    const dx = e.clientX - dragRef.current.startX;
+    if (Math.abs(dx) >= SWIPE_THRESHOLD) {
+      if (dx < 0) handleNext();
+      else handlePrev();
+    }
+  };
+
+  const handleCarouselPointerLeave = () => {
+    dragRef.current.active = false;
+  };
+
   // Timer logic for Auto-scroll & Progress Bar
   useEffect(() => {
     if (isHovered || items.length <= 1) return;
@@ -102,6 +130,7 @@ export default function QuickViewDefault() {
   }, [isHovered, items.length, handleNext]);
 
   const handleCardClick = (link: string) => {
+    if (dragRef.current.moved) return; // suppress click after drag
     if (link) {
       extensionIpc.application.send.openUrlDefaultBrowser(link);
     }
@@ -192,7 +221,12 @@ export default function QuickViewDefault() {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative w-full h-56 sm:h-72 flex items-center justify-center">
+        onPointerDown={handleCarouselPointerDown}
+        onPointerMove={handleCarouselPointerMove}
+        onPointerUp={handleCarouselPointerUp}
+        onPointerCancel={handleCarouselPointerLeave}
+        onPointerLeave={handleCarouselPointerLeave}
+        className="relative w-full h-56 sm:h-72 flex items-center justify-center cursor-grab active:cursor-grabbing select-none">
         {/* Floating Controls */}
         <button
           onClick={e => {
