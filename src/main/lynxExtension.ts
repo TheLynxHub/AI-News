@@ -5,40 +5,7 @@ import axios from 'axios';
 import {ipcMain} from 'electron';
 import Parser from 'rss-parser';
 
-const DEFAULT_SOURCES: NewsSource[] = [
-  {
-    id: 'venturebeat-ai',
-    name: 'VentureBeat AI',
-    type: 'website',
-    url: 'https://venturebeat.com/category/ai',
-    feedUrl: 'https://venturebeat.com/category/ai/feed/',
-    enabled: true,
-  },
-  {
-    id: 'techcrunch-ai',
-    name: 'TechCrunch AI',
-    type: 'website',
-    url: 'https://techcrunch.com/category/artificial-intelligence/',
-    feedUrl: 'https://techcrunch.com/category/artificial-intelligence/feed/',
-    enabled: true,
-  },
-  {
-    id: 'youtube-theaisearch',
-    name: 'AI Search',
-    type: 'youtube',
-    url: 'https://www.youtube.com/@theAIsearch',
-    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCIgnGlGkVRhd4qNFcEwLL4A',
-    enabled: true,
-  },
-  {
-    id: 'youtube-mreflow',
-    name: 'Matt Wolfe',
-    type: 'youtube',
-    url: 'https://www.youtube.com/@mreflow',
-    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UChpleBmo18P08aKCIgti38g',
-    enabled: true,
-  },
-];
+import {DEFAULT_SOURCES} from './defaultSources';
 
 export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExtensionUtils, _mainIpc: MainIpcApi) {
   const storageManager = await utils.getStorageManager();
