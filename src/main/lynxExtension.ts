@@ -7,6 +7,13 @@ import Parser from 'rss-parser';
 
 import {DEFAULT_SOURCES, DEFAULT_SOURCES_VERSION} from './defaultSources';
 
+const BROWSER_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+  'Accept-Language': 'en-US,en;q=0.9',
+};
+
 export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExtensionUtils, _mainIpc: MainIpcApi) {
   const storageManager = await utils.getStorageManager();
   const appManager = await utils.getAppManager();
@@ -129,9 +136,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     if (!url) return '';
     try {
       const res = await axios.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
-        },
+        headers: BROWSER_HEADERS,
         timeout: 3000,
       });
       return extractOgImage(res.data);
@@ -470,9 +475,7 @@ async function getYoutubeChannelId(input: string): Promise<{channelId: string; n
 
   try {
     const res = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
-      },
+      headers: BROWSER_HEADERS,
       timeout: 10000,
     });
     const html = res.data;
@@ -507,9 +510,7 @@ async function getWebsiteFeedDetails(input: string): Promise<{feedUrl: string; n
 
   try {
     const res = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
-      },
+      headers: BROWSER_HEADERS,
       timeout: 10000,
     });
     const html = res.data;
@@ -527,7 +528,10 @@ async function getWebsiteFeedDetails(input: string): Promise<{feedUrl: string; n
       for (const path of commonPaths) {
         try {
           const checkUrl = urlObj.origin + path;
-          const checkRes = await axios.get(checkUrl, {timeout: 3000});
+          const checkRes = await axios.get(checkUrl, {
+            headers: BROWSER_HEADERS,
+            timeout: 3000,
+          });
           if (checkRes.status === 200 && (checkRes.data.includes('<rss') || checkRes.data.includes('<feed'))) {
             feedUrl = checkUrl;
             break;
