@@ -1,8 +1,8 @@
-import {Checkbox, InputGroup, ScrollShadow, Tabs, TextField} from '@heroui/react';
+import {Button, InputGroup, ListBox, ScrollShadow, Select, Tabs, TextField} from '@heroui/react';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Search} from 'lucide-react';
-import {Key} from 'react';
+import {Key, useMemo} from 'react';
 
 import NewsCard from './NewsCard';
 
@@ -13,7 +13,9 @@ interface NewsFeedTabProps {
   setTypeFilter: (filter: 'all' | 'website' | 'youtube') => void;
   sources: NewsSource[];
   selectedSourceIds: Record<string, boolean>;
-  setSelectedSourceIds: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setSelectedSourceIds: (
+    updater: Record<string, boolean> | ((prev: Record<string, boolean>) => Record<string, boolean>),
+  ) => void;
   filteredItems: NewsItem[];
   onOpenLink: (url: string) => void;
 }
@@ -31,6 +33,35 @@ export default function NewsFeedTab({
 }: NewsFeedTabProps) {
   const handleTabChange = (key: Key) => {
     setTypeFilter(key as 'all' | 'website' | 'youtube');
+  };
+
+  const selectedKeys = useMemo(() => {
+    return Object.keys(selectedSourceIds).filter(id => selectedSourceIds[id]);
+  }, [selectedSourceIds]);
+
+  const handleSelectionChange = (keys: any) => {
+    const keyArray = keys as Key[];
+    const nextSelection: Record<string, boolean> = {};
+    sources.forEach(src => {
+      nextSelection[src.id] = keyArray.includes(src.id);
+    });
+    setSelectedSourceIds(nextSelection);
+  };
+
+  const handleEnableAll = () => {
+    const nextSelection: Record<string, boolean> = {};
+    sources.forEach(src => {
+      nextSelection[src.id] = true;
+    });
+    setSelectedSourceIds(nextSelection);
+  };
+
+  const handleDisableAll = () => {
+    const nextSelection: Record<string, boolean> = {};
+    sources.forEach(src => {
+      nextSelection[src.id] = false;
+    });
+    setSelectedSourceIds(nextSelection);
   };
 
   return (
@@ -70,24 +101,41 @@ export default function NewsFeedTab({
 
         {/* Individual Source Filters */}
         {sources.length > 0 && (
-          <div className={'flex flex-wrap items-center gap-x-4 gap-y-1.5 p-3 bg-surface rounded-xl'}>
-            <span className={'text-[10px] font-extrabold uppercase text-semi-muted tracking-wider select-none'}>
+          <div className="flex items-center gap-3 p-3 bg-surface rounded-xl">
+            <span className="text-[10px] font-extrabold uppercase text-semi-muted tracking-wider select-none shrink-0">
               Filter Sources:
             </span>
-            {sources.map(src => (
-              <Checkbox
-                key={src.id}
-                variant="secondary"
-                isSelected={selectedSourceIds[src.id]}
-                onChange={selected => setSelectedSourceIds(prev => ({...prev, [src.id]: selected}))}>
-                <Checkbox.Content className="flex items-center gap-1.5">
-                  <Checkbox.Control>
-                    <Checkbox.Indicator />
-                  </Checkbox.Control>
-                  <span className="text-xs text-foreground/80 select-none">{src.name}</span>
-                </Checkbox.Content>
-              </Checkbox>
-            ))}
+
+            <Select
+              value={selectedKeys}
+              selectionMode="multiple"
+              className="flex-1 max-w-xs"
+              placeholder="Select sources"
+              onChange={handleSelectionChange}>
+              <Select.Trigger>
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox selectionMode="multiple">
+                  {sources.map(src => (
+                    <ListBox.Item id={src.id} key={src.id} textValue={src.name}>
+                      {src.name}
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                  ))}
+                </ListBox>
+              </Select.Popover>
+            </Select>
+
+            <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+              <Button size="sm" variant="ghost" onPress={handleEnableAll}>
+                All On
+              </Button>
+              <Button size="sm" variant="ghost" onPress={handleDisableAll}>
+                All Off
+              </Button>
+            </div>
           </div>
         )}
       </div>

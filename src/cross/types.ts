@@ -5,6 +5,7 @@ export type NewsSource = {
   url: string;
   feedUrl: string;
   enabled: boolean;
+  isDefault?: boolean;
 };
 
 export type NewsItem = {

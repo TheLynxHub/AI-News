@@ -11,6 +11,7 @@ interface ManageSourcesTabProps {
   homeView: 'default' | 'compact';
   showInHome: boolean;
   onToggleSource: (sourceId: string, enabled: boolean) => Promise<void>;
+  onToggleAllSources: (enabled: boolean) => Promise<void>;
   onDeleteSource: (sourceId: string) => Promise<void>;
   onToggleHomeView: (view: 'default' | 'compact') => Promise<void>;
   onToggleShowInHome: (show: boolean) => Promise<void>;
@@ -22,6 +23,7 @@ export default function ManageSourcesTab({
   homeView,
   showInHome,
   onToggleSource,
+  onToggleAllSources,
   onDeleteSource,
   onToggleHomeView,
   onToggleShowInHome,
@@ -131,12 +133,22 @@ export default function ManageSourcesTab({
 
       {/* Sources List panel */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <h3 className="text-sm font-extrabold text-foreground mb-2 shrink-0">
-          Active Sources{' '}
-          <Chip size="sm" color="accent">
-            {sources.length}
-          </Chip>
-        </h3>
+        <div className="flex items-center justify-between mb-3 shrink-0">
+          <h3 className="text-sm font-extrabold text-foreground flex items-center gap-1.5">
+            Active Sources{' '}
+            <Chip size="sm" color="accent">
+              {sources.length}
+            </Chip>
+          </h3>
+          <div className="flex gap-1">
+            <Button size="sm" variant="ghost" onPress={() => onToggleAllSources(true)}>
+              Enable All
+            </Button>
+            <Button size="sm" variant="ghost" onPress={() => onToggleAllSources(false)}>
+              Disable All
+            </Button>
+          </div>
+        </div>
         <ScrollShadow className="flex-1 pr-2">
           <div className="flex flex-col gap-3">
             {sources.map(src => (
@@ -169,18 +181,11 @@ export default function ManageSourcesTab({
                   </Switch>
 
                   {/* Delete button (only show for custom sources) */}
-                  {src.id.startsWith('website-') && (
+                  {!src.isDefault && (
                     <Button size="sm" variant="danger-soft" onPress={() => onDeleteSource(src.id)} isIconOnly>
                       <TrashBin2 />
                     </Button>
                   )}
-                  {src.id.startsWith('youtube-') &&
-                    src.id !== 'youtube-theaisearch' &&
-                    src.id !== 'youtube-mreflow' && (
-                      <Button size="sm" variant="danger-soft" onPress={() => onDeleteSource(src.id)} isIconOnly>
-                        <TrashBin2 />
-                      </Button>
-                    )}
                 </div>
               </div>
             ))}

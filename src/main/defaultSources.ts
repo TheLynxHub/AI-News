@@ -1,5 +1,7 @@
 import {NewsSource} from '@lynx_extension/cross/types';
 
+export const DEFAULT_SOURCES_VERSION = '1.0.1';
+
 export const DEFAULT_SOURCES: NewsSource[] = [
   // ── News & Publications ────────────────────────────────────────────────────
   {
@@ -9,6 +11,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://venturebeat.com/category/ai',
     feedUrl: 'https://venturebeat.com/category/ai/feed/',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'techcrunch-ai',
@@ -17,6 +20,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://techcrunch.com/category/artificial-intelligence/',
     feedUrl: 'https://techcrunch.com/category/artificial-intelligence/feed/',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'theverge-ai',
@@ -25,6 +29,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.theverge.com/ai-artificial-intelligence',
     feedUrl: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'arstechnica-ai',
@@ -33,6 +38,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://arstechnica.com/ai/',
     feedUrl: 'https://feeds.arstechnica.com/arstechnica/technology-lab',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'mit-tech-review-ai',
@@ -41,6 +47,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.technologyreview.com/topic/artificial-intelligence/',
     feedUrl: 'https://www.technologyreview.com/feed/',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'arxiv-ai',
@@ -49,6 +56,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://arxiv.org/list/cs.AI/recent',
     feedUrl: 'https://rss.arxiv.org/rss/cs.AI',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'latent-space',
@@ -57,6 +65,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.latent.space/archive',
     feedUrl: 'https://www.latent.space/feed',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'therundown-ai',
@@ -65,6 +74,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.therundown.ai/',
     feedUrl: 'https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml',
     enabled: true,
+    isDefault: true,
   },
 
   // ── Company Blogs ──────────────────────────────────────────────────────────
@@ -75,6 +85,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://openai.com/news',
     feedUrl: 'https://openai.com/news/rss.xml',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'deepmind-blog',
@@ -83,6 +94,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://deepmind.google/blog/',
     feedUrl: 'https://deepmind.google/blog/rss.xml',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'huggingface-blog',
@@ -91,6 +103,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://huggingface.co/blog',
     feedUrl: 'https://huggingface.co/blog/feed.xml',
     enabled: true,
+    isDefault: true,
   },
 
   // ── YouTube Channels ───────────────────────────────────────────────────────
@@ -101,6 +114,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@mreflow',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UChpleBmo18P08aKCIgti38g',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-fireship',
@@ -109,6 +123,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@Fireship',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-aiexplained',
@@ -117,6 +132,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@aiexplained-official',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCNJ1Ymd5yFuUPtn21xtRbbw',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-twominutepapers',
@@ -125,6 +141,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@TwoMinutePapers',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-matthewberman',
@@ -133,6 +150,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@matthew_berman',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCawZsQWqfGSbCI5yjkdVkTA',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-theaisearch',
@@ -141,6 +159,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@theAIsearch',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCIgnGlGkVRhd4qNFcEwLL4A',
     enabled: true,
+    isDefault: true,
   },
   {
     id: 'youtube-bycloud',
@@ -149,5 +168,6 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     url: 'https://www.youtube.com/@bycloudAI',
     feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCgfe2ooZD3VJPB6aJAnuQng',
     enabled: true,
+    isDefault: true,
   },
 ];

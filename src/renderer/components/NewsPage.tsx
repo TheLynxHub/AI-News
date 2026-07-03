@@ -10,12 +10,12 @@ import ManageSourcesTab from './news/ManageSourcesTab';
 import NewsFeedTab from './news/NewsFeedTab';
 import RequestSourceTab from './news/RequestSourceTab';
 
-const defaultSelections = (sourcesList: NewsSource[]) => {
-  const initialSelections: Record<string, boolean> = {};
+const resolveSelections = (sourcesList: NewsSource[], storedSelection?: Record<string, boolean>) => {
+  const selections: Record<string, boolean> = {};
   sourcesList.forEach(src => {
-    initialSelections[src.id] = true;
+    selections[src.id] = storedSelection && src.id in storedSelection ? storedSelection[src.id] : true;
   });
-  return initialSelections;
+  return selections;
 };
 
 export default function NewsPage() {
@@ -33,6 +33,18 @@ export default function NewsPage() {
   const [typeFilter, setTypeFilter] = useState<'all' | 'website' | 'youtube'>('all');
   const [selectedSourceIds, setSelectedSourceIds] = useState<Record<string, boolean>>({});
 
+  const handleUpdateFilterSelection = async (
+    updater: Record<string, boolean> | ((prev: Record<string, boolean>) => Record<string, boolean>),
+  ) => {
+    setSelectedSourceIds(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      extensionIpc.lynxIpc.invoke('lynxhub-ai-news:update-filter-selection', next).catch(err => {
+        console.error('Failed to update filter selection:', err);
+      });
+      return next;
+    });
+  };
+
   // Fetch initial data
   useEffect(() => {
     setLoading(true);
@@ -43,7 +55,7 @@ export default function NewsPage() {
           setSources(state.sources || []);
           setCache(state.cache || []);
           setLastFetched(state.lastFetched || 0);
-          setSelectedSourceIds(defaultSelections(state.sources || []));
+          setSelectedSourceIds(resolveSelections(state.sources || [], state.filterSelection));
           setHomeView(state.homeView || 'default');
           setShowInHome(state.showInHome !== false);
         }
@@ -66,6 +78,9 @@ export default function NewsPage() {
         if (state.showInHome !== undefined) {
           setShowInHome(state.showInHome);
         }
+        if (state.filterSelection) {
+          setSelectedSourceIds(resolveSelections(state.sources || [], state.filterSelection));
+        }
       }
     });
   }, []);
@@ -85,6 +100,23 @@ export default function NewsPage() {
       console.error('Failed to refresh feeds:', err);
     } finally {
       setRefreshing(false);
+    }
+  };
+
+  // Toggle all news sources enabled/disabled
+  const handleToggleAllSources = async (enabled: boolean) => {
+    const updated = sources.map(s => ({...s, enabled}));
+    setSources(updated);
+
+    try {
+      const state = await extensionIpc.lynxIpc.invoke<any>('lynxhub-ai-news:update-sources', updated);
+      if (state) {
+        setSources(state.sources || []);
+        setCache(state.cache || []);
+        setLastFetched(state.lastFetched || 0);
+      }
+    } catch (err) {
+      console.error('Failed to toggle all sources:', err);
     }
   };
 
@@ -264,7 +296,7 @@ export default function NewsPage() {
                 filteredItems={filteredItems}
                 setSearchQuery={setSearchQuery}
                 selectedSourceIds={selectedSourceIds}
-                setSelectedSourceIds={setSelectedSourceIds}
+                setSelectedSourceIds={handleUpdateFilterSelection}
               />
             ) : activeTab === 'sources' ? (
               <ManageSourcesTab
@@ -275,6 +307,7 @@ export default function NewsPage() {
                 onToggleSource={handleToggleSource}
                 onDeleteSource={handleDeleteSource}
                 onToggleHomeView={handleToggleHomeView}
+                onToggleAllSources={handleToggleAllSources}
                 onToggleShowInHome={handleToggleShowInHome}
               />
             ) : (

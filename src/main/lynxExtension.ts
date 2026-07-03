@@ -5,7 +5,7 @@ import axios from 'axios';
 import {ipcMain} from 'electron';
 import Parser from 'rss-parser';
 
-import {DEFAULT_SOURCES} from './defaultSources';
+import {DEFAULT_SOURCES, DEFAULT_SOURCES_VERSION} from './defaultSources';
 
 export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExtensionUtils, _mainIpc: MainIpcApi) {
   const storageManager = await utils.getStorageManager();
@@ -13,6 +13,8 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
 
   // Initialize keys in keyToExtensionMap to route storage calls correctly
   storageManager.getCustomData('ai-news::sources');
+  storageManager.getCustomData('ai-news::sourcesVersion');
+  storageManager.getCustomData('ai-news::filterSelection');
   storageManager.getCustomData('ai-news::cache');
   storageManager.getCustomData('ai-news::lastFetched');
   storageManager.getCustomData('ai-news::homeView');
@@ -27,15 +29,46 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     },
   });
 
-  // Load existing configuration or defaults
+  // Load existing configuration or defaults with migrations
   const getSources = (): NewsSource[] => {
-    const stored = storageManager.getCustomData('ai-news::sources');
+    let stored = storageManager.getCustomData('ai-news::sources');
+    const storedVersion = storageManager.getCustomData('ai-news::sourcesVersion');
+
     if (!stored || !Array.isArray(stored) || stored.length === 0) {
       storageManager.setCustomData('ai-news::sources', DEFAULT_SOURCES);
+      storageManager.setCustomData('ai-news::sourcesVersion', DEFAULT_SOURCES_VERSION);
       storageManager.write();
       return DEFAULT_SOURCES;
     }
+
+    if (storedVersion !== DEFAULT_SOURCES_VERSION) {
+      console.log(
+        `AI News: Migrating default sources from ${storedVersion || 'initial'} to ${DEFAULT_SOURCES_VERSION}`,
+      );
+      const defaultIds = new Set(DEFAULT_SOURCES.map(d => d.id));
+      const customSources = stored.filter(s => !defaultIds.has(s.id));
+
+      const migratedDefaults = DEFAULT_SOURCES.map(def => {
+        const existing = stored.find(s => s.id === def.id);
+        return {
+          ...def,
+          enabled: existing ? existing.enabled : def.enabled,
+        };
+      });
+
+      const updated = [...migratedDefaults, ...customSources];
+      storageManager.setCustomData('ai-news::sources', updated);
+      storageManager.setCustomData('ai-news::sourcesVersion', DEFAULT_SOURCES_VERSION);
+      storageManager.write();
+      stored = updated;
+    }
+
     return stored;
+  };
+
+  const getFilterSelection = (): Record<string, boolean> => {
+    const sel = storageManager.getCustomData('ai-news::filterSelection');
+    return sel && typeof sel === 'object' && !Array.isArray(sel) ? sel : {};
   };
 
   const getCachedItems = (): NewsItem[] => {
@@ -254,7 +287,15 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
         showInHome: getShowInHome(),
+        filterSelection: getFilterSelection(),
       };
+    });
+
+    // Save filter selection
+    ipcMain.handle('lynxhub-ai-news:update-filter-selection', (_, selection: Record<string, boolean>) => {
+      storageManager.setCustomData('ai-news::filterSelection', selection);
+      storageManager.write();
+      return getFilterSelection();
     });
 
     // Manually refresh all feeds
@@ -266,6 +307,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
         showInHome: getShowInHome(),
+        filterSelection: getFilterSelection(),
       };
     });
 
@@ -281,6 +323,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
         showInHome: getShowInHome(),
+        filterSelection: getFilterSelection(),
       };
     });
 
@@ -296,6 +339,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: view,
         showInHome: getShowInHome(),
+        filterSelection: getFilterSelection(),
       });
 
       return {
@@ -304,6 +348,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: view,
         showInHome: getShowInHome(),
+        filterSelection: getFilterSelection(),
       };
     });
 
@@ -319,6 +364,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
         showInHome: show,
+        filterSelection: getFilterSelection(),
       });
 
       return {
@@ -327,6 +373,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
         showInHome: show,
+        filterSelection: getFilterSelection(),
       };
     });
 
@@ -356,6 +403,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
             : `https://www.youtube.com/${cleanUrl.startsWith('@') ? '' : '@'}${cleanUrl}`,
           feedUrl,
           enabled: true,
+          isDefault: false,
         };
 
         const updated = [...sources, newSource];
@@ -366,6 +414,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
           sources: getSources(),
           cache: getCachedItems(),
           lastFetched: getLastFetched(),
+          filterSelection: getFilterSelection(),
         };
       } else {
         const discovered = await getWebsiteFeedDetails(cleanUrl);
@@ -385,6 +434,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
           url: cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`,
           feedUrl: discovered.feedUrl,
           enabled: true,
+          isDefault: false,
         };
 
         const updated = [...sources, newSource];
@@ -395,6 +445,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
           sources: getSources(),
           cache: getCachedItems(),
           lastFetched: getLastFetched(),
+          filterSelection: getFilterSelection(),
         };
       }
     });
