@@ -63,7 +63,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     name: 'The Rundown AI',
     type: 'website',
     url: 'https://www.therundown.ai/',
-    feedUrl: 'https://www.therundown.ai/subscribe/rss',
+    feedUrl: 'https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml',
     enabled: true,
   },
 
@@ -82,14 +82,6 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     type: 'website',
     url: 'https://deepmind.google/blog/',
     feedUrl: 'https://deepmind.google/blog/rss.xml',
-    enabled: true,
-  },
-  {
-    id: 'anthropic-news',
-    name: 'Anthropic News',
-    type: 'website',
-    url: 'https://anthropic.com/news',
-    feedUrl: 'https://www.anthropic.com/feed.xml',
     enabled: true,
   },
   {
@@ -139,7 +131,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     name: 'Matthew Berman',
     type: 'youtube',
     url: 'https://www.youtube.com/@matthew_berman',
-    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCFMqHs0lCPDWyMJDfhahiXw',
+    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCawZsQWqfGSbCI5yjkdVkTA',
     enabled: true,
   },
   {
@@ -155,7 +147,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     name: 'bycloud',
     type: 'youtube',
     url: 'https://www.youtube.com/@bycloudAI',
-    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCVMmMsaTSfm5cGbnEWBHJbQ',
+    feedUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCgfe2ooZD3VJPB6aJAnuQng',
     enabled: true,
   },
 ];
