@@ -1,7 +1,8 @@
+import {Description, Link} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
-import {Clock, ExternalLink, Play} from 'lucide-react';
+import {Clock, Play} from 'lucide-react';
 
 function formatTimeAgo(dateStr: string) {
   try {
@@ -28,22 +29,19 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
   return (
     <div
       className={
-        'group bg-surface hover:bg-surface-secondary border border-border ' +
-        'hover:border-accent rounded-2xl flex p-4 transition-all ' +
-        'duration-200 relative overflow-hidden cursor-pointer ' +
-        'shadow-sm hover:shadow-md'
+        'group bg-surface hover:bg-foreground/3 ' +
+        'rounded-3xl flex p-4 transition-all ' +
+        'duration-200 relative overflow-hidden cursor-pointer'
       }
       onClick={() => onOpenLink(item.link)}>
       {item.thumbnail ? (
         <div
-          className={
-            'w-28 h-20 relative shrink-0 overflow-hidden bg-surface-secondary ' + 'rounded-xl mr-4 self-center'
-          }>
+          className={'w-28 h-20 relative shrink-0 overflow-hidden bg-surface-secondary rounded-2xl mr-4 self-center'}>
           <img
             loading="lazy"
             alt={item.title}
             src={item.thumbnail}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="size-full object-cover transition-transform duration-500 hover:scale-105"
           />
           {item.type === 'youtube' && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/20">
@@ -93,19 +91,17 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
             }>
             {item.title}
           </h3>
-          <p className="text-[11px] text-muted line-clamp-2 mt-1">{item.snippet}</p>
+
+          <Description className="text-[11px] text-muted line-clamp-2 mt-1">{item.snippet}</Description>
         </div>
 
-        <div
-          className={
-            'flex items-center justify-between text-[10px] text-muted ' + 'mt-3 pt-2 border-t border-border select-none'
-          }>
-          <span className="flex items-center gap-1.5 font-bold">
+        <div className={'flex items-center justify-between text-[10px] text-muted mt-4 select-none'}>
+          <span className="flex items-center gap-x-1.5 font-bold">
             <Clock className="size-3" /> {formatTimeAgo(item.isoDate)}
           </span>
-          <span className={'text-[9px] font-bold text-accent group-hover:underline ' + 'flex items-center gap-1'}>
-            View Content <ExternalLink className="size-2.5" />
-          </span>
+          <Link onPress={() => onOpenLink(item.link)} className="text-[9px] font-bold text-accent">
+            View Content <Link.Icon className="size-2.5" />
+          </Link>
         </div>
       </div>
     </div>
