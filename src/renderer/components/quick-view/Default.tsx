@@ -226,7 +226,7 @@ export default function Default() {
         onPointerMove={handleCarouselPointerMove}
         onPointerLeave={handleCarouselPointerLeave}
         onPointerCancel={handleCarouselPointerLeave}
-        className="relative w-full h-56 sm:h-72 flex items-center justify-center cursor-grab active:cursor-grabbing select-none">
+        className="relative w-full h-56 sm:h-72 flex items-center justify-center select-none">
         {/* Floating Controls */}
         <button
           onClick={e => {
@@ -236,7 +236,7 @@ export default function Default() {
           className={
             'absolute left-2 sm:left-4 z-50 p-2.5 sm:p-3 rounded-full bg-background/60 ' +
             'hover:bg-background/90 backdrop-blur-xl border border-divider text-foreground/70 ' +
-            'hover:text-foreground transition-all duration-300 shadow-xl opacity-0 ' +
+            'hover:text-foreground transition-all duration-300 shadow-xl opacity-0 cursor-pointer ' +
             'group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 focus:opacity-100'
           }>
           <ChevronLeft />
@@ -249,7 +249,7 @@ export default function Default() {
           className={
             'absolute right-2 sm:right-4 z-50 p-2.5 sm:p-3 rounded-full bg-background/60 ' +
             'hover:bg-background/90 backdrop-blur-xl border border-divider text-foreground/70 ' +
-            'hover:text-foreground transition-all duration-300 shadow-xl opacity-0 ' +
+            'hover:text-foreground transition-all duration-300 shadow-xl opacity-0 cursor-pointer ' +
             'group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 focus:opacity-100'
           }>
           <ChevronRight />
