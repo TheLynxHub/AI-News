@@ -1,8 +1,22 @@
-import {Button, InputGroup, ListBox, ScrollShadow, Select, Tabs, TextField} from '@heroui/react';
+import {
+  Autocomplete,
+  Button,
+  EmptyState,
+  InputGroup,
+  Key,
+  ListBox,
+  ScrollShadow,
+  SearchField,
+  Tabs,
+  Tag,
+  TagGroup,
+  TextField,
+  useFilter,
+} from '@heroui/react';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Search} from 'lucide-react';
-import {Key, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import NewsCard from './NewsCard';
 
@@ -35,17 +49,29 @@ export default function NewsFeedTab({
     setTypeFilter(key as 'all' | 'website' | 'youtube');
   };
 
+  const {contains} = useFilter({sensitivity: 'base'});
+
   const selectedKeys = useMemo(() => {
     return Object.keys(selectedSourceIds).filter(id => selectedSourceIds[id]);
   }, [selectedSourceIds]);
 
-  const handleSelectionChange = (keys: any) => {
-    const keyArray = keys as Key[];
+  const handleSelectionChange = (keys: Key | Key[] | null) => {
+    const keyArray = (Array.isArray(keys) ? keys : keys ? [keys] : []) as string[];
     const nextSelection: Record<string, boolean> = {};
     sources.forEach(src => {
       nextSelection[src.id] = keyArray.includes(src.id);
     });
     setSelectedSourceIds(nextSelection);
+  };
+
+  const handleRemoveTag = (keys: Set<Key>) => {
+    setSelectedSourceIds(prev => {
+      const next = {...prev};
+      keys.forEach(k => {
+        next[k as string] = false;
+      });
+      return next;
+    });
   };
 
   const handleEnableAll = () => {
@@ -106,27 +132,52 @@ export default function NewsFeedTab({
               Filter Sources:
             </span>
 
-            <Select
+            <Autocomplete
               value={selectedKeys}
               selectionMode="multiple"
-              className="flex-1 max-w-xs"
-              placeholder="Select sources"
-              onChange={handleSelectionChange}>
-              <Select.Trigger>
-                <Select.Value />
-                <Select.Indicator />
-              </Select.Trigger>
-              <Select.Popover>
-                <ListBox selectionMode="multiple">
-                  {sources.map(src => (
-                    <ListBox.Item id={src.id} key={src.id} textValue={src.name}>
-                      {src.name}
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                  ))}
-                </ListBox>
-              </Select.Popover>
-            </Select>
+              placeholder="Filter sources..."
+              onChange={handleSelectionChange}
+              fullWidth>
+              <Autocomplete.Trigger>
+                <Autocomplete.Value>
+                  {({defaultChildren, isPlaceholder, state}: any) => {
+                    if (isPlaceholder || state.selectedItems.length === 0) return defaultChildren;
+                    return (
+                      <TagGroup size="sm" onRemove={handleRemoveTag}>
+                        <TagGroup.List>
+                          {(state.selectedItems as any[]).map((item: any) => (
+                            <Tag id={item.key} key={item.key}>
+                              {sources.find(s => s.id === item.key)?.name ?? item.key}
+                            </Tag>
+                          ))}
+                        </TagGroup.List>
+                      </TagGroup>
+                    );
+                  }}
+                </Autocomplete.Value>
+                <Autocomplete.ClearButton />
+                <Autocomplete.Indicator />
+              </Autocomplete.Trigger>
+              <Autocomplete.Popover>
+                <Autocomplete.Filter filter={contains}>
+                  <SearchField variant="secondary" name="source-search" autoFocus>
+                    <SearchField.Group>
+                      <SearchField.SearchIcon />
+                      <SearchField.Input placeholder="Search sources..." />
+                      <SearchField.ClearButton />
+                    </SearchField.Group>
+                  </SearchField>
+                  <ListBox selectionMode="multiple" renderEmptyState={() => <EmptyState>No sources found</EmptyState>}>
+                    {sources.map(src => (
+                      <ListBox.Item id={src.id} key={src.id} textValue={src.name}>
+                        {src.name}
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                    ))}
+                  </ListBox>
+                </Autocomplete.Filter>
+              </Autocomplete.Popover>
+            </Autocomplete>
 
             <div className="flex items-center gap-1.5 shrink-0 ml-auto">
               <Button size="sm" variant="ghost" onPress={handleEnableAll}>
