@@ -81,9 +81,7 @@ export default function QuickViewCompact() {
     <div className="w-full flex flex-col gap-1 py-0.5 px-2">
       <div className="flex items-center justify-between px-1">
         <span
-          className={
-            'text-[10px] font-bold text-accent uppercase tracking-widest ' + 'flex items-center gap-1 select-none'
-          }>
+          className={'text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 select-none'}>
           <Plain2 className="size-3 text-accent" /> AI NEWS
         </span>
       </div>
@@ -91,7 +89,7 @@ export default function QuickViewCompact() {
         {items.map(item => (
           <div
             className={
-              'w-72 min-w-[288px] h-20 bg-surface-secondary border ' +
+              'w-72 min-w-[288px] h-20 bg-surface-secondary border border-border/50 ' +
               'hover:border-accent/50 rounded-xl flex transition-all duration-200 ' +
               'relative overflow-hidden cursor-pointer'
             }
