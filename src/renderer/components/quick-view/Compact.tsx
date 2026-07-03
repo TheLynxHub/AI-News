@@ -1,6 +1,7 @@
 import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
-import {ClockCircle, DocumentText, Earth, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
+import {Play} from '@solar-icons/react-perf/Bold';
+import {ClockCircle, DocumentText, Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
 import {useEffect, useRef, useState} from 'react';
 
 import {NewsItem} from '../../../cross/types';
@@ -85,16 +86,7 @@ export default function Compact() {
     return (
       <div className="w-full px-2 py-1.5 flex gap-3 overflow-x-auto scrollbar-hide">
         {[1, 2, 3].map(n => (
-          <div
-            key={n}
-            className={'w-72 min-w-[288px] h-20 bg-surface border border-divider ' + 'rounded-xl flex animate-pulse'}>
-            <div className="w-20 h-full bg-surface-secondary rounded-l-xl shrink-0" />
-            <div className="flex-1 flex flex-col p-2.5 gap-y-1.5 justify-between">
-              <div className="h-3 bg-surface-secondary rounded w-16" />
-              <div className="h-4 bg-surface-secondary rounded w-full" />
-              <div className="h-2.5 bg-surface-secondary rounded w-12" />
-            </div>
-          </div>
+          <div key={n} className="w-64 min-w-[256px] h-32 rounded-2xl bg-surface-secondary animate-pulse" />
         ))}
       </div>
     );
@@ -105,7 +97,7 @@ export default function Compact() {
   }
 
   return (
-    <div className="w-full flex flex-col gap-1 py-0.5 px-2">
+    <div className="w-full flex flex-col gap-1.5 px-2">
       <div className="flex items-center justify-between px-1">
         <span
           className={'text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 select-none'}>
@@ -120,87 +112,91 @@ export default function Compact() {
         onPointerMove={handlePointerMove}
         onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerLeave}
-        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4 cursor-grab select-none">
+        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1.5 pt-1 pl-1 pr-4 cursor-grab select-none">
         {items.map(item => (
           <div
             className={
-              'w-72 min-w-[288px] h-20 bg-surface-secondary border border-border/50 ' +
-              'hover:border-accent/50 rounded-xl flex transition-all duration-200 ' +
-              'relative overflow-hidden cursor-pointer'
+              'group relative w-64 min-w-[256px] h-32 rounded-2xl shrink-0 overflow-hidden isolate ' +
+              'border border-white/10 cursor-pointer transform-gpu will-change-transform ' +
+              'transition-all duration-300 ease-out flex flex-col ' +
+              'hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-md hover:shadow-black/20'
             }
             key={item.id}
             onClick={() => handleCardClick(item.link)}>
-            {item.thumbnail ? (
-              <div className="w-20 h-full relative shrink-0 overflow-hidden bg-surface-secondary">
+            {/* Image area — its own clipped box, so the hover zoom is contained here and
+                never overlaps or seams against the caption panel below */}
+            <div className="relative flex-1 min-h-0 overflow-hidden">
+              {item.thumbnail ? (
                 <img
                   className={
-                    'w-full h-full object-cover rounded-l-xl transition-transform duration-500 hover:scale-105'
+                    'absolute inset-0 w-full h-full object-cover transition-transform ' +
+                    'duration-500 ease-out group-hover:scale-110'
                   }
                   loading="lazy"
                   alt={item.title}
                   src={item.thumbnail}
                 />
-                {item.type === 'youtube' && (
-                  <div
-                    className={
-                      'absolute inset-0 flex items-center justify-center ' +
-                      'bg-black/20 hover:bg-black/40 transition-all duration-200'
-                    }>
-                    <div
-                      className={
-                        'size-6 rounded-full bg-red-600 flex ' + 'items-center justify-center text-white shadow-md'
-                      }>
-                      <Play className="size-3 ml-0.5" />
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className={
-                  'w-20 h-full bg-linear-to-br from-accent/10 to-secondary/10 ' +
-                  'rounded-l-xl shrink-0 flex items-center justify-center'
-                }>
-                {item.type === 'youtube' ? (
-                  <SiYoutube className="size-5 text-red-600" />
-                ) : (
-                  <DocumentText className="size-5 text-accent" />
-                )}
-              </div>
-            )}
+              ) : (
+                <div
+                  className={
+                    'absolute inset-0 bg-linear-to-br from-accent/25 via-surface-secondary to-secondary/25 ' +
+                    'flex items-center justify-center'
+                  }>
+                  {item.type === 'youtube' ? (
+                    <SiYoutube className="size-9 text-red-500/70" />
+                  ) : (
+                    <DocumentText className="size-9 text-accent/60" />
+                  )}
+                </div>
+              )}
 
-            <div className="flex-1 flex flex-col p-2.5 min-w-0 justify-between">
-              <div className="flex items-center justify-between gap-x-2">
+              {/* Light top scrim, just enough to seat the badges on any image */}
+              <div className="absolute inset-x-0 top-0 h-9 bg-linear-to-b from-black/60 to-transparent" />
+
+              {/* Badges float over the image */}
+              <div className="relative flex items-center justify-between gap-x-2 p-2.5 pointer-events-none">
                 <span
                   className={
-                    'text-[9px] font-extrabold uppercase tracking-wide px-1.5 ' +
-                    'py-0.5 rounded bg-accent/10 text-accent select-none ' +
-                    'truncate max-w-30'
+                    'text-[9px] font-extrabold uppercase tracking-wide px-1.5 py-0.5 rounded-full ' +
+                    'bg-black/55 backdrop-blur-md border border-white/10 text-white shadow-sm ' +
+                    'select-none truncate max-w-32'
                   }>
                   {item.sourceName}
                 </span>
-                {item.type === 'youtube' ? (
-                  <SiYoutube className="size-3.5 text-red-600 shrink-0" />
-                ) : (
-                  <Earth className="size-3 text-accent shrink-0" />
-                )}
-              </div>
-
-              <div className="flex flex-col min-w-0 mt-0.5 pointer-events-none">
-                <h4
+                <span
                   className={
-                    'text-[10px] font-bold leading-snug line-clamp-2 ' +
-                    'text-foreground/90 group-hover:text-foreground'
+                    'size-5 rounded-full bg-black/55 backdrop-blur-md border border-white/10 ' +
+                    'flex items-center justify-center shrink-0 shadow-sm'
                   }>
-                  {item.title}
-                </h4>
-              </div>
-
-              <div className="flex items-center justify-between text-[8px] text-muted-foreground mt-1 select-none">
-                <span className="flex items-center gap-1 font-semibold">
-                  <ClockCircle className="size-2" /> {formatTimeAgo(item.isoDate)}
+                  {item.type === 'youtube' ? (
+                    <SiYoutube className="size-2.5 text-white" />
+                  ) : (
+                    <Earth className="size-2.5 text-white" />
+                  )}
                 </span>
               </div>
+
+              {/* Play affordance for video items */}
+              {item.type === 'youtube' && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="bg-surface/70 rounded-full p-1.5">
+                    <Play className="size-8 ml-0.5 text-red-600/90 group-hover:scale-110 transition duration-200" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Caption — a normal (non-absolute) sibling below the image box, so it can
+                never overlap or seam against the zooming image */}
+            <div
+              className={
+                'relative shrink-0 bg-surface-secondary border-t border-border ' +
+                'px-2.5 py-1.5 flex flex-col gap-1 pointer-events-none'
+              }>
+              <h4 className="text-[11px] font-bold leading-snug line-clamp-2">{item.title}</h4>
+              <span className="flex items-center gap-1 text-[8.5px] font-semibold text-muted">
+                <ClockCircle className="size-2" /> {formatTimeAgo(item.isoDate)}
+              </span>
             </div>
           </div>
         ))}
