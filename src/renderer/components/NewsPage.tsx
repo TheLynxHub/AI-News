@@ -1,8 +1,8 @@
 import {Button, Description, Spinner} from '@heroui/react';
 import Page from '@lynx/pages/Page';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
-import {Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
-import {Info, RefreshCw, Send, Settings} from 'lucide-react';
+import {Earth, Plain2, Refresh, Settings} from '@solar-icons/react-perf/BoldDuotone';
+import {Info} from 'lucide-react';
 import {useEffect, useMemo, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
@@ -186,7 +186,7 @@ export default function NewsPage() {
           </div>
           <div className="flex items-center gap-3">
             <Button variant="ghost" onPress={handleRefresh} isDisabled={refreshing || loading} isIconOnly>
-              <RefreshCw className={`size-4 ${refreshing ? 'animate-spin text-accent' : ''}`} />
+              <Refresh className={`size-4 ${refreshing ? 'animate-spin text-accent' : ''}`} />
             </Button>
           </div>
         </div>
@@ -214,7 +214,7 @@ export default function NewsPage() {
               className="w-full text-xs font-bold justify-start"
               variant={activeTab === 'request' ? 'primary' : 'ghost'}
               fullWidth>
-              <Send className="size-4" /> Request Source
+              <Plain2 className="size-4" /> Request Source
             </Button>
 
             <div className={'mt-auto p-3 bg-surface rounded-2xl flex flex-col gap-1 select-none'}>
