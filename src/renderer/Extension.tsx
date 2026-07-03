@@ -5,7 +5,7 @@ import {RendererIpcApi} from '@lynx/plugins/extensions/types/ipcWrapper';
 import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
 
 import NewsPage from './components/NewsPage';
-import QuickView from './components/QuickView';
+import Index from './components/quick-view';
 import {setExtensionIpc} from './ipc';
 
 export function InitialExtensions(lynxAPI: ExtensionRendererApi, rendererIpc: RendererIpcApi, id: string) {
@@ -20,5 +20,5 @@ export function InitialExtensions(lynxAPI: ExtensionRendererApi, rendererIpc: Re
   });
 
   // Add the news Quick View carousel to the top of the Home page
-  lynxAPI.customizePages.home.add.scrollTop(QuickView);
+  lynxAPI.customizePages.home.add.scrollTop(Index);
 }

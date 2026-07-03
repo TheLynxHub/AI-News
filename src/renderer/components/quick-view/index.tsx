@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 
-import {extensionIpc} from '../ipc';
-import QuickViewCompact from './QuickViewCompact';
-import QuickViewDefault from './QuickViewDefault';
+import {extensionIpc} from '../../ipc';
+import Compact from './Compact';
+import Default from './Default';
 
-export default function QuickView() {
+export default function Index() {
   const [homeView, setHomeView] = useState<'default' | 'compact'>('default');
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function QuickView() {
   }, []);
 
   if (homeView === 'compact') {
-    return <QuickViewCompact />;
+    return <Compact />;
   }
-  return <QuickViewDefault />;
+  return <Default />;
 }

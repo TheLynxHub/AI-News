@@ -1,10 +1,10 @@
 import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
-import {NewsItem} from '@lynx_extension/cross/types';
 import {ClockCircle, DocumentText, Earth, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useEffect, useRef, useState} from 'react';
 
-import {extensionIpc} from '../ipc';
+import {NewsItem} from '../../../cross/types';
+import {extensionIpc} from '../../ipc';
 
 function formatTimeAgo(dateStr: string) {
   try {
@@ -22,7 +22,7 @@ function formatTimeAgo(dateStr: string) {
   }
 }
 
-export default function QuickViewCompact() {
+export default function Compact() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -115,12 +115,12 @@ export default function QuickViewCompact() {
       <ScrollShadow
         ref={scrollRef}
         orientation="horizontal"
-        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4 cursor-grab select-none"
+        onPointerUp={handlePointerUp}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        onPointerLeave={handlePointerLeave}>
+        onPointerLeave={handlePointerLeave}
+        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-2.5 pl-4 cursor-grab select-none">
         {items.map(item => (
           <div
             className={

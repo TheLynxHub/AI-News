@@ -1,10 +1,10 @@
 import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
-import {NewsItem} from '@lynx_extension/cross/types';
 import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
-import {extensionIpc} from '../ipc';
+import {NewsItem} from '../../../cross/types';
+import {extensionIpc} from '../../ipc';
 
 function formatTimeAgo(dateStr: string) {
   try {
@@ -37,7 +37,7 @@ const ChevronRight = () => (
 const AUTO_PLAY_SPEED = 6000; // 6 seconds per slide
 const UPDATE_INTERVAL = 30; // 30ms for smooth progress bar animation
 
-export default function QuickViewDefault() {
+export default function Default() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -219,13 +219,13 @@ export default function QuickViewDefault() {
 
       {/* Carousel Container */}
       <div
+        onPointerUp={handleCarouselPointerUp}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onPointerDown={handleCarouselPointerDown}
         onPointerMove={handleCarouselPointerMove}
-        onPointerUp={handleCarouselPointerUp}
-        onPointerCancel={handleCarouselPointerLeave}
         onPointerLeave={handleCarouselPointerLeave}
+        onPointerCancel={handleCarouselPointerLeave}
         className="relative w-full h-56 sm:h-72 flex items-center justify-center cursor-grab active:cursor-grabbing select-none">
         {/* Floating Controls */}
         <button
