@@ -2,8 +2,8 @@ import {Button, ButtonGroup, Chip, InputGroup, ScrollShadow, Spinner, Switch, Te
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import LynxSwitch from '@lynx/components/LynxSwitch';
 import {NewsSource} from '@lynx_extension/cross/types';
-import {Earth} from '@solar-icons/react-perf/BoldDuotone';
-import {Plus, Trash2} from 'lucide-react';
+import {Earth, TrashBin2} from '@solar-icons/react-perf/BoldDuotone';
+import {Plus} from 'lucide-react';
 import {SubmitEvent, useState} from 'react';
 
 interface ManageSourcesTabProps {
@@ -170,21 +170,15 @@ export default function ManageSourcesTab({
 
                   {/* Delete button (only show for custom sources) */}
                   {src.id.startsWith('website-') && (
-                    <Button
-                      variant="ghost"
-                      onPress={() => onDeleteSource(src.id)}
-                      className="size-7 min-w-0 p-0 text-danger rounded-lg hover:bg-danger/10 border-0">
-                      <Trash2 className="size-3.5" />
+                    <Button size="sm" variant="danger-soft" onPress={() => onDeleteSource(src.id)} isIconOnly>
+                      <TrashBin2 />
                     </Button>
                   )}
                   {src.id.startsWith('youtube-') &&
                     src.id !== 'youtube-theaisearch' &&
                     src.id !== 'youtube-mreflow' && (
-                      <Button
-                        variant="ghost"
-                        onPress={() => onDeleteSource(src.id)}
-                        className="size-7 min-w-0 p-0 text-danger rounded-lg hover:bg-danger/10 border-0">
-                        <Trash2 className="size-3.5" />
+                      <Button size="sm" variant="danger-soft" onPress={() => onDeleteSource(src.id)} isIconOnly>
+                        <TrashBin2 />
                       </Button>
                     )}
                 </div>
