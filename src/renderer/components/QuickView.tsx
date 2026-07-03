@@ -19,13 +19,11 @@ export default function QuickView() {
         console.error('Failed to load Quick View setting:', err);
       });
 
-    const cleanup = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
+    return extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state && state.homeView) {
         setHomeView(state.homeView);
       }
     });
-
-    return cleanup;
   }, []);
 
   if (homeView === 'compact') {

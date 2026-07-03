@@ -1,7 +1,7 @@
 import {Button, InputGroup, TextField} from '@heroui/react';
 import {SiGithub} from '@icons-pack/react-simple-icons';
 import {Send} from 'lucide-react';
-import {FormEvent, useState} from 'react';
+import {SubmitEvent, useState} from 'react';
 
 import {extensionIpc} from '../../ipc';
 
@@ -10,7 +10,7 @@ export default function RequestSourceTab() {
   const [reqUrl, setReqUrl] = useState('');
   const [reqReason, setReqReason] = useState('');
 
-  const handleSubmitRequest = (e: FormEvent) => {
+  const handleSubmitRequest = (e: SubmitEvent) => {
     e.preventDefault();
     if (!reqName.trim() || !reqUrl.trim()) return;
 
