@@ -9,18 +9,22 @@ import {SubmitEvent, useState} from 'react';
 interface ManageSourcesTabProps {
   sources: NewsSource[];
   homeView: 'default' | 'compact';
+  showInHome: boolean;
   onToggleSource: (sourceId: string, enabled: boolean) => Promise<void>;
   onDeleteSource: (sourceId: string) => Promise<void>;
   onToggleHomeView: (view: 'default' | 'compact') => Promise<void>;
+  onToggleShowInHome: (show: boolean) => Promise<void>;
   onAddSource: (type: 'website' | 'youtube', url: string) => Promise<void>;
 }
 
 export default function ManageSourcesTab({
   sources,
   homeView,
+  showInHome,
   onToggleSource,
   onDeleteSource,
   onToggleHomeView,
+  onToggleShowInHome,
   onAddSource,
 }: ManageSourcesTabProps) {
   // Add source states
@@ -108,6 +112,12 @@ export default function ManageSourcesTab({
           <h4 className="text-xs font-extrabold text-foreground tracking-wide uppercase select-none">
             Layout Preferences
           </h4>
+          <LynxSwitch
+            enabled={showInHome}
+            title="Show News on Home Page"
+            onEnabledChange={val => onToggleShowInHome(val)}
+            description={<span className="text-[11px]">Display the news widget on the LynxHub home page.</span>}
+          />
           <LynxSwitch
             description={
               <span className="text-[11px]">Use compact cards on the home page instead of the coverflow carousel.</span>

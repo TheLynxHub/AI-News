@@ -26,6 +26,7 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [homeView, setHomeView] = useState<'default' | 'compact'>('default');
+  const [showInHome, setShowInHome] = useState(true);
 
   // Search and filter states
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,6 +45,7 @@ export default function NewsPage() {
           setLastFetched(state.lastFetched || 0);
           setSelectedSourceIds(defaultSelections(state.sources || []));
           setHomeView(state.homeView || 'default');
+          setShowInHome(state.showInHome !== false);
         }
         setLoading(false);
       })
@@ -60,6 +62,9 @@ export default function NewsPage() {
         setLastFetched(state.lastFetched || 0);
         if (state.homeView) {
           setHomeView(state.homeView);
+        }
+        if (state.showInHome !== undefined) {
+          setShowInHome(state.showInHome);
         }
       }
     });
@@ -113,6 +118,16 @@ export default function NewsPage() {
       }
     } catch (err) {
       console.error('Failed to update home view preference:', err);
+    }
+  };
+
+  // Toggle show-in-home preference
+  const handleToggleShowInHome = async (show: boolean) => {
+    setShowInHome(show);
+    try {
+      await extensionIpc.lynxIpc.invoke<any>('lynxhub-ai-news:update-show-in-home', show);
+    } catch (err) {
+      console.error('Failed to update show-in-home preference:', err);
     }
   };
 
@@ -255,10 +270,12 @@ export default function NewsPage() {
               <ManageSourcesTab
                 sources={sources}
                 homeView={homeView}
+                showInHome={showInHome}
                 onAddSource={handleAddSource}
                 onToggleSource={handleToggleSource}
                 onDeleteSource={handleDeleteSource}
                 onToggleHomeView={handleToggleHomeView}
+                onToggleShowInHome={handleToggleShowInHome}
               />
             ) : (
               <RequestSourceTab />

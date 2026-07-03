@@ -49,6 +49,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   storageManager.getCustomData('ai-news::cache');
   storageManager.getCustomData('ai-news::lastFetched');
   storageManager.getCustomData('ai-news::homeView');
+  storageManager.getCustomData('ai-news::showInHome');
 
   const parser = new Parser({
     customFields: {
@@ -83,6 +84,12 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   const getHomeView = (): 'default' | 'compact' => {
     const view = storageManager.getCustomData('ai-news::homeView');
     return view === 'compact' ? 'compact' : 'default';
+  };
+
+  const getShowInHome = (): boolean => {
+    const value = storageManager.getCustomData('ai-news::showInHome');
+    // Default to true – show in home unless the user explicitly disabled it
+    return value === false ? false : true;
   };
 
   // Extract video ID from youtube feeds
@@ -279,6 +286,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
+        showInHome: getShowInHome(),
       };
     });
 
@@ -290,6 +298,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
+        showInHome: getShowInHome(),
       };
     });
 
@@ -304,6 +313,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
         homeView: getHomeView(),
+        showInHome: getShowInHome(),
       };
     });
 
@@ -318,6 +328,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
         homeView: view,
+        showInHome: getShowInHome(),
       });
 
       return {
@@ -325,6 +336,30 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
         homeView: view,
+        showInHome: getShowInHome(),
+      };
+    });
+
+    // Update show-in-home preference
+    ipcMain.handle('lynxhub-ai-news:update-show-in-home', (_, show: boolean) => {
+      storageManager.setCustomData('ai-news::showInHome', show);
+      storageManager.write();
+
+      // Broadcast update to renderer process
+      appManager.sendMessage('lynxhub-ai-news:state-updated', {
+        sources: getSources(),
+        cache: getCachedItems(),
+        lastFetched: getLastFetched(),
+        homeView: getHomeView(),
+        showInHome: show,
+      });
+
+      return {
+        sources: getSources(),
+        cache: getCachedItems(),
+        lastFetched: getLastFetched(),
+        homeView: getHomeView(),
+        showInHome: show,
       };
     });
 
