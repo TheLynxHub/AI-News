@@ -70,17 +70,14 @@ export default function NewsFeedTab({
 
         {/* Individual Source Filters */}
         {sources.length > 0 && (
-          <div
-            className={
-              'flex flex-wrap items-center gap-x-4 gap-y-1.5 px-2 py-2 ' +
-              'bg-surface-secondary border-b border-border rounded-xl'
-            }>
-            <span className={'text-[10px] font-extrabold uppercase ' + 'text-semi-muted tracking-wider select-none'}>
+          <div className={'flex flex-wrap items-center gap-x-4 gap-y-1.5 p-3 bg-surface rounded-xl'}>
+            <span className={'text-[10px] font-extrabold uppercase text-semi-muted tracking-wider select-none'}>
               Filter Sources:
             </span>
             {sources.map(src => (
               <Checkbox
                 key={src.id}
+                variant="secondary"
                 isSelected={selectedSourceIds[src.id]}
                 onChange={selected => setSelectedSourceIds(prev => ({...prev, [src.id]: selected}))}>
                 <Checkbox.Content className="flex items-center gap-1.5">
@@ -96,7 +93,7 @@ export default function NewsFeedTab({
       </div>
 
       {/* Feeds Timeline list */}
-      <ScrollShadow className="flex-1 pr-2 scrollbar-hide">
+      <ScrollShadow className="flex-1 pr-2">
         {filteredItems.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center p-8 text-center select-none">
             <Earth className="size-12 text-muted/30 mb-2" />
