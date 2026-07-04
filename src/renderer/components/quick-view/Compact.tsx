@@ -121,14 +121,51 @@ export default function Compact() {
   }
 
   if (items.length === 0) {
-    return null; // Don't show anything if cache is empty
+    // If a fetch is active, show a skeleton strip with the progress indicator
+    if (!fetchProgress) return null;
+    return (
+      <div className="w-full flex flex-col gap-1.5 px-2">
+        {/* Progress banner */}
+        <div className="flex flex-col overflow-hidden rounded-xl border border-divider/30 bg-surface-secondary">
+          <div className="flex items-center justify-between px-3 py-1 gap-3">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="relative flex size-1.5 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
+              </span>
+              <span className="text-[9px] font-bold text-foreground/70 truncate">
+                {fetchProgress.sourceName ? `Fetching: ${fetchProgress.sourceName}` : 'Fetching feeds...'}
+              </span>
+            </div>
+            <span className="text-[9px] font-extrabold text-accent shrink-0 tabular-nums">
+              {fetchProgress.completed}/{fetchProgress.total}
+            </span>
+          </div>
+          <div className="h-0.5 w-full bg-divider/30">
+            <div
+              style={{
+                width: fetchProgress.total > 0 ? `${(fetchProgress.completed / fetchProgress.total) * 100}%` : '0%',
+                transition: 'width 400ms ease-out',
+              }}
+              className="h-full bg-linear-to-r from-accent/70 via-accent to-accent/70"
+            />
+          </div>
+        </div>
+        {/* Skeleton cards */}
+        <div className="w-full px-1 py-1 flex gap-3 overflow-x-hidden">
+          {[1, 2, 3].map(n => (
+            <div key={n} className="w-64 min-w-[256px] h-32 rounded-2xl bg-surface-secondary animate-pulse shrink-0" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="w-full flex flex-col gap-1.5 px-2">
       {/* Fetch-progress banner */}
       {fetchProgress && fetchProgress.visible && (
-        <div className="flex flex-col overflow-hidden rounded-xl border border-divider/40 bg-background/70 backdrop-blur-md">
+        <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface-secondary">
           <div className="flex items-center justify-between px-3 py-1 gap-3">
             <div className="flex items-center gap-1.5 min-w-0">
               {fetchProgress.completed < fetchProgress.total ? (
@@ -156,10 +193,7 @@ export default function Compact() {
           <div className="h-0.5 w-full bg-divider/30">
             <div
               style={{
-                width:
-                  fetchProgress.total > 0
-                    ? `${(fetchProgress.completed / fetchProgress.total) * 100}%`
-                    : '0%',
+                width: fetchProgress.total > 0 ? `${(fetchProgress.completed / fetchProgress.total) * 100}%` : '0%',
                 transition: 'width 400ms ease-out',
               }}
               className={

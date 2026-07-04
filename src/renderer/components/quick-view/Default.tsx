@@ -210,7 +210,74 @@ export default function Default() {
     );
   }
 
-  if (items.length === 0) return null;
+  // When the cache is empty but a fetch is underway, show the skeleton+progress banner
+  if (items.length === 0) {
+    if (!fetchProgress) return null;
+    return (
+      <div className="w-full flex flex-col">
+        {/* Progress banner — flows naturally, no overlap */}
+        <div className="flex flex-col bg-surface-secondary border-b border-divider/30 shadow-sm">
+          <div className="flex items-center justify-between px-4 py-1.5 gap-3">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="relative flex size-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-accent" />
+              </span>
+              <span className="text-[10px] font-bold text-foreground/80 truncate">
+                {fetchProgress.sourceName ? `Fetching: ${fetchProgress.sourceName}` : 'Fetching feeds...'}
+              </span>
+            </div>
+            <span className="text-[10px] font-extrabold text-accent shrink-0 tabular-nums">
+              {fetchProgress.completed}/{fetchProgress.total}
+            </span>
+          </div>
+          <div className="h-0.5 w-full bg-divider/30">
+            <div
+              style={{
+                width: fetchProgress.total > 0 ? `${(fetchProgress.completed / fetchProgress.total) * 100}%` : '0%',
+                transition: 'width 400ms ease-out',
+              }}
+              className="h-full bg-linear-to-r from-accent/70 via-accent to-accent/70"
+            />
+          </div>
+        </div>
+
+        {/* Skeleton cards below — own relative container, no overlap */}
+        <div className="relative h-64 overflow-hidden flex items-center justify-center">
+          <div
+            className={
+              'absolute translate-x-[-65%] sm:translate-x-[-75%] scale-[0.85] z-20 ' +
+              'w-64 sm:w-96 h-48 sm:h-60 rounded-3xl opacity-40 overflow-hidden'
+            }>
+            <Skeleton className="w-full h-full" />
+          </div>
+          <div
+            className={
+              'absolute translate-x-0 scale-100 z-30 w-64 sm:w-96 h-48 sm:h-60 ' +
+              'rounded-3xl border border-divider shadow-2xl ' +
+              'bg-surface flex flex-col justify-end p-5 sm:p-7 gap-2 overflow-hidden'
+            }>
+            <div className="absolute inset-0 p-5 sm:p-7 flex flex-col justify-end gap-3 z-10">
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+                <Skeleton className="w-20 h-5 rounded-full" />
+                <Skeleton className="size-8 sm:size-9 rounded-full" />
+              </div>
+              <Skeleton className="w-full h-5 sm:h-6 rounded-lg" />
+              <Skeleton className="w-3/4 h-5 sm:h-6 rounded-lg" />
+              <Skeleton className="w-20 h-4 rounded-md mt-1" />
+            </div>
+          </div>
+          <div
+            className={
+              'absolute translate-x-[65%] sm:translate-x-[75%] scale-[0.85] z-20 ' +
+              'w-64 sm:w-96 h-48 sm:h-60 rounded-3xl opacity-40 overflow-hidden'
+            }>
+            <Skeleton className="w-full h-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full flex flex-col py-4 relative group overflow-hidden h-72">
@@ -218,9 +285,9 @@ export default function Default() {
       {fetchProgress && fetchProgress.visible && (
         <div
           className={
-            'absolute top-0 inset-x-0 z-50 flex flex-col gap-0 ' +
-            'bg-background/80 backdrop-blur-md border-b border-divider/50 ' +
-            'animate-in fade-in slide-in-from-top-1 duration-300'
+            'absolute top-0 inset-x-0 z-50 flex flex-col rounded-xl ' +
+            'bg-surface-secondary border border-border shadow-sm ' +
+            'animate-in fade-in slide-in-from-top-1 duration-300 overflow-hidden'
           }>
           <div className="flex items-center justify-between px-4 py-1.5 gap-3">
             <div className="flex items-center gap-1.5 min-w-0">
@@ -250,10 +317,7 @@ export default function Default() {
           <div className="h-0.5 w-full bg-divider/30">
             <div
               style={{
-                width:
-                  fetchProgress.total > 0
-                    ? `${(fetchProgress.completed / fetchProgress.total) * 100}%`
-                    : '0%',
+                width: fetchProgress.total > 0 ? `${(fetchProgress.completed / fetchProgress.total) * 100}%` : '0%',
                 transition: 'width 400ms ease-out',
               }}
               className={
