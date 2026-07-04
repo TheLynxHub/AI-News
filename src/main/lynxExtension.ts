@@ -140,13 +140,13 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   // Extract Open Graph or Twitter image from page HTML
   const extractOgImage = (html: string): string => {
     if (!html) return '';
-    const ogImageRegex = /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i;
-    const ogImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i;
+    const ogImageRegex = /<meta[^>]+property=["']?og:image["']?[^>]+content=["']([^"']+)["']/i;
+    const ogImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']?og:image["']?/i;
     const match = html.match(ogImageRegex) || html.match(ogImageRegexAlt);
     if (match) return decodeHtmlEntities(match[1]);
 
-    const twitterImageRegex = /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i;
-    const twitterImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i;
+    const twitterImageRegex = /<meta[^>]+name=["']?twitter:image["']?[^>]+content=["']([^"']+)["']/i;
+    const twitterImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']?twitter:image["']?/i;
     const matchTwitter = html.match(twitterImageRegex) || html.match(twitterImageRegexAlt);
     return matchTwitter ? decodeHtmlEntities(matchTwitter[1]) : '';
   };
