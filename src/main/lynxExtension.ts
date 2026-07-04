@@ -166,6 +166,18 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
       return;
     }
 
+    const enabledSources = sources.filter(s => s.enabled);
+    const totalSources = enabledSources.length;
+    let completedSources = 0;
+
+    const emitProgress = (sourceName: string) => {
+      appManager.sendMessage('lynxhub-ai-news:fetch-progress', {
+        sourceName,
+        completed: completedSources,
+        total: totalSources,
+      });
+    };
+
     console.log('AI News: Fetching feeds started...');
     const updatedCacheMap = new Map<string, NewsItem[]>();
 
@@ -182,6 +194,9 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         // Keep their cache in case they get re-enabled later
         continue;
       }
+
+      // Emit progress: starting this source
+      emitProgress(src.name);
 
       try {
         console.log(`AI News: Fetching source ${src.name} (${src.feedUrl})...`);
@@ -232,8 +247,19 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
       } catch (err) {
         console.error(`AI News: Failed to fetch feed for source ${src.name}:`, err);
         // Do not update the map so we keep the previous cached items for this source
+      } finally {
+        completedSources++;
+        // Emit progress: this source completed
+        emitProgress(src.name);
       }
     }
+
+    // Emit final done signal
+    appManager.sendMessage('lynxhub-ai-news:fetch-progress', {
+      sourceName: '',
+      completed: totalSources,
+      total: totalSources,
+    });
 
     // Flatten map, filter out disabled source items, and sort by date descending
     const activeSourceIds = new Set(sources.filter(s => s.enabled).map(s => s.id));

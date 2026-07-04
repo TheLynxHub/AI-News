@@ -27,6 +27,15 @@ export default function Compact() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch-progress indicator state
+  const [fetchProgress, setFetchProgress] = useState<{
+    sourceName: string;
+    completed: number;
+    total: number;
+    visible: boolean;
+  } | null>(null);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const dragState = useRef({isDragging: false, startX: 0, scrollLeft: 0, moved: false});
 
@@ -46,12 +55,31 @@ export default function Compact() {
       });
 
     // Listen for updates
-
-    return extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
+    const cleanupState = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state && Array.isArray(state.cache)) {
         setItems(state.cache.slice(0, 5));
       }
     });
+
+    const cleanupProgress = extensionIpc.lynxIpc.on(
+      'lynxhub-ai-news:fetch-progress',
+      (data: {sourceName: string; completed: number; total: number}) => {
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+        const isDone = data.total > 0 && data.completed >= data.total;
+        setFetchProgress({...data, visible: true});
+        if (isDone) {
+          hideTimerRef.current = setTimeout(() => {
+            setFetchProgress(null);
+          }, 1500);
+        }
+      },
+    );
+
+    return () => {
+      cleanupState();
+      cleanupProgress();
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
   }, []);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -98,6 +126,53 @@ export default function Compact() {
 
   return (
     <div className="w-full flex flex-col gap-1.5 px-2">
+      {/* Fetch-progress banner */}
+      {fetchProgress && fetchProgress.visible && (
+        <div className="flex flex-col overflow-hidden rounded-xl border border-divider/40 bg-background/70 backdrop-blur-md">
+          <div className="flex items-center justify-between px-3 py-1 gap-3">
+            <div className="flex items-center gap-1.5 min-w-0">
+              {fetchProgress.completed < fetchProgress.total ? (
+                <span className="relative flex size-1.5 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
+                </span>
+              ) : (
+                <span className="relative flex size-1.5 shrink-0">
+                  <span className="relative inline-flex size-1.5 rounded-full bg-green-500" />
+                </span>
+              )}
+              <span className="text-[9px] font-bold text-foreground/70 truncate">
+                {fetchProgress.completed < fetchProgress.total
+                  ? fetchProgress.sourceName
+                    ? `Fetching: ${fetchProgress.sourceName}`
+                    : 'Fetching feeds...'
+                  : 'Feeds updated'}
+              </span>
+            </div>
+            <span className="text-[9px] font-extrabold text-accent shrink-0 tabular-nums">
+              {fetchProgress.completed}/{fetchProgress.total}
+            </span>
+          </div>
+          <div className="h-0.5 w-full bg-divider/30">
+            <div
+              style={{
+                width:
+                  fetchProgress.total > 0
+                    ? `${(fetchProgress.completed / fetchProgress.total) * 100}%`
+                    : '0%',
+                transition: 'width 400ms ease-out',
+              }}
+              className={
+                'h-full ' +
+                (fetchProgress.completed >= fetchProgress.total
+                  ? 'bg-green-500'
+                  : 'bg-linear-to-r from-accent/70 via-accent to-accent/70')
+              }
+            />
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between px-1">
         <span
           className={'text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 select-none'}>

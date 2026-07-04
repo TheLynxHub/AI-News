@@ -44,6 +44,15 @@ export default function Default() {
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  // Fetch-progress indicator state
+  const [fetchProgress, setFetchProgress] = useState<{
+    sourceName: string;
+    completed: number;
+    total: number;
+    visible: boolean;
+  } | null>(null);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     extensionIpc.lynxIpc
       .invoke('lynxhub-ai-news:get-state')
@@ -65,7 +74,25 @@ export default function Default() {
       }
     });
 
-    return cleanup;
+    const cleanupProgress = extensionIpc.lynxIpc.on(
+      'lynxhub-ai-news:fetch-progress',
+      (data: {sourceName: string; completed: number; total: number}) => {
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+        const isDone = data.total > 0 && data.completed >= data.total;
+        setFetchProgress({...data, visible: true});
+        if (isDone) {
+          hideTimerRef.current = setTimeout(() => {
+            setFetchProgress(null);
+          }, 1500);
+        }
+      },
+    );
+
+    return () => {
+      cleanup();
+      cleanupProgress();
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
   }, []);
 
   const handleNext = useCallback(() => {
@@ -187,6 +214,59 @@ export default function Default() {
 
   return (
     <div className="w-full flex flex-col py-4 relative group overflow-hidden h-72">
+      {/* Fetch-progress banner */}
+      {fetchProgress && fetchProgress.visible && (
+        <div
+          className={
+            'absolute top-0 inset-x-0 z-50 flex flex-col gap-0 ' +
+            'bg-background/80 backdrop-blur-md border-b border-divider/50 ' +
+            'animate-in fade-in slide-in-from-top-1 duration-300'
+          }>
+          <div className="flex items-center justify-between px-4 py-1.5 gap-3">
+            <div className="flex items-center gap-1.5 min-w-0">
+              {fetchProgress.completed < fetchProgress.total ? (
+                <span className="relative flex size-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-accent" />
+                </span>
+              ) : (
+                <span className="relative flex size-2 shrink-0">
+                  <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+                </span>
+              )}
+              <span className="text-[10px] font-bold text-foreground/80 truncate">
+                {fetchProgress.completed < fetchProgress.total
+                  ? fetchProgress.sourceName
+                    ? `Fetching: ${fetchProgress.sourceName}`
+                    : 'Fetching feeds...'
+                  : 'Feeds updated'}
+              </span>
+            </div>
+            <span className="text-[10px] font-extrabold text-accent shrink-0 tabular-nums">
+              {fetchProgress.completed}/{fetchProgress.total}
+            </span>
+          </div>
+          {/* Progress bar */}
+          <div className="h-0.5 w-full bg-divider/30">
+            <div
+              style={{
+                width:
+                  fetchProgress.total > 0
+                    ? `${(fetchProgress.completed / fetchProgress.total) * 100}%`
+                    : '0%',
+                transition: 'width 400ms ease-out',
+              }}
+              className={
+                'h-full ' +
+                (fetchProgress.completed >= fetchProgress.total
+                  ? 'bg-green-500'
+                  : 'bg-linear-to-r from-accent/70 via-accent to-accent/70')
+              }
+            />
+          </div>
+        </div>
+      )}
+
       {/* Header section */}
       <div className="relative z-40 flex items-center justify-between px-6 mb-4">
         <span
