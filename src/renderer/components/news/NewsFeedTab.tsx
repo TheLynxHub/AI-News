@@ -291,7 +291,7 @@ export default function NewsFeedTab({
           </div>
 
           {/* Pagination controls */}
-          <Pagination size="sm">
+          <Pagination size="sm" className="size-fit">
             <Pagination.Content>
               <Pagination.Item>
                 <Pagination.Previous isDisabled={safePage === 1} onPress={() => setCurrentPage(p => p - 1)}>
@@ -320,6 +320,8 @@ export default function NewsFeedTab({
               </Pagination.Item>
             </Pagination.Content>
           </Pagination>
+
+          <div />
         </div>
       )}
     </div>
