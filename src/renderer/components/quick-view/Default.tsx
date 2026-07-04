@@ -222,7 +222,7 @@ export default function Default() {
     return (
       <div className="w-full flex flex-col">
         {/* Progress banner — flows naturally, no overlap */}
-        <div className="flex flex-col bg-surface-secondary border-b border-divider/30 shadow-sm">
+        <div className="flex flex-col bg-surface-secondary border border-border rounded-xl overflow-hidden shadow-sm">
           <div className="flex items-center justify-between px-4 py-1.5 gap-3">
             <div className="flex items-center gap-1.5 min-w-0">
               <span className="relative flex size-2 shrink-0">

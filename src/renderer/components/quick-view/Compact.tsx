@@ -132,7 +132,7 @@ export default function Compact() {
     return (
       <div className="w-full flex flex-col gap-1.5 px-2">
         {/* Progress banner */}
-        <div className="flex flex-col overflow-hidden rounded-xl border border-divider/30 bg-surface-secondary">
+        <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface-secondary">
           <div className="flex items-center justify-between px-3 py-1 gap-3">
             <div className="flex items-center gap-1.5 min-w-0">
               <span className="relative flex size-1.5 shrink-0">
