@@ -181,7 +181,7 @@ export default function NewsFeedTab({
 
         {/* Individual Source Filters */}
         {sources.length > 0 && (
-          <div className="flex items-center gap-3 p-3 bg-surface rounded-xl">
+          <div className="flex items-center gap-3 p-3 bg-surface rounded-2xl">
             <Autocomplete
               value={selectedKeys}
               selectionMode="multiple"
