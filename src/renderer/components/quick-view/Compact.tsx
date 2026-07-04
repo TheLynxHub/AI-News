@@ -45,7 +45,10 @@ export default function Compact() {
       .invoke('lynxhub-ai-news:get-state')
       .then((state: any) => {
         if (state && Array.isArray(state.cache)) {
-          setItems(state.cache.slice(0, 5)); // Only show top 5 in Quick View
+          const enabledIds = new Set<string>(
+            Array.isArray(state.sources) ? state.sources.filter((s: any) => s.enabled).map((s: any) => s.id) : [],
+          );
+          setItems(state.cache.filter((item: any) => enabledIds.has(item.sourceId)).slice(0, 5));
         }
         setLoading(false);
       })
@@ -57,7 +60,10 @@ export default function Compact() {
     // Listen for updates
     const cleanupState = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state && Array.isArray(state.cache)) {
-        setItems(state.cache.slice(0, 5));
+        const enabledIds = new Set<string>(
+          Array.isArray(state.sources) ? state.sources.filter((s: any) => s.enabled).map((s: any) => s.id) : [],
+        );
+        setItems(state.cache.filter((item: any) => enabledIds.has(item.sourceId)).slice(0, 5));
       }
     });
 

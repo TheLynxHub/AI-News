@@ -58,7 +58,10 @@ export default function Default() {
       .invoke('lynxhub-ai-news:get-state')
       .then((state: any) => {
         if (state && Array.isArray(state.cache)) {
-          setItems(state.cache.slice(0, 5)); // Keep top 5 for coverflow
+          const enabledIds = new Set<string>(
+            Array.isArray(state.sources) ? state.sources.filter((s: any) => s.enabled).map((s: any) => s.id) : [],
+          );
+          setItems(state.cache.filter((item: any) => enabledIds.has(item.sourceId)).slice(0, 5));
         }
         setLoading(false);
       })
@@ -70,7 +73,10 @@ export default function Default() {
     // noinspection UnnecessaryLocalVariableJS
     const cleanup = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state && Array.isArray(state.cache)) {
-        setItems(state.cache.slice(0, 5));
+        const enabledIds = new Set<string>(
+          Array.isArray(state.sources) ? state.sources.filter((s: any) => s.enabled).map((s: any) => s.id) : [],
+        );
+        setItems(state.cache.filter((item: any) => enabledIds.has(item.sourceId)).slice(0, 5));
       }
     });
 
