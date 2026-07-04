@@ -40,6 +40,7 @@ const UPDATE_INTERVAL = 30; // 30ms for smooth progress bar animation
 export default function Default() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -447,7 +448,7 @@ export default function Default() {
               }
               key={item.id}>
               {/* Full Background Image */}
-              {item.thumbnail ? (
+              {item.thumbnail && !failedImages[item.id] ? (
                 <img
                   className={
                     'absolute inset-0 w-full h-full object-cover transition-transform ' +
@@ -455,6 +456,7 @@ export default function Default() {
                   }
                   alt={item.title}
                   src={item.thumbnail}
+                  onError={() => setFailedImages(prev => ({...prev, [item.id]: true}))}
                 />
               ) : (
                 <div

@@ -26,6 +26,7 @@ function formatTimeAgo(dateStr: string) {
 export default function Compact() {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
   // Fetch-progress indicator state
   const [fetchProgress, setFetchProgress] = useState<{
@@ -241,7 +242,7 @@ export default function Compact() {
             {/* Image area — its own clipped box, so the hover zoom is contained here and
                 never overlaps or seams against the caption panel below */}
             <div className="relative flex-1 min-h-0 overflow-hidden">
-              {item.thumbnail ? (
+              {item.thumbnail && !failedImages[item.id] ? (
                 <img
                   className={
                     'absolute inset-0 w-full h-full object-cover transition-transform ' +
@@ -250,6 +251,7 @@ export default function Compact() {
                   loading="lazy"
                   alt={item.title}
                   src={item.thumbnail}
+                  onError={() => setFailedImages(prev => ({...prev, [item.id]: true}))}
                 />
               ) : (
                 <div
