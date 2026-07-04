@@ -1,6 +1,6 @@
 import {NewsSource} from '@lynx_extension/cross/types';
 
-export const DEFAULT_SOURCES_VERSION = '1.0.1';
+export const DEFAULT_SOURCES_VERSION = '1.0.2';
 
 export const DEFAULT_SOURCES: NewsSource[] = [
   // ── News & Publications ────────────────────────────────────────────────────
@@ -54,7 +54,9 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     name: 'arXiv AI',
     type: 'website',
     url: 'https://arxiv.org/list/cs.AI/recent',
-    feedUrl: 'https://rss.arxiv.org/rss/cs.AI',
+    feedUrl:
+      'https://export.arxiv.org/api/query?' +
+      'search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=40',
     enabled: true,
     isDefault: true,
   },
