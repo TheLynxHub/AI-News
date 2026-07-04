@@ -377,7 +377,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         await fetchAndCacheAllFeeds(true, new Set(newlyEnabled.map(s => s.id)));
       }
 
-      return {
+      const newState = {
         sources: getSources(),
         cache: getCachedItems(),
         lastFetched: getLastFetched(),
@@ -385,6 +385,11 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         showInHome: getShowInHome(),
         filterSelection: getFilterSelection(),
       };
+
+      // Broadcast to all windows so the home page quick-view reacts immediately
+      appManager.sendMessage('lynxhub-ai-news:state-updated', newState);
+
+      return newState;
     });
 
     // Update homepage view preference
