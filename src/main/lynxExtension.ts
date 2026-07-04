@@ -2,7 +2,7 @@ import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
 import {MainIpcApi} from '@lynx_main/plugins/extensions/ipcWrapper';
 import {ExtensionMainApi, MainExtensionUtils} from '@lynx_main/plugins/extensions/types';
 import axios from 'axios';
-import {ipcMain} from 'electron';
+import {ipcMain, net} from 'electron';
 import Parser from 'rss-parser';
 
 import {DEFAULT_SOURCES, DEFAULT_SOURCES_VERSION} from './defaultSources';
@@ -125,29 +125,46 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     return match ? match[1] : '';
   };
 
+  const decodeHtmlEntities = (str: string): string => {
+    if (!str) return '';
+    return str
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#x27;/g, "'")
+      .replace(/&#x2F;/g, '/')
+      .replace(/&#39;/g, "'");
+  };
+
   // Extract Open Graph or Twitter image from page HTML
   const extractOgImage = (html: string): string => {
     if (!html) return '';
     const ogImageRegex = /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i;
     const ogImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i;
     const match = html.match(ogImageRegex) || html.match(ogImageRegexAlt);
-    if (match) return match[1];
+    if (match) return decodeHtmlEntities(match[1]);
 
     const twitterImageRegex = /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i;
     const twitterImageRegexAlt = /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i;
     const matchTwitter = html.match(twitterImageRegex) || html.match(twitterImageRegexAlt);
-    return matchTwitter ? matchTwitter[1] : '';
+    return matchTwitter ? decodeHtmlEntities(matchTwitter[1]) : '';
   };
 
   // Fetch article webpage and parse the Open Graph image
   const fetchOgImage = async (url: string): Promise<string> => {
     if (!url) return '';
     try {
-      const res = await axios.get(url, {
+      const res = await net.fetch(url, {
         headers: BROWSER_HEADERS,
-        timeout: 3000,
+        signal: AbortSignal.timeout(3000),
       });
-      let ogImage = extractOgImage(res.data);
+      if (!res.ok) {
+        console.warn(`AI News: Failed to fetch webpage for ${url}, status: ${res.status}`);
+        return '';
+      }
+      const html = await res.text();
+      let ogImage = extractOgImage(html);
       if (ogImage) {
         if (ogImage.startsWith('//')) {
           try {
@@ -536,17 +553,28 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     });
 
     ipcMain.handle('lynxhub-ai-news:fetch-item-thumbnail', async (_, itemId: string, itemLink: string) => {
-      if (activeScrapes.has(itemId)) return '';
+      console.log(`[AI News] IPC fetch-item-thumbnail invoked for item: ${itemId}, link: ${itemLink}`);
+      if (activeScrapes.has(itemId)) {
+        console.log(`[AI News] Already scraping item: ${itemId}`);
+        return '';
+      }
 
       const currentCache = getCachedItems();
       const item = currentCache.find(i => i.id === itemId);
-      if (!item || item.thumbnail) {
-        return item?.thumbnail || '';
+      if (!item) {
+        console.log(`[AI News] Item not found in cache: ${itemId}`);
+        return '';
+      }
+      if (item.thumbnail) {
+        console.log(`[AI News] Item already has thumbnail in cache: ${item.thumbnail}`);
+        return item.thumbnail;
       }
 
       activeScrapes.add(itemId);
       try {
+        console.log(`[AI News] Scraping OG image for: ${itemLink}`);
         const thumbnail = await fetchOgImage(itemLink);
+        console.log(`[AI News] Scraped thumbnail result: ${thumbnail}`);
         if (thumbnail) {
           item.thumbnail = thumbnail;
           storageManager.setCustomData('ai-news::cache', currentCache);
@@ -561,7 +589,10 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
             showInHome: getShowInHome(),
             filterSelection: getFilterSelection(),
           });
+          console.log(`[AI News] Successfully updated cache & broadcast state for item: ${itemId}`);
           return thumbnail;
+        } else {
+          console.log(`[AI News] Scraper returned empty thumbnail for: ${itemLink}`);
         }
       } catch (err) {
         console.error(`AI News: Failed to fetch item thumbnail on demand for ${itemId}:`, err);
