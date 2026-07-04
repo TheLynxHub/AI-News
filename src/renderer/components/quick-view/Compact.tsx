@@ -227,7 +227,7 @@ export default function Compact() {
         onPointerMove={handlePointerMove}
         onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerLeave}
-        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1.5 pt-1 pl-1 pr-4 cursor-grab select-none">
+        className="w-full flex gap-3 overflow-x-auto scrollbar-hide pb-1.5 pt-1 pl-1 pr-4 select-none">
         {items.map(item => (
           <div
             className={
