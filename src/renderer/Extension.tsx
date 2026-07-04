@@ -8,6 +8,7 @@ import NewsPage from './components/NewsPage';
 import Index from './components/quick-view';
 import {setExtensionIpc} from './ipc';
 
+// noinspection JSUnusedGlobalSymbols
 export function InitialExtensions(lynxAPI: ExtensionRendererApi, rendererIpc: RendererIpcApi, id: string) {
   setExtensionIpc(rendererIpc, id);
 

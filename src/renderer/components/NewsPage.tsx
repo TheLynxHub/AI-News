@@ -26,6 +26,7 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [homeView, setHomeView] = useState<'default' | 'compact'>('default');
+  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
 
   // Fetch-progress indicator state
   const [fetchProgress, setFetchProgress] = useState<{
@@ -66,6 +67,9 @@ export default function NewsPage() {
           setSelectedSourceIds(resolveSelections(state.sources || [], state.filterSelection));
           setHomeView(state.homeView || 'default');
           setShowInHome(state.showInHome !== false);
+          if (typeof state.itemsPerPage === 'number' && state.itemsPerPage > 0) {
+            setItemsPerPage(state.itemsPerPage);
+          }
         }
         setLoading(false);
       })
@@ -192,6 +196,16 @@ export default function NewsPage() {
     }
   };
 
+  // Update items-per-page preference
+  const handleItemsPerPageChange = async (count: number) => {
+    setItemsPerPage(count);
+    try {
+      await extensionIpc.lynxIpc.invoke<any>('lynxhub-ai-news:update-items-per-page', count);
+    } catch (err) {
+      console.error('Failed to update items-per-page preference:', err);
+    }
+  };
+
   // Delete news source
   const handleDeleteSource = async (sourceId: string) => {
     const updated = sources.filter(s => s.id !== sourceId);
@@ -235,7 +249,7 @@ export default function NewsPage() {
       // 1. Exclude items from sources that are globally disabled
       if (!enabledSourceIdSet.has(item.sourceId)) return false;
 
-      // 2. Search Query filter
+      // 2. Search Query
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchesTitle = item.title.toLowerCase().includes(query);
@@ -250,7 +264,7 @@ export default function NewsPage() {
       }
 
       // 4. Per-feed source display filter (only active enabled sources)
-      return selectedSourceIds[item.sourceId] !== false;
+      return selectedSourceIds[item.sourceId];
     });
   }, [cache, enabledSources, searchQuery, typeFilter, selectedSourceIds]);
 
@@ -374,10 +388,12 @@ export default function NewsPage() {
                 sources={enabledSources}
                 searchQuery={searchQuery}
                 onOpenLink={handleOpenLink}
+                itemsPerPage={itemsPerPage}
                 setTypeFilter={setTypeFilter}
                 filteredItems={filteredItems}
                 setSearchQuery={setSearchQuery}
                 selectedSourceIds={selectedSourceIds}
+                onItemsPerPageChange={handleItemsPerPageChange}
                 setSelectedSourceIds={handleUpdateFilterSelection}
               />
             ) : activeTab === 'sources' ? (

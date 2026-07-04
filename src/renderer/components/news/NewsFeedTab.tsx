@@ -4,9 +4,12 @@ import {
   EmptyState,
   InputGroup,
   Key,
+  Label,
   ListBox,
+  Pagination,
   ScrollShadow,
   SearchField,
+  Select,
   Tabs,
   Tag,
   TagGroup,
@@ -16,9 +19,12 @@ import {
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Search} from 'lucide-react';
-import {useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import NewsCard from './NewsCard';
+
+const PER_PAGE_OPTIONS = [10, 20, 30, 50] as const;
+type PerPageOption = (typeof PER_PAGE_OPTIONS)[number];
 
 interface NewsFeedTabProps {
   searchQuery: string;
@@ -32,6 +38,8 @@ interface NewsFeedTabProps {
   ) => void;
   filteredItems: NewsItem[];
   onOpenLink: (url: string) => void;
+  itemsPerPage: number;
+  onItemsPerPageChange: (count: number) => void;
 }
 
 export default function NewsFeedTab({
@@ -44,7 +52,11 @@ export default function NewsFeedTab({
   setSelectedSourceIds,
   filteredItems,
   onOpenLink,
+  itemsPerPage,
+  onItemsPerPageChange,
 }: NewsFeedTabProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handleTabChange = (key: Key) => {
     setTypeFilter(key as 'all' | 'website' | 'youtube');
   };
@@ -88,6 +100,48 @@ export default function NewsFeedTab({
       nextSelection[src.id] = false;
     });
     setSelectedSourceIds(nextSelection);
+  };
+
+  // Reset to page 1 whenever filters or items change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredItems.length, searchQuery, typeFilter, selectedSourceIds]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
+
+  // Clamp currentPage to valid range
+  const safePage = Math.min(currentPage, totalPages);
+
+  const pagedItems = useMemo(
+    () => filteredItems.slice((safePage - 1) * itemsPerPage, safePage * itemsPerPage),
+    [filteredItems, safePage, itemsPerPage],
+  );
+
+  const startItem = filteredItems.length === 0 ? 0 : (safePage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(safePage * itemsPerPage, filteredItems.length);
+
+  const handlePerPageChange = (key: Key | null) => {
+    if (!key) return;
+    const count = Number(key) as PerPageOption;
+    if (PER_PAGE_OPTIONS.includes(count)) {
+      onItemsPerPageChange(count);
+      setCurrentPage(1);
+    }
+  };
+
+  // Build page numbers with ellipsis
+  const getPageNumbers = (): (number | 'ellipsis')[] => {
+    if (totalPages <= 7) {
+      return Array.from({length: totalPages}, (_, i) => i + 1);
+    }
+    const pages: (number | 'ellipsis')[] = [1];
+    if (safePage > 3) pages.push('ellipsis');
+    const start = Math.max(2, safePage - 1);
+    const end = Math.min(totalPages - 1, safePage + 1);
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (safePage < totalPages - 2) pages.push('ellipsis');
+    pages.push(totalPages);
+    return pages;
   };
 
   return (
@@ -197,12 +251,77 @@ export default function NewsFeedTab({
           </div>
         ) : (
           <div className="flex flex-col gap-4 pb-4">
-            {filteredItems.map(item => (
+            {pagedItems.map(item => (
               <NewsCard item={item} key={item.id} onOpenLink={onOpenLink} />
             ))}
           </div>
         )}
       </ScrollShadow>
+
+      {/* Pagination footer */}
+      {filteredItems.length > 0 && (
+        <div className="shrink-0 flex items-center justify-between gap-4 pt-2 border-t border-border">
+          {/* Summary + per-page select */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-muted tabular-nums whitespace-nowrap">
+              {startItem}–{endItem} of {filteredItems.length}
+            </span>
+            <Select
+              className="w-27.5"
+              variant="secondary"
+              aria-label="Items per page"
+              value={String(itemsPerPage)}
+              onChange={handlePerPageChange}>
+              <Label className="sr-only">Items per page</Label>
+              <Select.Trigger>
+                <Select.Value />
+                <Select.Indicator />
+              </Select.Trigger>
+              <Select.Popover>
+                <ListBox>
+                  {PER_PAGE_OPTIONS.map(n => (
+                    <ListBox.Item id={String(n)} key={String(n)} textValue={`${n} / page`}>
+                      {n} / page
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                  ))}
+                </ListBox>
+              </Select.Popover>
+            </Select>
+          </div>
+
+          {/* Pagination controls */}
+          <Pagination size="sm">
+            <Pagination.Content>
+              <Pagination.Item>
+                <Pagination.Previous isDisabled={safePage === 1} onPress={() => setCurrentPage(p => p - 1)}>
+                  <Pagination.PreviousIcon />
+                  <span>Prev</span>
+                </Pagination.Previous>
+              </Pagination.Item>
+              {getPageNumbers().map((p, i) =>
+                p === 'ellipsis' ? (
+                  <Pagination.Item key={`ellipsis-${i}`}>
+                    <Pagination.Ellipsis />
+                  </Pagination.Item>
+                ) : (
+                  <Pagination.Item key={p}>
+                    <Pagination.Link isActive={p === safePage} onPress={() => setCurrentPage(p)}>
+                      {p}
+                    </Pagination.Link>
+                  </Pagination.Item>
+                ),
+              )}
+              <Pagination.Item>
+                <Pagination.Next isDisabled={safePage === totalPages} onPress={() => setCurrentPage(p => p + 1)}>
+                  <span>Next</span>
+                  <Pagination.NextIcon />
+                </Pagination.Next>
+              </Pagination.Item>
+            </Pagination.Content>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ const BROWSER_HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9',
 };
 
+// noinspection JSUnusedGlobalSymbols
 export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExtensionUtils, _mainIpc: MainIpcApi) {
   const storageManager = await utils.getStorageManager();
   const appManager = await utils.getAppManager();
@@ -26,6 +27,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   storageManager.getCustomData('ai-news::lastFetched');
   storageManager.getCustomData('ai-news::homeView');
   storageManager.getCustomData('ai-news::showInHome');
+  storageManager.getCustomData('ai-news::itemsPerPage');
 
   const parser = new Parser({
     customFields: {
@@ -96,7 +98,13 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   const getShowInHome = (): boolean => {
     const value = storageManager.getCustomData('ai-news::showInHome');
     // Default to true – show in home unless the user explicitly disabled it
+    // noinspection RedundantConditionalExpressionJS
     return value === false ? false : true;
+  };
+
+  const getItemsPerPage = (): number => {
+    const value = storageManager.getCustomData('ai-news::itemsPerPage');
+    return typeof value === 'number' && value > 0 ? value : 20;
   };
 
   // Extract video ID from youtube feeds
@@ -319,7 +327,15 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         homeView: getHomeView(),
         showInHome: getShowInHome(),
         filterSelection: getFilterSelection(),
+        itemsPerPage: getItemsPerPage(),
       };
+    });
+
+    // Update items-per-page preference
+    ipcMain.handle('lynxhub-ai-news:update-items-per-page', (_, count: number) => {
+      storageManager.setCustomData('ai-news::itemsPerPage', count);
+      storageManager.write();
+      return getItemsPerPage();
     });
 
     // Save filter selection
