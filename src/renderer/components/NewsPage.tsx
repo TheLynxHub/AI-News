@@ -3,7 +3,7 @@ import Page from '@lynx/pages/Page';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
 import {Earth, Plain2, Refresh, Settings} from '@solar-icons/react-perf/BoldDuotone';
 import {Info} from 'lucide-react';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 
 import {extensionIpc} from '../ipc';
 import ManageSourcesTab from './news/ManageSourcesTab';
@@ -26,6 +26,14 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [homeView, setHomeView] = useState<'default' | 'compact'>('default');
+
+  // Fetch-progress indicator state
+  const [fetchProgress, setFetchProgress] = useState<{
+    sourceName: string;
+    completed: number;
+    total: number;
+  } | null>(null);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showInHome, setShowInHome] = useState(true);
 
   // Search and filter states
@@ -67,7 +75,7 @@ export default function NewsPage() {
       });
 
     // Listen for state updates in real-time
-    return extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
+    const cleanupState = extensionIpc.lynxIpc.on('lynxhub-ai-news:state-updated', (state: any) => {
       if (state) {
         setSources(state.sources || []);
         setCache(state.cache || []);
@@ -83,6 +91,27 @@ export default function NewsPage() {
         }
       }
     });
+
+    // Listen for fetch-progress events
+    const cleanupProgress = extensionIpc.lynxIpc.on(
+      'lynxhub-ai-news:fetch-progress',
+      (data: {sourceName: string; completed: number; total: number}) => {
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+        const isDone = data.total > 0 && data.completed >= data.total;
+        setFetchProgress(data);
+        if (isDone) {
+          hideTimerRef.current = setTimeout(() => {
+            setFetchProgress(null);
+          }, 1500);
+        }
+      },
+    );
+
+    return () => {
+      cleanupState();
+      cleanupProgress();
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
   }, []);
 
   // Handle feed refresh
@@ -237,6 +266,50 @@ export default function NewsPage() {
             </Button>
           </div>
         </div>
+
+        {/* Fetch-progress banner */}
+        {fetchProgress && (
+          <div className="flex flex-col shrink-0 animate-in fade-in slide-in-from-top-1 duration-300">
+            <div className="flex items-center justify-between px-4 py-1.5 gap-3">
+              <div className="flex items-center gap-1.5 min-w-0">
+                {fetchProgress.completed < fetchProgress.total ? (
+                  <span className="relative flex size-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                    <span className="relative inline-flex size-2 rounded-full bg-accent" />
+                  </span>
+                ) : (
+                  <span className="relative flex size-2 shrink-0">
+                    <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+                  </span>
+                )}
+                <span className="text-[10px] font-bold text-foreground/80 truncate">
+                  {fetchProgress.completed < fetchProgress.total
+                    ? fetchProgress.sourceName
+                      ? `Fetching: ${fetchProgress.sourceName}`
+                      : 'Fetching feeds...'
+                    : 'Feeds updated'}
+                </span>
+              </div>
+              <span className="text-[10px] font-extrabold text-accent shrink-0 tabular-nums">
+                {fetchProgress.completed}/{fetchProgress.total}
+              </span>
+            </div>
+            <div className="h-0.5 w-full bg-divider/30">
+              <div
+                style={{
+                  width: fetchProgress.total > 0 ? `${(fetchProgress.completed / fetchProgress.total) * 100}%` : '0%',
+                  transition: 'width 400ms ease-out',
+                }}
+                className={
+                  'h-full ' +
+                  (fetchProgress.completed >= fetchProgress.total
+                    ? 'bg-green-500'
+                    : 'bg-linear-to-r from-accent/70 via-accent to-accent/70')
+                }
+              />
+            </div>
+          </div>
+        )}
 
         {/* Main Area */}
         <div className="flex flex-1 overflow-hidden">
