@@ -147,7 +147,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
   };
 
   // Background feeds update logic
-  const fetchAndCacheAllFeeds = async (force = false) => {
+  const fetchAndCacheAllFeeds = async (force = false, onlySourceIds?: Set<string>) => {
     const sources = getSources();
     const currentCache = getCachedItems();
     const now = Date.now();
@@ -166,7 +166,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
       return;
     }
 
-    const enabledSources = sources.filter(s => s.enabled);
+    const enabledSources = sources.filter(s => s.enabled && (!onlySourceIds || onlySourceIds.has(s.id)));
     const totalSources = enabledSources.length;
     let completedSources = 0;
 
@@ -190,7 +190,7 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     }
 
     for (const src of sources) {
-      if (!src.enabled) {
+      if (!src.enabled || (onlySourceIds && !onlySourceIds.has(src.id))) {
         // Keep their cache in case they get re-enabled later
         continue;
       }
@@ -344,10 +344,23 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
 
     // Toggle sources or enable/disable them
     ipcMain.handle('lynxhub-ai-news:update-sources', async (_, updatedSources: NewsSource[]) => {
+      const previousSources = getSources();
       storageManager.setCustomData('ai-news::sources', updatedSources);
       storageManager.write();
-      // Re-fetch since sources changed
-      await fetchAndCacheAllFeeds(true);
+
+      // Only re-fetch sources that are newly enabled and have no cached items yet
+      const currentCache = getCachedItems();
+      const cachedSourceIds = new Set(currentCache.map(item => item.sourceId));
+      const previouslyEnabled = new Set(previousSources.filter(s => s.enabled).map(s => s.id));
+      const newlyEnabled = updatedSources.filter(
+        s => s.enabled && !previouslyEnabled.has(s.id) && !cachedSourceIds.has(s.id),
+      );
+
+      if (newlyEnabled.length > 0) {
+        // Only fetch the sources that were just enabled and have no cache
+        await fetchAndCacheAllFeeds(true, new Set(newlyEnabled.map(s => s.id)));
+      }
+
       return {
         sources: getSources(),
         cache: getCachedItems(),
