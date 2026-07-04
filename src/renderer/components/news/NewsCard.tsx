@@ -3,6 +3,9 @@ import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Clock, Play} from 'lucide-react';
+import {useEffect} from 'react';
+
+import {extensionIpc} from '../../ipc';
 
 function formatTimeAgo(dateStr: string) {
   try {
@@ -26,6 +29,14 @@ interface NewsCardProps {
 }
 
 export default function NewsCard({item, onOpenLink}: NewsCardProps) {
+  useEffect(() => {
+    if (!item.thumbnail && item.link && item.type !== 'youtube') {
+      extensionIpc.lynxIpc.invoke('lynxhub-ai-news:fetch-item-thumbnail', item.id, item.link).catch(err => {
+        console.error('Failed to fetch item thumbnail on-demand:', err);
+      });
+    }
+  }, [item.id, item.link, item.thumbnail, item.type]);
+
   return (
     <div
       className={

@@ -316,6 +316,8 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
     );
   });
 
+  const activeScrapes = new Set<string>();
+
   // Handle frontend requests via IPC
   lynxApi.listenForChannels(() => {
     // Get full state (cache, sources, lastFetched)
@@ -513,6 +515,42 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
           filterSelection: getFilterSelection(),
         };
       }
+    });
+
+    ipcMain.handle('lynxhub-ai-news:fetch-item-thumbnail', async (_, itemId: string, itemLink: string) => {
+      if (activeScrapes.has(itemId)) return '';
+
+      const currentCache = getCachedItems();
+      const item = currentCache.find(i => i.id === itemId);
+      if (!item || item.thumbnail) {
+        return item?.thumbnail || '';
+      }
+
+      activeScrapes.add(itemId);
+      try {
+        const thumbnail = await fetchOgImage(itemLink);
+        if (thumbnail) {
+          item.thumbnail = thumbnail;
+          storageManager.setCustomData('ai-news::cache', currentCache);
+          storageManager.write();
+
+          // Broadcast update to all renderers
+          appManager.sendMessage('lynxhub-ai-news:state-updated', {
+            sources: getSources(),
+            cache: currentCache,
+            lastFetched: getLastFetched(),
+            homeView: getHomeView(),
+            showInHome: getShowInHome(),
+            filterSelection: getFilterSelection(),
+          });
+          return thumbnail;
+        }
+      } catch (err) {
+        console.error(`AI News: Failed to fetch item thumbnail on demand for ${itemId}:`, err);
+      } finally {
+        activeScrapes.delete(itemId);
+      }
+      return '';
     });
   });
 }
