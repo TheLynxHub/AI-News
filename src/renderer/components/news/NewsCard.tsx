@@ -3,7 +3,7 @@ import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Clock, Play} from 'lucide-react';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {extensionIpc} from '../../ipc';
 
@@ -29,6 +29,12 @@ interface NewsCardProps {
 }
 
 export default function NewsCard({item, onOpenLink}: NewsCardProps) {
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [item.thumbnail]);
+
   useEffect(() => {
     if (!item.thumbnail && item.link && item.type !== 'youtube') {
       extensionIpc.lynxIpc.invoke('lynxhub-ai-news:fetch-item-thumbnail', item.id, item.link).catch(err => {
@@ -45,13 +51,14 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
         'duration-200 relative overflow-hidden cursor-pointer'
       }
       onClick={() => onOpenLink(item.link)}>
-      {item.thumbnail ? (
+      {item.thumbnail && !imgError ? (
         <div
           className={'w-28 h-20 relative shrink-0 overflow-hidden bg-surface-secondary rounded-2xl mr-4 self-center'}>
           <img
             loading="lazy"
             alt={item.title}
             src={item.thumbnail}
+            onError={() => setImgError(true)}
             className="size-full object-cover transition-transform duration-500 hover:scale-105"
           />
           {item.type === 'youtube' && (
