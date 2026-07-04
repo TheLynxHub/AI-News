@@ -1,5 +1,6 @@
 import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import {getCacheUrl} from '@lynx_common/utils';
 import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -455,7 +456,7 @@ export default function Default() {
                     'duration-[10s] ease-out group-hover:scale-110'
                   }
                   alt={item.title}
-                  src={item.thumbnail}
+                  src={getCacheUrl(item.thumbnail)}
                   onError={() => setFailedImages(prev => ({...prev, [item.id]: true}))}
                 />
               ) : (

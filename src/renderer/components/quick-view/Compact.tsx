@@ -1,5 +1,6 @@
 import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import {getCacheUrl} from '@lynx_common/utils';
 import {Play} from '@solar-icons/react-perf/Bold';
 import {ClockCircle, DocumentText, Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
 import {useEffect, useRef, useState} from 'react';
@@ -250,7 +251,7 @@ export default function Compact() {
                   }
                   loading="lazy"
                   alt={item.title}
-                  src={item.thumbnail}
+                  src={getCacheUrl(item.thumbnail)}
                   onError={() => setFailedImages(prev => ({...prev, [item.id]: true}))}
                 />
               ) : (

@@ -1,5 +1,6 @@
 import {Description, Link} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import {getCacheUrl} from '@lynx_common/utils';
 import {NewsItem} from '@lynx_extension/cross/types';
 import {Earth} from '@solar-icons/react-perf/BoldDuotone';
 import {Clock, Play} from 'lucide-react';
@@ -57,7 +58,7 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
           <img
             loading="lazy"
             alt={item.title}
-            src={item.thumbnail}
+            src={getCacheUrl(item.thumbnail)}
             onError={() => setImgError(true)}
             className="size-full object-cover transition-transform duration-500 hover:scale-105"
           />
