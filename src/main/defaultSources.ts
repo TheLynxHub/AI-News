@@ -9,7 +9,7 @@ export const DEFAULT_SOURCES: NewsSource[] = [
     name: 'VentureBeat AI',
     type: 'website',
     url: 'https://venturebeat.com/category/ai',
-    feedUrl: 'https://venturebeat.com/category/ai/feed/',
+    feedUrl: 'https://venturebeat.com/feed',
     enabled: true,
     isDefault: true,
   },
