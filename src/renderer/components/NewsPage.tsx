@@ -281,7 +281,9 @@ export default function NewsPage() {
               <div className="flex items-center gap-1.5 min-w-0">
                 {fetchProgress.completed < fetchProgress.total ? (
                   <span className="relative flex size-2 shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                    <span
+                      className={'animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75'}
+                    />
                     <span className="relative inline-flex size-2 rounded-full bg-accent" />
                   </span>
                 ) : (
@@ -368,8 +370,8 @@ export default function NewsPage() {
               </div>
             ) : activeTab === 'feed' ? (
               <NewsFeedTab
-                sources={enabledSources}
                 typeFilter={typeFilter}
+                sources={enabledSources}
                 searchQuery={searchQuery}
                 onOpenLink={handleOpenLink}
                 setTypeFilter={setTypeFilter}
