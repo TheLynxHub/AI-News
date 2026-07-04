@@ -225,10 +225,17 @@ export default function NewsPage() {
     }
   };
 
+  // Only expose enabled sources to the feed tab's filter UI
+  const enabledSources = useMemo(() => sources.filter(s => s.enabled), [sources]);
+
   // Filtered cache items
   const filteredItems = useMemo(() => {
+    const enabledSourceIdSet = new Set(enabledSources.map(s => s.id));
     return cache.filter(item => {
-      // 1. Search Query filter
+      // 1. Exclude items from sources that are globally disabled
+      if (!enabledSourceIdSet.has(item.sourceId)) return false;
+
+      // 2. Search Query filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchesTitle = item.title.toLowerCase().includes(query);
@@ -237,15 +244,15 @@ export default function NewsPage() {
         if (!matchesTitle && !matchesSnippet && !matchesSource) return false;
       }
 
-      // 2. Type
+      // 3. Type
       if (typeFilter !== 'all' && item.type !== typeFilter) {
         return false;
       }
 
-      // 3. Source enabled list filter
-      return selectedSourceIds[item.sourceId];
+      // 4. Per-feed source display filter (only active enabled sources)
+      return selectedSourceIds[item.sourceId] !== false;
     });
-  }, [cache, searchQuery, typeFilter, selectedSourceIds]);
+  }, [cache, enabledSources, searchQuery, typeFilter, selectedSourceIds]);
 
   return (
     <Page className="flex overflow-hidden p-5">
@@ -361,7 +368,7 @@ export default function NewsPage() {
               </div>
             ) : activeTab === 'feed' ? (
               <NewsFeedTab
-                sources={sources}
+                sources={enabledSources}
                 typeFilter={typeFilter}
                 searchQuery={searchQuery}
                 onOpenLink={handleOpenLink}
