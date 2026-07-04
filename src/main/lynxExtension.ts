@@ -147,7 +147,25 @@ export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExt
         headers: BROWSER_HEADERS,
         timeout: 3000,
       });
-      return extractOgImage(res.data);
+      let ogImage = extractOgImage(res.data);
+      if (ogImage) {
+        if (ogImage.startsWith('//')) {
+          try {
+            const base = new URL(url);
+            ogImage = `${base.protocol}${ogImage}`;
+          } catch {
+            ogImage = `https:${ogImage}`;
+          }
+        } else if (!ogImage.startsWith('http://') && !ogImage.startsWith('https://')) {
+          try {
+            const base = new URL(url);
+            ogImage = new URL(ogImage, base.origin).toString();
+          } catch {
+            // ignore
+          }
+        }
+      }
+      return ogImage;
     } catch (err: any) {
       console.warn(`AI News: Failed to scrape OG image for ${url}:`, err.message);
       return '';
