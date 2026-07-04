@@ -128,10 +128,6 @@ export default function NewsFeedTab({
         {/* Individual Source Filters */}
         {sources.length > 0 && (
           <div className="flex items-center gap-3 p-3 bg-surface rounded-xl">
-            <span className="text-[10px] font-extrabold uppercase text-semi-muted tracking-wider select-none shrink-0">
-              Filter Sources:
-            </span>
-
             <Autocomplete
               value={selectedKeys}
               selectionMode="multiple"
