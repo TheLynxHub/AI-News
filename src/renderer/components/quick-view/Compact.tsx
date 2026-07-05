@@ -1,5 +1,6 @@
 import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import LynxTooltip from '@lynx/components/LynxTooltip';
 import {getCacheUrl} from '@lynx_common/utils';
 import {Play} from '@solar-icons/react-perf/Bold';
 import {ClockCircle, DocumentText, Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
@@ -308,10 +309,11 @@ export default function Compact() {
                 never overlap or seam against the zooming image */}
             <div
               className={
-                'relative shrink-0 bg-surface-secondary border-t border-border ' +
-                'px-2.5 py-1.5 flex flex-col gap-1 pointer-events-none'
+                'relative shrink-0 bg-surface-secondary border-t border-border ' + 'px-2.5 py-1.5 flex flex-col gap-1'
               }>
-              <h4 className="text-[11px] font-bold leading-snug line-clamp-2">{item.title}</h4>
+              <LynxTooltip content={item.snippet}>
+                <h4 className="text-[11px] font-bold leading-snug line-clamp-2">{item.title}</h4>
+              </LynxTooltip>
               <span className="flex items-center gap-1 text-[8.5px] font-semibold text-muted">
                 <ClockCircle className="size-2" /> {formatTimeAgo(item.isoDate)}
               </span>

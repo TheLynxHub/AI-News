@@ -1,5 +1,6 @@
 import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
+import LynxTooltip from '@lynx/components/LynxTooltip';
 import {getCacheUrl} from '@lynx_common/utils';
 import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
 import {useCallback, useEffect, useRef, useState} from 'react';
@@ -506,12 +507,14 @@ export default function Default() {
 
               {/* Bottom Content */}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 pb-6 sm:pb-7 flex flex-col gap-1.5 z-10">
-                <h4
-                  className={
-                    'text-white font-extrabold text-sm sm:text-base leading-tight ' + 'line-clamp-2 drop-shadow-xl'
-                  }>
-                  {item.title}
-                </h4>
+                <LynxTooltip content={item.snippet} isDisabled={!isCenter}>
+                  <h4
+                    className={
+                      'text-white font-extrabold text-sm sm:text-base leading-tight ' + 'line-clamp-2 drop-shadow-xl'
+                    }>
+                    {item.title}
+                  </h4>
+                </LynxTooltip>
                 <div
                   className={
                     'flex items-center gap-1.5 text-[9px] sm:text-[10px] text-white/70 ' + 'font-semibold tracking-wide'
