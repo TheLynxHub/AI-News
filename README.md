@@ -1,30 +1,36 @@
-# LynxHub Extension Template
+# AI News for LynxHub
 
-A simple boilerplate repository for building custom LynxHub extensions.
+Get all your AI news, YouTube videos, and research papers right inside LynxHub. No need to check ten different websites every day — see what's happening in AI all in one place.
 
-## Development Setup
+![AI News Preview](assets/screenshot.png)
 
-To develop and test your extension locally:
+## How to Install
 
-1. Clone this repository directly into the `/extension` directory at the root of the LynxHub host application:
+1. Download LynxHub from [LynxHub.app/Download](https://lynxhub.app/download) and install it on your computer.
+2. Open LynxHub, go to the **Plugins** page, and look for **AI News**.
+3. Click **Install**, then restart LynxHub.
+
+## Features
+
+- **Top AI Sources**: Get updates from popular tech sites, arXiv papers, company blogs (OpenAI, Anthropic, Google, Meta), and YouTube channels.
+- **Add Custom Feeds**: Add your own RSS feeds or ask for new ones to be added.
+- **Dashboard Views**: Choose between a card grid or a compact list view on your LynxHub home screen.
+- **Quick Search & Filters**: Search headlines or filter between website articles and YouTube videos.
+- **Fast Loading**: Automatically saves updates in the background so everything loads fast.
+
+## Local Development Setup
+
+If you want to test or work on this extension locally:
+
+1. Clone the main LynxHub host application:
    ```bash
-   git clone https://github.com/KindaBrazy/LynxHub-Extension-Template extension
+   git clone https://github.com/TheLynxHub/LynxHub
    ```
-2. Run the host application in development mode:
+2. Open the cloned folder and clone this repository into the `extension` folder:
    ```bash
-   npm run dev
+   git clone https://github.com/TheLynxHub/AI-News extension && cd extension && npm i
    ```
-   The application will detect the `/extension` folder and load your code.
-3. Verify your backend logs in the terminal and inspect your UI additions.
-4. Run static validation tests:
+3. Start LynxHub in development mode:
    ```bash
-   npm run validate:ext
+   cd .. && npm run dev
    ```
-
-## Publishing
-
-To publish your extension to the LynxHub plugin registry:
-
-1. Create a dedicated `metadata` branch.
-2. Place `metadata.json` and `versioning.json` (samples can be found in `metadata-example/`) in the root of the `metadata` branch.
-3. Submit a Pull Request to the global statics registry as detailed in the [Publishing extensions](https://lynxhub.dev/plugins/extensions/publish) documentation.
