@@ -1,0 +1,31 @@
+{
+  "versions": [
+    {
+      "version": "0.10.0",
+      "commit": "60d80e5",
+      "engines": {
+        "extensionApi": "^2.2.0"
+      },
+      "stage": "early_access",
+      "platforms": ["win32", "linux", "darwin"]
+    }
+  ],
+  "changes": [
+    {
+      "version": "0.10.0",
+      "date": "2026-08-01",
+      "items": [
+        {
+          "✨ New Features": [
+            "Initial release of AI News extension for LynxHub",
+            "Gathers updates from top AI news sites, company blogs, arXiv papers, and YouTube channels",
+            "Support for custom RSS feeds and flexible source management (enable/disable, request new sources)",
+            "Home screen Quick View dashboard integration with compact and default list layout views",
+            "Open Graph thumbnail extraction with caching, fallback scraping, and background auto-updates",
+            "Headline search, article/video filter tabs, pagination options, and state sync across windows"
+          ]
+        }
+      ]
+    }
+  ]
+}
