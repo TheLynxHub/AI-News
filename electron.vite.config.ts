@@ -8,7 +8,7 @@ export default defineConfig({
   main: {
     root: resolve('extension/src/main'),
     build: {
-      externalizeDeps: {exclude: ['tree-kill']},
+      externalizeDeps: {exclude: ['tree-kill', 'axios']},
       outDir: resolve('extension_out/main'),
       rolldownOptions: {
         input: resolve('extension/src/main/lynxExtension.ts'),
