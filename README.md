@@ -27,7 +27,7 @@ If you want to test or work on this extension locally:
 
 1. Clone the main LynxHub host application:
    ```bash
-   git clone https://github.com/TheLynxHub/LynxHub
+   git clone https://github.com/TheLynxHub/LynxHub && cd LynxHub
    ```
 2. Open the cloned folder and clone this repository into the `extension` folder:
    ```bash
