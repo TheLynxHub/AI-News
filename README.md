@@ -18,6 +18,9 @@ Get all your AI news, YouTube videos, and research papers right inside LynxHub. 
 - **Quick Search & Filters**: Search headlines or filter between website articles and YouTube videos.
 - **Fast Loading**: Automatically saves updates in the background so everything loads fast.
 
+![AI News Preview](assets/screenshot2.png)
+
+
 ## Local Development Setup
 
 If you want to test or work on this extension locally:
