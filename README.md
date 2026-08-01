@@ -1,6 +1,6 @@
 # AI News for LynxHub
 
-Get all your AI news, YouTube videos, and research papers right inside LynxHub. No need to check ten different websites every day — see what's happening in AI all in one place.
+Get all your AI news, YouTube videos, and research papers right inside LynxHub. No need to check ten different websites every day to see what's happening in AI all in one place.
 
 ![AI News Preview](assets/screenshot.png)
 
