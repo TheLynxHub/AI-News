@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "0.10.1",
+      "commit": "6ba2b6d",
+      "engines": {
+        "extensionApi": "^2.2.0"
+      },
+      "stage": "early_access",
+      "platforms": ["win32", "linux", "darwin"]
+    },
+    {
       "version": "0.10.0",
       "commit": "60d80e5",
       "engines": {
@@ -11,6 +20,15 @@
     }
   ],
   "changes": [
+    {
+      "version": "0.10.0",
+      "date": "2026-08-01",
+      "items": [
+        {
+          "🪲 Bug Fixes": ["Fixed start up fetching news issue."]
+        }
+      ]
+    },
     {
       "version": "0.10.0",
       "date": "2026-08-01",
