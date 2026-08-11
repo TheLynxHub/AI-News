@@ -5,6 +5,7 @@ import axios from 'axios';
 import {ipcMain, net} from 'electron';
 import Parser from 'rss-parser';
 
+import {SENTRY_DSN} from '../cross/constants';
 import {DEFAULT_SOURCES, DEFAULT_SOURCES_VERSION} from './defaultSources';
 
 const BROWSER_HEADERS = {
@@ -16,6 +17,8 @@ const BROWSER_HEADERS = {
 
 // noinspection JSUnusedGlobalSymbols
 export async function initialExtension(lynxApi: ExtensionMainApi, utils: MainExtensionUtils, _mainIpc: MainIpcApi) {
+  lynxApi.initNodeSentry(SENTRY_DSN);
+
   const storageManager = await utils.getStorageManager();
   const appManager = await utils.getAppManager();
 
