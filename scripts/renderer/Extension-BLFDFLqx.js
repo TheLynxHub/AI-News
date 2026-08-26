@@ -1,95 +1,83 @@
-import { a as __toCommonJS, i as __exportAll, n as __commonJSMin, o as __toESM, r as __esmMin, t as require_react } from "./react-G_MRPtAP.js";
-import { r as importShared } from "./_virtual___federation_fn_import-ChPcBYrR.js";
-import { t as require_jsx_runtime } from "./jsx-runtime-qEX3bJsW.js";
-//#region node_modules/@solar-icons/react-perf/dist/lib/IconBase.mjs
+(function() {
+	try {
+		var e = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : {};
+		e.SENTRY_RELEASE = { id: "c7bb908a43660e5a85e91aad0c631c812f339fb4" };
+		var n = new e.Error().stack;
+		n && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[n] = "ee524ee7-f860-404c-896f-cddddcb4ac3b", e._sentryDebugIdIdentifier = "sentry-dbid-ee524ee7-f860-404c-896f-cddddcb4ac3b");
+	} catch (e) {}
+})();
+import { n as __commonJSMin, r as __toESM, t as require_react } from "./react-vn4hjppW.js";
+import { r as importShared } from "./_virtual___federation_fn_import-CfihF-4P.js";
+import { t as require_jsx_runtime } from "./jsx-runtime-DzUQKA3j.js";
+//#region node_modules/@solar-icons/react/dist/lib/IconBase.mjs
 var import_jsx_runtime = require_jsx_runtime();
 var { forwardRef: e } = await importShared("react");
-var r$9 = e((e, r) => {
-	let { alt: i, color: a = `currentColor`, size: o = `1em`, mirrored: s = !1, children: c, ...l } = e;
+var r$9 = `solar`;
+function i$8(e) {
+	return e[`aria-label`] !== void 0 || e.title !== void 0;
+}
+var a = e(({ alt: e, color: a, size: o, strokeWidth: s, secondaryColor: c, secondaryOpacity: l, iconName: u, isolated: d, children: f, ...p }, m) => {
+	let h = u ? `${r$9} solar-${u}` : r$9, g = p.className, _ = g ? `${h} ${g}` : h, v = !!e || i$8(p), y = { ...p.style ?? {} };
+	if (d && (y[`--solar-secondary-color`] = `initial`, y[`--solar-secondary-opacity`] = `initial`), a !== void 0 && (y.color = a), o !== void 0) {
+		let e = typeof o == `number` ? `${o}px` : o;
+		y.width = e, y.height = e;
+	}
+	s !== void 0 && (y.strokeWidth = String(s)), c && (y[`--solar-secondary-color`] = c), l != null && (y[`--solar-secondary-opacity`] = String(l));
+	let b = o === void 0 ? d ? `24px` : `1em` : void 0, x = o === void 0 ? d ? `24px` : `1em` : void 0;
+	o === void 0 && !d && (`fontSize` in y || (y.fontSize = `var(--solar-size, 24px)`));
+	let S = a === void 0 ? d ? `currentColor` : `var(--solar-color, currentColor)` : void 0, C = s === void 0 ? d ? `1.5` : `var(--solar-stroke-width, 1.5)` : void 0;
 	return (0, import_jsx_runtime.jsxs)(`svg`, {
-		ref: r,
+		ref: m,
 		xmlns: `http://www.w3.org/2000/svg`,
-		width: o,
-		height: o,
-		color: a,
 		fill: `none`,
 		viewBox: `0 0 24 24`,
-		transform: s ? `scale(-1, 1)` : void 0,
-		...l,
-		children: [!!i && (0, import_jsx_runtime.jsx)(`title`, { children: i }), c]
+		...p,
+		className: _,
+		style: Object.keys(y).length > 0 ? y : void 0,
+		width: b,
+		height: x,
+		color: S,
+		strokeWidth: C,
+		...!v && { "aria-hidden": `true` },
+		children: [!!e && (0, import_jsx_runtime.jsx)(`title`, { children: e }), f]
 	});
 });
-r$9.displayName = `IconBase`;
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/arrows/BoldDuotone/Refresh.mjs
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/clock-circle.mjs
 var { forwardRef: t$8 } = await importShared("react");
-var i$7 = t$8((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
+var i$7 = t$8((t, i) => (0, import_jsx_runtime.jsxs)(a, {
 	ref: i,
 	...t,
+	iconName: `clock-circle-bold-duotone`,
 	children: [(0, import_jsx_runtime.jsx)(`path`, {
-		d: `M12.0789 2.25C7.2854 2.25 3.34478 5.913 2.96055 10.5833H2.00002C1.69614 10.5833 1.42229 10.7667 1.30655 11.0477C1.19081 11.3287 1.25606 11.6517 1.47178 11.8657L3.15159 13.5324C3.444 13.8225 3.91567 13.8225 4.20808 13.5324L5.88789 11.8657C6.10361 11.6517 6.16886 11.3287 6.05312 11.0477C5.93738 10.7667 5.66353 10.5833 5.35965 10.5833H4.4668C4.84652 6.75167 8.10479 3.75 12.0789 3.75C14.8484 3.75 17.2727 5.20845 18.6156 7.39279C18.8325 7.74565 19.2944 7.85585 19.6473 7.63892C20.0002 7.42199 20.1104 6.96007 19.8934 6.60721C18.2871 3.99427 15.3873 2.25 12.0789 2.25Z`,
-		fill: `currentColor`
+		d: `M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z`,
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
 	}), (0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
-		d: `M20.8412 10.4666C20.5491 10.1778 20.0789 10.1778 19.7868 10.4666L18.1005 12.1333C17.8842 12.3471 17.8185 12.6703 17.934 12.9517C18.0496 13.233 18.3236 13.4167 18.6278 13.4167H19.5269C19.1456 17.2462 15.876 20.25 11.8828 20.25C9.10034 20.25 6.66595 18.7903 5.31804 16.6061C5.10051 16.2536 4.63841 16.1442 4.28591 16.3618C3.93342 16.5793 3.82401 17.0414 4.04154 17.3939C5.65416 20.007 8.56414 21.75 11.8828 21.75C16.6907 21.75 20.6476 18.0892 21.0332 13.4167H22.0002C22.3044 13.4167 22.5784 13.233 22.694 12.9517C22.8096 12.6703 22.7438 12.3471 22.5275 12.1333L20.8412 10.4666Z`,
-		fill: `currentColor`
-	})]
-}));
-i$7.displayName = `Refresh`;
-//#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/astronomy/BoldDuotone/Earth.mjs
-var { forwardRef: t$7 } = await importShared("react");
-var i$6 = t$7((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
-	ref: i,
-	...t,
-	children: [
-		(0, import_jsx_runtime.jsx)(`circle`, {
-			opacity: `0.5`,
-			cx: `12`,
-			cy: `12`,
-			r: `10`,
-			fill: `currentColor`
-		}),
-		(0, import_jsx_runtime.jsx)(`path`, {
-			d: `M8.57516 9.44737C8.3879 7.36316 6.7806 5.42105 6.00035 4.71053L5.56934 4.34189C7.30792 2.88037 9.55133 2 12.0004 2C14.2137 2 16.2592 2.7191 17.9158 3.93642C18.1498 4.64695 17.704 6.13158 17.2359 6.84211C17.0663 7.09947 16.6818 7.41898 16.2602 7.72186C15.3097 8.40477 14.1102 8.74254 13.5004 10C13.326 10.3595 13.3335 10.7108 13.4173 11.0163C13.4776 11.2358 13.5161 11.4745 13.5167 11.708C13.5187 12.4629 12.7552 13.0082 12.0004 13C10.0361 12.9786 8.7502 11.3955 8.57516 9.44737Z`,
-			fill: `currentColor`
-		}),
-		(0, import_jsx_runtime.jsx)(`path`, {
-			d: `M13.4365 18.2761C14.4246 16.414 17.7182 16.414 17.7182 16.414C21.1502 16.3782 21.6138 14.2944 21.9237 13.2412C21.369 17.7226 17.8494 21.2849 13.3885 21.9046C13.0659 21.2256 12.6837 19.6946 13.4365 18.2761Z`,
-			fill: `currentColor`
-		})
-	]
-}));
-i$6.displayName = `Earth`;
-//#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/messages/BoldDuotone/Plain2.mjs
-var { forwardRef: t$6 } = await importShared("react");
-var i$5 = t$6((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
-	ref: i,
-	...t,
-	children: [(0, import_jsx_runtime.jsx)(`path`, {
 		fillRule: `evenodd`,
 		clipRule: `evenodd`,
-		d: `M5.79624 18.2037L21.5122 2.48782C20.5237 1.49939 18.6511 2.12356 14.906 3.37189L5.57477 6.48218C3.49295 7.1761 2.45203 7.52305 2.13608 8.28637C2.06182 8.46577 2.01692 8.65596 2.00311 8.84963C1.94433 9.67365 2.72018 10.4495 4.27188 12.0011L4.55451 12.2837C4.80921 12.5384 4.93655 12.6658 5.03282 12.8075C5.22269 13.0871 5.33046 13.4143 5.34393 13.7519C5.35076 13.9232 5.32403 14.1013 5.27057 14.4574C5.07488 15.7612 4.97703 16.4131 5.0923 16.9147C5.20622 17.4105 5.45393 17.8534 5.79624 18.2037Z`,
-		fill: `currentColor`
-	}), (0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
-		d: `M17.4981 18.4856L20.6287 9.09419C21.8771 5.3492 22.5013 3.47671 21.5128 2.48828L5.79688 18.2042C6.14492 18.5604 6.59077 18.8208 7.0932 18.9438C7.59318 19.0661 8.2464 18.9774 9.55283 18.8001L9.62427 18.7904C9.99254 18.7404 10.1767 18.7155 10.3535 18.7261C10.6745 18.7455 10.9845 18.85 11.2516 19.029C11.3988 19.1276 11.5302 19.259 11.793 19.5217L12.0442 19.773C13.5545 21.2832 14.3096 22.0383 15.1107 21.999C15.3316 21.9882 15.5485 21.9369 15.7509 21.8479C16.485 21.5248 16.8227 20.5117 17.4981 18.4856Z`,
+		d: `M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z`,
 		fill: `currentColor`
 	})]
 }));
-i$5.displayName = `Plain2`;
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/notes/BoldDuotone/DocumentText.mjs
-var { forwardRef: t$5 } = await importShared("react");
-var i$4 = t$5((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/document-text.mjs
+var { forwardRef: t$7 } = await importShared("react");
+var i$6 = t$7((t, i) => (0, import_jsx_runtime.jsxs)(a, {
 	ref: i,
 	...t,
+	iconName: `document-text-bold-duotone`,
 	children: [
 		(0, import_jsx_runtime.jsx)(`path`, {
-			opacity: `0.5`,
 			d: `M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z`,
-			fill: `currentColor`
+			fill: `currentColor`,
+			style: {
+				color: `var(--solar-secondary-color, currentColor)`,
+				opacity: `var(--solar-secondary-opacity, 0.5)`
+			}
 		}),
 		(0, import_jsx_runtime.jsx)(`path`, {
 			fillRule: `evenodd`,
@@ -111,77 +99,138 @@ var i$4 = t$5((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
 		})
 	]
 }));
-i$4.displayName = `DocumentText`;
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/settings/BoldDuotone/Settings.mjs
-var { forwardRef: t$4 } = await importShared("react");
-var i$3 = t$4((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/earth.mjs
+var { forwardRef: t$6 } = await importShared("react");
+var i$5 = t$6((t, i) => (0, import_jsx_runtime.jsxs)(a, {
 	ref: i,
 	...t,
+	iconName: `earth-bold-duotone`,
+	children: [
+		(0, import_jsx_runtime.jsx)(`circle`, {
+			cx: `12`,
+			cy: `12`,
+			r: `10`,
+			fill: `currentColor`,
+			style: {
+				color: `var(--solar-secondary-color, currentColor)`,
+				opacity: `var(--solar-secondary-opacity, 0.5)`
+			}
+		}),
+		(0, import_jsx_runtime.jsx)(`path`, {
+			d: `M8.57516 9.44737C8.3879 7.36316 6.7806 5.42105 6.00035 4.71053L5.56934 4.34189C7.30792 2.88037 9.55133 2 12.0004 2C14.2137 2 16.2592 2.7191 17.9158 3.93642C18.1498 4.64695 17.704 6.13158 17.2359 6.84211C17.0663 7.09947 16.6818 7.41898 16.2602 7.72186C15.3097 8.40477 14.1102 8.74254 13.5004 10C13.326 10.3595 13.3335 10.7108 13.4173 11.0163C13.4776 11.2358 13.5161 11.4745 13.5167 11.708C13.5187 12.4629 12.7552 13.0082 12.0004 13C10.0361 12.9786 8.7502 11.3955 8.57516 9.44737Z`,
+			fill: `currentColor`
+		}),
+		(0, import_jsx_runtime.jsx)(`path`, {
+			d: `M13.4365 18.2761C14.4246 16.414 17.7182 16.414 17.7182 16.414C21.1502 16.3782 21.6138 14.2944 21.9237 13.2412C21.369 17.7226 17.8494 21.2849 13.3885 21.9046C13.0659 21.2256 12.6837 19.6946 13.4365 18.2761Z`,
+			fill: `currentColor`
+		})
+	]
+}));
+//#endregion
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/plane-2.mjs
+var { forwardRef: t$5 } = await importShared("react");
+var i$4 = t$5((t, i) => (0, import_jsx_runtime.jsxs)(a, {
+	ref: i,
+	...t,
+	iconName: `plane-2-bold-duotone`,
 	children: [(0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
+		d: `M17.4981 18.4856L20.6287 9.09419C21.8771 5.3492 22.5013 3.47671 21.5128 2.48828L5.79688 18.2042C6.14492 18.5604 6.59077 18.8208 7.0932 18.9438C7.59318 19.0661 8.2464 18.9774 9.55283 18.8001L9.62427 18.7904C9.99254 18.7404 10.1767 18.7155 10.3535 18.7261C10.6745 18.7455 10.9845 18.85 11.2516 19.029C11.3988 19.1276 11.5302 19.259 11.793 19.5217L12.0442 19.773C13.5545 21.2832 14.3096 22.0383 15.1107 21.999C15.3316 21.9882 15.5485 21.9369 15.7509 21.8479C16.485 21.5248 16.8227 20.5117 17.4981 18.4856Z`,
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
+	}), (0, import_jsx_runtime.jsx)(`path`, {
+		fillRule: `evenodd`,
+		clipRule: `evenodd`,
+		d: `M5.79624 18.2037L21.5122 2.48782C20.5237 1.49939 18.6511 2.12356 14.906 3.37189L5.57477 6.48218C3.49295 7.1761 2.45203 7.52305 2.13608 8.28637C2.06182 8.46577 2.01692 8.65596 2.00311 8.84963C1.94433 9.67365 2.72018 10.4495 4.27188 12.0011L4.55451 12.2837C4.80921 12.5384 4.93655 12.6658 5.03282 12.8075C5.22269 13.0871 5.33046 13.4143 5.34393 13.7519C5.35076 13.9232 5.32403 14.1013 5.27057 14.4574C5.07488 15.7612 4.97703 16.4131 5.0923 16.9147C5.20622 17.4105 5.45393 17.8534 5.79624 18.2037Z`,
+		fill: `currentColor`
+	})]
+}));
+//#endregion
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/play.mjs
+var { forwardRef: t$4 } = await importShared("react");
+var i$3 = t$4((t, i) => (0, import_jsx_runtime.jsxs)(a, {
+	ref: i,
+	...t,
+	iconName: `play-bold-duotone`,
+	children: [(0, import_jsx_runtime.jsx)(`path`, {
+		d: `M8.59662 21.6145L21.4086 14.6474C22.4695 14.0705 23 13.0352 23 12H4L4 18.9671C4 21.2763 6.53435 22.736 8.59662 21.6145Z`,
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
+	}), (0, import_jsx_runtime.jsx)(`path`, {
+		fillRule: `evenodd`,
+		clipRule: `evenodd`,
+		d: `M23 12C23 10.9648 22.4695 9.92953 21.4086 9.35258L8.59661 2.38548C6.53435 1.26402 4 2.72368 4 5.0329L4 12H23Z`,
+		fill: `currentColor`
+	})]
+}));
+//#endregion
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/refresh.mjs
+var { forwardRef: t$3 } = await importShared("react");
+var i$2 = t$3((t, i) => (0, import_jsx_runtime.jsxs)(a, {
+	ref: i,
+	...t,
+	iconName: `refresh-bold-duotone`,
+	children: [(0, import_jsx_runtime.jsx)(`path`, {
+		d: `M20.8412 10.4666C20.5491 10.1778 20.0789 10.1778 19.7868 10.4666L18.1005 12.1333C17.8842 12.3471 17.8185 12.6703 17.934 12.9517C18.0496 13.233 18.3236 13.4167 18.6278 13.4167H19.5269C19.1456 17.2462 15.876 20.25 11.8828 20.25C9.10034 20.25 6.66595 18.7903 5.31804 16.6061C5.10051 16.2536 4.63841 16.1442 4.28591 16.3618C3.93342 16.5793 3.82401 17.0414 4.04154 17.3939C5.65416 20.007 8.56414 21.75 11.8828 21.75C16.6907 21.75 20.6476 18.0892 21.0332 13.4167H22.0002C22.3044 13.4167 22.5784 13.233 22.694 12.9517C22.8096 12.6703 22.7438 12.3471 22.5275 12.1333L20.8412 10.4666Z`,
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
+	}), (0, import_jsx_runtime.jsx)(`path`, {
+		d: `M12.0789 2.25C7.2854 2.25 3.34478 5.913 2.96055 10.5833H2.00002C1.69614 10.5833 1.42229 10.7667 1.30655 11.0477C1.19081 11.3287 1.25606 11.6517 1.47178 11.8657L3.15159 13.5324C3.444 13.8225 3.91567 13.8225 4.20808 13.5324L5.88789 11.8657C6.10361 11.6517 6.16886 11.3287 6.05312 11.0477C5.93738 10.7667 5.66353 10.5833 5.35965 10.5833H4.4668C4.84652 6.75167 8.10479 3.75 12.0789 3.75C14.8484 3.75 17.2727 5.20845 18.6156 7.39279C18.8325 7.74565 19.2944 7.85585 19.6473 7.63892C20.0002 7.42199 20.1104 6.96007 19.8934 6.60721C18.2871 3.99427 15.3873 2.25 12.0789 2.25Z`,
+		fill: `currentColor`
+	})]
+}));
+//#endregion
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/settings.mjs
+var { forwardRef: t$2 } = await importShared("react");
+var i$1 = t$2((t, i) => (0, import_jsx_runtime.jsxs)(a, {
+	ref: i,
+	...t,
+	iconName: `settings-bold-duotone`,
+	children: [(0, import_jsx_runtime.jsx)(`path`, {
 		fillRule: `evenodd`,
 		clipRule: `evenodd`,
 		d: `M14.2788 2.15224C13.9085 2 13.439 2 12.5 2C11.561 2 11.0915 2 10.7212 2.15224C10.2274 2.35523 9.83509 2.74458 9.63056 3.23463C9.53719 3.45834 9.50065 3.7185 9.48635 4.09799C9.46534 4.65568 9.17716 5.17189 8.69017 5.45093C8.20318 5.72996 7.60864 5.71954 7.11149 5.45876C6.77318 5.2813 6.52789 5.18262 6.28599 5.15102C5.75609 5.08178 5.22018 5.22429 4.79616 5.5472C4.47814 5.78938 4.24339 6.1929 3.7739 6.99993C3.30441 7.80697 3.06967 8.21048 3.01735 8.60491C2.94758 9.1308 3.09118 9.66266 3.41655 10.0835C3.56506 10.2756 3.77377 10.437 4.0977 10.639C4.57391 10.936 4.88032 11.4419 4.88029 12C4.88026 12.5581 4.57386 13.0639 4.0977 13.3608C3.77372 13.5629 3.56497 13.7244 3.41645 13.9165C3.09108 14.3373 2.94749 14.8691 3.01725 15.395C3.06957 15.7894 3.30432 16.193 3.7738 17C4.24329 17.807 4.47804 18.2106 4.79606 18.4527C5.22008 18.7756 5.75599 18.9181 6.28589 18.8489C6.52778 18.8173 6.77305 18.7186 7.11133 18.5412C7.60852 18.2804 8.2031 18.27 8.69012 18.549C9.17714 18.8281 9.46533 19.3443 9.48635 19.9021C9.50065 20.2815 9.53719 20.5417 9.63056 20.7654C9.83509 21.2554 10.2274 21.6448 10.7212 21.8478C11.0915 22 11.561 22 12.5 22C13.439 22 13.9085 22 14.2788 21.8478C14.7726 21.6448 15.1649 21.2554 15.3694 20.7654C15.4628 20.5417 15.4994 20.2815 15.5137 19.902C15.5347 19.3443 15.8228 18.8281 16.3098 18.549C16.7968 18.2699 17.3914 18.2804 17.8886 18.5412C18.2269 18.7186 18.4721 18.8172 18.714 18.8488C19.2439 18.9181 19.7798 18.7756 20.2038 18.4527C20.5219 18.2105 20.7566 17.807 21.2261 16.9999C21.6956 16.1929 21.9303 15.7894 21.9827 15.395C22.0524 14.8691 21.9088 14.3372 21.5835 13.9164C21.4349 13.7243 21.2262 13.5628 20.9022 13.3608C20.4261 13.0639 20.1197 12.558 20.1197 11.9999C20.1197 11.4418 20.4261 10.9361 20.9022 10.6392C21.2263 10.4371 21.435 10.2757 21.5836 10.0835C21.9089 9.66273 22.0525 9.13087 21.9828 8.60497C21.9304 8.21055 21.6957 7.80703 21.2262 7C20.7567 6.19297 20.522 5.78945 20.2039 5.54727C19.7799 5.22436 19.244 5.08185 18.7141 5.15109C18.4722 5.18269 18.2269 5.28136 17.8887 5.4588C17.3915 5.71959 16.7969 5.73002 16.3099 5.45096C15.8229 5.17191 15.5347 4.65566 15.5136 4.09794C15.4993 3.71848 15.4628 3.45833 15.3694 3.23463C15.1649 2.74458 14.7726 2.35523 14.2788 2.15224Z`,
-		fill: `currentColor`
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
 	}), (0, import_jsx_runtime.jsx)(`path`, {
 		d: `M15.5227 12C15.5227 13.6569 14.1694 15 12.4999 15C10.8304 15 9.47705 13.6569 9.47705 12C9.47705 10.3431 10.8304 9 12.4999 9C14.1694 9 15.5227 10.3431 15.5227 12Z`,
 		fill: `currentColor`
 	})]
 }));
-i$3.displayName = `Settings`;
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/time/BoldDuotone/ClockCircle.mjs
-var { forwardRef: t$3 } = await importShared("react");
-var i$2 = t$3((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
+//#region node_modules/@solar-icons/react/dist/icons/bold-duotone/trash-bin-2.mjs
+var { forwardRef: t$1 } = await importShared("react");
+var i = t$1((t, i) => (0, import_jsx_runtime.jsxs)(a, {
 	ref: i,
 	...t,
+	iconName: `trash-bin-2-bold-duotone`,
 	children: [(0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
-		d: `M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z`,
-		fill: `currentColor`
+		d: `M11.6068 21.9998H12.3937C15.1012 21.9998 16.4549 21.9998 17.3351 21.1366C18.2153 20.2734 18.3054 18.8575 18.4855 16.0256L18.745 11.945C18.8427 10.4085 18.8916 9.6402 18.45 9.15335C18.0084 8.6665 17.2628 8.6665 15.7714 8.6665H8.22905C6.73771 8.6665 5.99204 8.6665 5.55047 9.15335C5.10891 9.6402 5.15777 10.4085 5.25549 11.945L5.515 16.0256C5.6951 18.8575 5.78515 20.2734 6.66534 21.1366C7.54553 21.9998 8.89927 21.9998 11.6068 21.9998Z`,
+		fill: `currentColor`,
+		style: {
+			color: `var(--solar-secondary-color, currentColor)`,
+			opacity: `var(--solar-secondary-opacity, 0.5)`
+		}
 	}), (0, import_jsx_runtime.jsx)(`path`, {
-		fillRule: `evenodd`,
-		clipRule: `evenodd`,
-		d: `M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z`,
-		fill: `currentColor`
-	})]
-}));
-i$2.displayName = `ClockCircle`;
-//#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/ui/BoldDuotone/TrashBin2.mjs
-var { forwardRef: t$2 } = await importShared("react");
-var i$1 = t$2((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
-	ref: i,
-	...t,
-	children: [(0, import_jsx_runtime.jsx)(`path`, {
 		d: `M2.75 6.16667C2.75 5.70644 3.09538 5.33335 3.52143 5.33335L6.18567 5.3329C6.71502 5.31841 7.18202 4.95482 7.36214 4.41691C7.36688 4.40277 7.37232 4.38532 7.39185 4.32203L7.50665 3.94993C7.5769 3.72179 7.6381 3.52303 7.72375 3.34536C8.06209 2.64349 8.68808 2.1561 9.41147 2.03132C9.59457 1.99973 9.78848 1.99987 10.0111 2.00002H13.4891C13.7117 1.99987 13.9056 1.99973 14.0887 2.03132C14.8121 2.1561 15.4381 2.64349 15.7764 3.34536C15.8621 3.52303 15.9233 3.72179 15.9935 3.94993L16.1083 4.32203C16.1279 4.38532 16.1333 4.40277 16.138 4.41691C16.3182 4.95482 16.8778 5.31886 17.4071 5.33335H19.9786C20.4046 5.33335 20.75 5.70644 20.75 6.16667C20.75 6.62691 20.4046 7 19.9786 7H3.52143C3.09538 7 2.75 6.62691 2.75 6.16667Z`,
 		fill: `currentColor`
-	}), (0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
-		d: `M11.6068 21.9998H12.3937C15.1012 21.9998 16.4549 21.9998 17.3351 21.1366C18.2153 20.2734 18.3054 18.8575 18.4855 16.0256L18.745 11.945C18.8427 10.4085 18.8916 9.6402 18.45 9.15335C18.0084 8.6665 17.2628 8.6665 15.7714 8.6665H8.22905C6.73771 8.6665 5.99204 8.6665 5.55047 9.15335C5.10891 9.6402 5.15777 10.4085 5.25549 11.945L5.515 16.0256C5.6951 18.8575 5.78515 20.2734 6.66534 21.1366C7.54553 21.9998 8.89927 21.9998 11.6068 21.9998Z`,
-		fill: `currentColor`
 	})]
 }));
-i$1.displayName = `TrashBin2`;
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/video/BoldDuotone/Play.mjs
-var { forwardRef: t$1 } = await importShared("react");
-var i = t$1((t, i) => (0, import_jsx_runtime.jsxs)(r$9, {
-	ref: i,
-	...t,
-	children: [(0, import_jsx_runtime.jsx)(`path`, {
-		fillRule: `evenodd`,
-		clipRule: `evenodd`,
-		d: `M23 12C23 10.9648 22.4695 9.92953 21.4086 9.35258L8.59661 2.38548C6.53435 1.26402 4 2.72368 4 5.0329L4 12H23Z`,
-		fill: `currentColor`
-	}), (0, import_jsx_runtime.jsx)(`path`, {
-		opacity: `0.5`,
-		d: `M8.59662 21.6145L21.4086 14.6474C22.4695 14.0705 23 13.0352 23 12H4L4 18.9671C4 21.2763 6.53435 22.736 8.59662 21.6145Z`,
-		fill: `currentColor`
-	})]
-}));
-i.displayName = `Play`;
+//#region extension/src/cross/constants.ts
+var SENTRY_DSN = "https://3ddaf1f9641149c93115c396084be871@o4509344104316928.ingest.us.sentry.io/4511891847184384";
 //#endregion
 //#region node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs
 var { createContext: createContext$6 } = await importShared("react");
@@ -203,11 +252,11 @@ function useConstant(init) {
 }
 //#endregion
 //#region node_modules/framer-motion/dist/es/utils/is-browser.mjs
-var isBrowser$1 = typeof window !== "undefined";
+var isBrowser$2 = typeof window !== "undefined";
 //#endregion
 //#region node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs
 var { useLayoutEffect, useEffect: useEffect$9 } = await importShared("react");
-var useIsomorphicLayoutEffect = isBrowser$1 ? useLayoutEffect : useEffect$9;
+var useIsomorphicLayoutEffect = isBrowser$2 ? useLayoutEffect : useEffect$9;
 //#endregion
 //#region node_modules/framer-motion/dist/es/context/PresenceContext.mjs
 var { createContext: createContext$5 } = await importShared("react");
@@ -252,7 +301,7 @@ var isZeroValueString = (v) => /^0[^.\s]+$/u.test(v);
 //#endregion
 //#region node_modules/motion-utils/dist/es/memo.mjs
 /*#__NO_SIDE_EFFECTS__*/
-function memo(callback) {
+function memo$1(callback) {
 	let result;
 	return () => {
 		if (result === void 0) result = callback();
@@ -972,7 +1021,8 @@ function matchOrder(origin, target) {
 	for (let i = 0; i < target.values.length; i++) {
 		const type = target.types[i];
 		const originIndex = origin.indexes[type][pointers[type]];
-		orderedOrigin[i] = origin.values[originIndex] ?? 0;
+		const originValue = origin.values[originIndex] ?? 0;
+		orderedOrigin[i] = originValue;
 		pointers[type]++;
 	}
 	return orderedOrigin;
@@ -2118,7 +2168,7 @@ var supportsFlags = {};
 //#endregion
 //#region node_modules/motion-dom/dist/es/utils/supports/memo.mjs
 function memoSupports(callback, supportsFlag) {
-	const memoized = /* @__PURE__ */ memo(callback);
+	const memoized = /* @__PURE__ */ memo$1(callback);
 	return () => supportsFlags[supportsFlag] ?? memoized();
 }
 //#endregion
@@ -2501,7 +2551,8 @@ var acceleratedValues = /* @__PURE__ */ new Set([
 	"opacity",
 	"clipPath",
 	"filter",
-	"transform"
+	"transform",
+	"backgroundColor"
 ]);
 //#endregion
 //#region node_modules/motion-dom/dist/es/animation/waapi/utils/is-browser-color.mjs
@@ -2524,16 +2575,18 @@ var colorProperties = /* @__PURE__ */ new Set([
 	"borderBottomColor",
 	"borderLeftColor"
 ]);
-var supportsWaapi = /*@__PURE__*/ memo(() => Object.hasOwnProperty.call(Element.prototype, "animate"));
+var supportsWaapi = /*@__PURE__*/ memo$1(() => Object.hasOwnProperty.call(Element.prototype, "animate"));
 function supportsBrowserAnimation(options) {
 	const { motionValue, name, repeatDelay, repeatType, damping, type, keyframes } = options;
+	const subject = motionValue?.owner?.current;
 	/**
-	* We use this check instead of isHTMLElement() because we explicitly
-	* **don't** want elements in different timing contexts (i.e. popups)
-	* to be accelerated, as it's not possible to sync these animations
-	* properly with those driven from the main window frameloop.
+	* We use instanceof checks instead of isHTMLElement()/isSVGElement()
+	* because we explicitly **don't** want elements in different timing
+	* contexts (i.e. popups) to be accelerated, as it's not possible to sync
+	* these animations properly with those driven from the main window
+	* frameloop.
 	*/
-	if (!(motionValue?.owner?.current instanceof HTMLElement)) return false;
+	if (!(subject instanceof HTMLElement) && !(subject instanceof SVGElement)) return false;
 	const { onUpdate, transformTemplate } = motionValue.owner.getProps();
 	return supportsWaapi() && name && (acceleratedValues.has(name) || colorProperties.has(name) && hasBrowserOnlyColors(keyframes)) && (name !== "transform" || !transformTemplate) && !onUpdate && !repeatDelay && repeatType !== "mirror" && damping !== 0 && type !== "inertia";
 }
@@ -3274,6 +3327,7 @@ function getOptimisedAppearId(visualElement) {
 }
 //#endregion
 //#region node_modules/motion-dom/dist/es/animation/interfaces/visual-element-target.mjs
+var isBrowser$1 = typeof window !== "undefined";
 /**
 * Decide whether we should block this animation. Previously, we achieved this
 * just by checking whether the key was listed in protectedKeys, but this
@@ -3320,7 +3374,7 @@ function animateTarget(visualElement, targetAndTransition, { delay = 0, transiti
 		* to see if we're handling off from an existing animation.
 		*/
 		let isHandoff = false;
-		if (window.MotionHandoffAnimation) {
+		if (isBrowser$1 && window.MotionHandoffAnimation) {
 			const appearId = getOptimisedAppearId(visualElement);
 			if (appearId) {
 				const startTime = window.MotionHandoffAnimation(appearId, key, frame);
@@ -3785,14 +3839,15 @@ function isDragActive() {
 //#endregion
 //#region node_modules/motion-dom/dist/es/gestures/drag/state/set-active.mjs
 function setDragLock(axis) {
-	if (axis === "x" || axis === "y") if (isDragging[axis]) return null;
-	else {
-		isDragging[axis] = true;
-		return () => {
-			isDragging[axis] = false;
-		};
-	}
-	else if (isDragging.x || isDragging.y) return null;
+	if (axis === "x" || axis === "y") {
+		if (isDragging[axis]) return null;
+		else {
+			isDragging[axis] = true;
+			return () => {
+				isDragging[axis] = false;
+			};
+		}
+	} else if (isDragging.x || isDragging.y) return null;
 	else {
 		isDragging.x = isDragging.y = true;
 		return () => {
@@ -4256,19 +4311,20 @@ function updateMotionValuesFromProps(element, next, prev) {
 		* create a new motion value from that
 		*/
 		element.addValue(key, motionValue(nextValue, { owner: element }));
-		else if (prevValue !== nextValue)
- /**
-		* If this is a flat value that has changed, update the motion value
-		* or create one if it doesn't exist. We only want to do this if we're
-		* not handling the value with our animation state.
-		*/
-		if (element.hasValue(key)) {
-			const existingValue = element.getValue(key);
-			if (existingValue.liveStyle === true) existingValue.jump(nextValue);
-			else if (!existingValue.hasAnimated) existingValue.set(nextValue);
-		} else {
-			const latestValue = element.getStaticValue(key);
-			element.addValue(key, motionValue(latestValue !== void 0 ? latestValue : nextValue, { owner: element }));
+		else if (prevValue !== nextValue) {
+			/**
+			* If this is a flat value that has changed, update the motion value
+			* or create one if it doesn't exist. We only want to do this if we're
+			* not handling the value with our animation state.
+			*/
+			if (element.hasValue(key)) {
+				const existingValue = element.getValue(key);
+				if (existingValue.liveStyle === true) existingValue.jump(nextValue);
+				else if (!existingValue.hasAnimated) existingValue.set(nextValue);
+			} else {
+				const latestValue = element.getStaticValue(key);
+				element.addValue(key, motionValue(latestValue !== void 0 ? latestValue : nextValue, { owner: element }));
+			}
 		}
 	}
 	for (const key in prev) if (next[key] === void 0) element.removeValue(key);
@@ -5091,8 +5147,10 @@ var correctBorderRadius = { correct: (latest, node) => {
 	* If latest is a string, if it's a percentage we can return immediately as it's
 	* going to be stretched appropriately. Otherwise, if it's a pixel, convert it to a number.
 	*/
-	if (typeof latest === "string") if (px.test(latest)) latest = parseFloat(latest);
-	else return latest;
+	if (typeof latest === "string") {
+		if (px.test(latest)) latest = parseFloat(latest);
+		else return latest;
+	}
 	return `${pixelsToPercent(latest, node.target.x)}% ${pixelsToPercent(latest, node.target.y)}%`;
 } };
 //#endregion
@@ -5157,6 +5215,15 @@ var HTMLVisualElement = class extends DOMVisualElement {
 		this.type = "html";
 		this.renderInstance = renderHTML;
 	}
+	mount(instance) {
+		/**
+		* If a custom component forwards its ref to something other than a
+		* HTML/SVG element (a class instance, an imperative handle) there's
+		* nothing for Motion to style, measure or attach gestures to. #2777
+		*/
+		Boolean(instance.style);
+		super.mount(instance);
+	}
 	readValueFromInstance(instance, key) {
 		if (transformProps.has(key)) return this.projection?.isProjecting ? defaultTransformValue(key) : readTransformValue(instance, key);
 		else {
@@ -5203,10 +5270,9 @@ function buildSVGPath(attrs, length, spacing = 1, offset = 0, useDashCase = true
 }
 //#endregion
 //#region node_modules/motion-dom/dist/es/render/svg/utils/build-attrs.mjs
-/**
-* CSS Motion Path properties that should remain as CSS styles on SVG elements.
-*/
-var cssMotionPathProperties = [
+var cssStyleProperties = [
+	"transform",
+	"opacity",
 	"offsetDistance",
 	"offsetPath",
 	"offsetRotate",
@@ -5228,13 +5294,9 @@ function buildSVGAttrs(state, { attrX, attrY, attrScale, pathLength, pathSpacing
 	state.attrs = state.style;
 	state.style = {};
 	const { attrs, style } = state;
-	/**
-	* However, we apply transforms as CSS transforms.
-	* So if we detect a transform, transformOrigin we take it from attrs and copy it into style.
-	*/
-	if (attrs.transform) {
-		style.transform = attrs.transform;
-		delete attrs.transform;
+	for (const key of cssStyleProperties) if (attrs[key] !== void 0) {
+		style[key] = attrs[key];
+		delete attrs[key];
 	}
 	if (style.transform || attrs.transformOrigin) {
 		style.transformOrigin = attrs.transformOrigin ?? "50% 50%";
@@ -5247,10 +5309,6 @@ function buildSVGAttrs(state, { attrX, attrY, attrScale, pathLength, pathSpacing
 		*/
 		style.transformBox = styleProp?.transformBox ?? "fill-box";
 		delete attrs.transformBox;
-	}
-	for (const key of cssMotionPathProperties) if (attrs[key] !== void 0) {
-		style[key] = attrs[key];
-		delete attrs[key];
 	}
 	if (attrX !== void 0) attrs.x = attrX;
 	if (attrY !== void 0) attrs.y = attrY;
@@ -5322,6 +5380,10 @@ var SVGVisualElement = class extends DOMVisualElement {
 		if (transformProps.has(key)) {
 			const defaultType = getDefaultValueType(key);
 			return defaultType ? defaultType.default || 0 : 0;
+		}
+		if (cssStyleProperties.includes(key)) {
+			const value = getComputedStyle(instance)[key];
+			if (typeof value === "string" && value) return value.trim();
 		}
 		key = !camelCaseAttributes.has(key) ? camelToDash(key) : key;
 		return instance.getAttribute(key);
@@ -5547,9 +5609,10 @@ function createAnimationState(visualElement) {
 				let valueHasChanged = false;
 				if (isKeyframesTarget(next) && isKeyframesTarget(prev)) valueHasChanged = !shallowCompare(next, prev) || variantDidChange;
 				else valueHasChanged = next !== prev;
-				if (valueHasChanged) if (next !== void 0 && next !== null) markToAnimate(key);
-				else removedKeys.add(key);
-				else if (next !== void 0 && removedKeys.has(key))
+				if (valueHasChanged) {
+					if (next !== void 0 && next !== null) markToAnimate(key);
+					else removedKeys.add(key);
+				} else if (next !== void 0 && removedKeys.has(key))
  /**
 				* If next hasn't changed and it isn't undefined, we want to check if it's
 				* been removed by a higher priority
@@ -6705,8 +6768,10 @@ function createProjectionNode$1({ attachResizeListener, defaultParent, measureSc
 			* a relativeParent. This will allow a component to perform scale correction
 			* even if no animation has started.
 			*/
-			if (!this.targetDelta && !this.relativeTarget) if (this.options.layoutAnchor !== false && relativeParent && relativeParent.layout) this.createRelativeTarget(relativeParent, this.layout.layoutBox, relativeParent.layout.layoutBox);
-			else this.removeRelativeTarget();
+			if (!this.targetDelta && !this.relativeTarget) {
+				if (this.options.layoutAnchor !== false && relativeParent && relativeParent.layout) this.createRelativeTarget(relativeParent, this.layout.layoutBox, relativeParent.layout.layoutBox);
+				else this.removeRelativeTarget();
+			}
 			/**
 			* If we have no relative target or no target delta our target isn't valid
 			* for this frame.
@@ -7517,105 +7582,6 @@ function loadFeatures(features) {
 	setFeatureDefinitions(featureDefinitions);
 }
 //#endregion
-//#region node_modules/framer-motion/dist/es/motion/utils/valid-prop.mjs
-/**
-* A list of all valid MotionProps.
-*
-* @privateRemarks
-* This doesn't throw if a `MotionProp` name is missing - it should.
-*/
-var validMotionProps = /* @__PURE__ */ new Set([
-	"animate",
-	"exit",
-	"variants",
-	"initial",
-	"style",
-	"values",
-	"variants",
-	"transition",
-	"transformTemplate",
-	"custom",
-	"inherit",
-	"onBeforeLayoutMeasure",
-	"onAnimationStart",
-	"onAnimationComplete",
-	"onUpdate",
-	"onDragStart",
-	"onDrag",
-	"onDragEnd",
-	"onMeasureDragConstraints",
-	"onDirectionLock",
-	"onDragTransitionEnd",
-	"_dragX",
-	"_dragY",
-	"onHoverStart",
-	"onHoverEnd",
-	"onViewportEnter",
-	"onViewportLeave",
-	"globalTapTarget",
-	"propagate",
-	"ignoreStrict",
-	"viewport"
-]);
-/**
-* Check whether a prop name is a valid `MotionProp` key.
-*
-* @param key - Name of the property to check
-* @returns `true` is key is a valid `MotionProp`.
-*
-* @public
-*/
-function isValidMotionProp(key) {
-	return key.startsWith("while") || key.startsWith("drag") && key !== "draggable" || key.startsWith("layout") || key.startsWith("onTap") || key.startsWith("onPan") || key.startsWith("onLayout") || validMotionProps.has(key);
-}
-//#endregion
-//#region __vite-optional-peer-dep:@emotion/is-prop-valid:framer-motion
-var is_prop_valid_framer_motion_exports = /* @__PURE__ */ __exportAll({ default: () => is_prop_valid_framer_motion_default });
-var is_prop_valid_framer_motion_default;
-var init_is_prop_valid_framer_motion = __esmMin((() => {
-	is_prop_valid_framer_motion_default = {};
-	throw new Error(`Could not resolve "@emotion/is-prop-valid" imported by "framer-motion". Is it installed?`);
-}));
-//#endregion
-//#region node_modules/framer-motion/dist/es/render/dom/utils/filter-props.mjs
-var shouldForward = (key) => !isValidMotionProp(key);
-function loadExternalIsValidProp(isValidProp) {
-	if (typeof isValidProp !== "function") return;
-	shouldForward = (key) => key.startsWith("on") ? !isValidMotionProp(key) : isValidProp(key);
-}
-/**
-* Emotion and Styled Components both allow users to pass through arbitrary props to their components
-* to dynamically generate CSS. They both use the `@emotion/is-prop-valid` package to determine which
-* of these should be passed to the underlying DOM node.
-*
-* However, when styling a Motion component `styled(motion.div)`, both packages pass through *all* props
-* as it's seen as an arbitrary component rather than a DOM node. Motion only allows arbitrary props
-* passed through the `custom` prop so it doesn't *need* the payload or computational overhead of
-* `@emotion/is-prop-valid`, however to fix this problem we need to use it.
-*
-* By making it an optionalDependency we can offer this functionality only in the situations where it's
-* actually required.
-*/
-try {
-	loadExternalIsValidProp((init_is_prop_valid_framer_motion(), __toCommonJS(is_prop_valid_framer_motion_exports)).default);
-} catch {}
-function filterProps(props, isDom, forwardMotionProps) {
-	const filteredProps = {};
-	for (const key in props) {
-		/**
-		* values is considered a valid prop by Emotion, so if it's present
-		* this will be rendered out to the DOM unless explicitly filtered.
-		*
-		* We check the type as it could be used with the `feColorMatrix`
-		* element, which we support.
-		*/
-		if (key === "values" && typeof props.values === "object") continue;
-		if (isMotionValue(props[key])) continue;
-		if (shouldForward(key) || forwardMotionProps === true && isValidMotionProp(key) || !isDom && !isValidMotionProp(key) || props["draggable"] && key.startsWith("onDrag")) filteredProps[key] = props[key];
-	}
-	return filteredProps;
-}
-//#endregion
 //#region node_modules/framer-motion/dist/es/context/MotionContext/index.mjs
 var { createContext: createContext$2 } = await importShared("react");
 var MotionContext = /* @__PURE__ */ createContext$2({});
@@ -7716,6 +7682,79 @@ function useSVGProps(props, visualState, _isStatic, Component) {
 	return visualProps;
 }
 //#endregion
+//#region node_modules/framer-motion/dist/es/motion/utils/valid-prop.mjs
+/**
+* A list of all valid MotionProps.
+*
+* @privateRemarks
+* This doesn't throw if a `MotionProp` name is missing - it should.
+*/
+var validMotionProps = /* @__PURE__ */ new Set([
+	"animate",
+	"exit",
+	"variants",
+	"initial",
+	"style",
+	"values",
+	"variants",
+	"transition",
+	"transformTemplate",
+	"custom",
+	"inherit",
+	"onBeforeLayoutMeasure",
+	"onAnimationStart",
+	"onAnimationComplete",
+	"onUpdate",
+	"onDragStart",
+	"onDrag",
+	"onDragEnd",
+	"onMeasureDragConstraints",
+	"onDirectionLock",
+	"onDragTransitionEnd",
+	"_dragX",
+	"_dragY",
+	"onHoverStart",
+	"onHoverEnd",
+	"onViewportEnter",
+	"onViewportLeave",
+	"globalTapTarget",
+	"propagate",
+	"ignoreStrict",
+	"viewport"
+]);
+/**
+* Check whether a prop name is a valid `MotionProp` key.
+*
+* @param key - Name of the property to check
+* @returns `true` is key is a valid `MotionProp`.
+*
+* @public
+*/
+function isValidMotionProp(key) {
+	return key.startsWith("while") || key.startsWith("drag") && key !== "draggable" || key.startsWith("layout") || key.startsWith("onTap") || key.startsWith("onPan") || key.startsWith("onLayout") || validMotionProps.has(key);
+}
+//#endregion
+//#region node_modules/framer-motion/dist/es/render/dom/utils/filter-props.mjs
+function shouldForward(key, isValidProp) {
+	return key.startsWith("on") ? !isValidMotionProp(key) : isValidProp?.(key) ?? !isValidMotionProp(key);
+}
+function filterProps(props, isDom, forwardMotionProps, isValidProp) {
+	const filteredProps = {};
+	for (const key in props) {
+		/**
+		* values is considered a valid prop by Emotion, so if it's present
+		* this will be rendered out to the DOM unless explicitly filtered.
+		*
+		* We check the type as it could be used with the `feColorMatrix`
+		* element, which we support.
+		*/
+		if (key === "values" && typeof props.values === "object") continue;
+		if (isMotionValue(props[key])) continue;
+		if (shouldForward(key, isValidProp) || forwardMotionProps === true && isValidMotionProp(key) || !isDom && !isValidMotionProp(key) || props["draggable"] && key.startsWith("onDrag")) filteredProps[key] = props[key];
+	}
+	return filteredProps;
+}
+//#endregion
 //#region node_modules/framer-motion/dist/es/render/svg/lowercase-elements.mjs
 /**
 * We keep these listed separately as we use the lowercase tag names as part
@@ -7758,9 +7797,9 @@ function isSVGComponent(Component) {
 //#endregion
 //#region node_modules/framer-motion/dist/es/render/dom/use-render.mjs
 var { Fragment: Fragment$1, useMemo: useMemo$3, createElement: createElement$3 } = await importShared("react");
-function useRender(Component, props, ref, { latestValues }, isStatic, forwardMotionProps = false, isSVG) {
+function useRender(Component, props, ref, { latestValues }, isStatic, forwardMotionProps = false, isSVG, isValidProp) {
 	const visualProps = (isSVG ?? isSVGComponent(Component) ? useSVGProps : useHTMLProps)(props, latestValues, isStatic, Component);
-	const filteredProps = filterProps(props, typeof Component === "string", forwardMotionProps);
+	const filteredProps = filterProps(props, typeof Component === "string", forwardMotionProps, isValidProp);
 	const elementProps = Component !== Fragment$1 ? {
 		...filteredProps,
 		...visualProps,
@@ -7870,14 +7909,15 @@ function useMotionRef(visualState, visualElement, externalRef) {
 		if (instance) visualState.onMount?.(instance);
 		if (visualElement) instance ? visualElement.mount(instance) : visualElement.unmount();
 		const ref = externalRefContainer.current;
-		if (typeof ref === "function") if (instance) {
-			const cleanup = ref(instance);
-			if (typeof cleanup === "function") refCleanup.current = cleanup;
-		} else if (refCleanup.current) {
-			refCleanup.current();
-			refCleanup.current = null;
-		} else ref(instance);
-		else if (ref) ref.current = instance;
+		if (typeof ref === "function") {
+			if (instance) {
+				const cleanup = ref(instance);
+				if (typeof cleanup === "function") refCleanup.current = cleanup;
+			} else if (refCleanup.current) {
+				refCleanup.current();
+				refCleanup.current = null;
+			} else ref(instance);
+		} else if (ref) ref.current = instance;
 	}, [visualElement]);
 }
 //#endregion
@@ -8051,7 +8091,7 @@ function createMotionComponent(Component, { forwardMotionProps = false, type } =
 			...props,
 			layoutId: useLayoutId(props)
 		};
-		const { isStatic } = configAndProps;
+		const { isStatic, isValidProp } = configAndProps;
 		const context = useCreateMotionContext(props);
 		const visualState = useVisualState(props, isStatic);
 		if (!isStatic && typeof window !== "undefined") {
@@ -8075,7 +8115,7 @@ function createMotionComponent(Component, { forwardMotionProps = false, type } =
 			children: [MeasureLayout && context.visualElement ? (0, import_jsx_runtime.jsx)(MeasureLayout, {
 				visualElement: context.visualElement,
 				...configAndProps
-			}) : null, useRender(Component, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, forwardMotionProps, isSVG)]
+			}) : null, useRender(Component, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, forwardMotionProps, isSVG, isValidProp)]
 		});
 	}
 	MotionDOMComponent.displayName = `motion.${typeof Component === "string" ? Component : `create(${Component.displayName ?? Component.name ?? ""})`}`;
@@ -9518,7 +9558,7 @@ function Page({ children, className }) {
 //#endregion
 //#region node_modules/lucide-react/dist/esm/shared/src/utils/mergeClasses.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9529,7 +9569,7 @@ var mergeClasses = (...classes) => classes.filter((className, index, array) => {
 //#endregion
 //#region node_modules/lucide-react/dist/esm/shared/src/utils/toKebabCase.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9538,7 +9578,7 @@ var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLo
 //#endregion
 //#region node_modules/lucide-react/dist/esm/shared/src/utils/toCamelCase.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9547,7 +9587,7 @@ var toCamelCase = (string) => string.replace(/^([A-Z])|[\s-_]+(\w)/g, (match, p1
 //#endregion
 //#region node_modules/lucide-react/dist/esm/shared/src/utils/toPascalCase.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9559,7 +9599,7 @@ var toPascalCase = (string) => {
 //#endregion
 //#region node_modules/lucide-react/dist/esm/defaultAttributes.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9578,7 +9618,7 @@ var defaultAttributes = {
 //#endregion
 //#region node_modules/lucide-react/dist/esm/shared/src/utils/hasA11yProp.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9590,7 +9630,7 @@ var hasA11yProp = (props) => {
 //#endregion
 //#region node_modules/lucide-react/dist/esm/context.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9601,7 +9641,7 @@ var useLucideContext = () => useContext(LucideContext);
 //#endregion
 //#region node_modules/lucide-react/dist/esm/Icon.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9625,7 +9665,7 @@ var Icon = forwardRef$1(({ color, size, strokeWidth, absoluteStrokeWidth, classN
 //#endregion
 //#region node_modules/lucide-react/dist/esm/createLucideIcon.mjs
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9642,7 +9682,7 @@ var createLucideIcon = (iconName, iconNode) => {
 	return Component;
 };
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9657,7 +9697,7 @@ var Clock = createLucideIcon("clock", [["circle", {
 	key: "mmk7yg"
 }]]);
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9679,7 +9719,7 @@ var Info = createLucideIcon("info", [
 	}]
 ]);
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9689,7 +9729,7 @@ var Play = createLucideIcon("play", [["path", {
 	key: "10ikf1"
 }]]);
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -9702,7 +9742,7 @@ var Plus = createLucideIcon("plus", [["path", {
 	key: "s699le"
 }]]);
 /**
-* @license lucide-react v1.24.0 - ISC
+* @license lucide-react v1.33.0 - ISC
 *
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
@@ -10090,7 +10130,7 @@ var objectTraps = {
 		const value = source[prop];
 		if (state.finalized_ || !isDraftable(value)) return value;
 		if (isArrayWithStringProp && state.operationMethod && arrayPlugin?.isMutatingArrayMethod(state.operationMethod) && isArrayIndex(prop)) return value;
-		if (value === peek(state.base_, prop)) {
+		if (value === peek(state.base_, prop) || isRelocatedBaseRef(state, prop, value)) {
 			prepareCopy(state);
 			const childKey = state.type_ === 1 ? +prop : prop;
 			const childDraft = createProxy(state.scope_, value, state, childKey);
@@ -10122,7 +10162,7 @@ var objectTraps = {
 			prepareCopy(state);
 			markChanged(state);
 		}
-		if (state.copy_[prop] === value && (value !== void 0 || prop in state.copy_) || Number.isNaN(value) && Number.isNaN(state.copy_[prop])) return true;
+		if (state.copy_[prop] === value && (value !== void 0 || has(state.copy_, prop, state.type_)) || Number.isNaN(value) && Number.isNaN(state.copy_[prop])) return true;
 		state.copy_[prop] = value;
 		state.assigned_.set(prop, true);
 		handleCrossReference(state, prop, value);
@@ -10176,6 +10216,10 @@ arrayTraps.set = function(state, prop, value) {
 function peek(draft, prop) {
 	const state = draft[DRAFT_STATE];
 	return (state ? latest(state) : draft)[prop];
+}
+function isRelocatedBaseRef(state, prop, value) {
+	if (state.type_ !== 1 || !state.allIndicesReassigned_ || state.assigned_?.get(prop) || !isDraftable(value) || value[DRAFT_STATE]) return false;
+	return state.baseRefs_.has(value);
 }
 function readPropFromProto(state, source, prop) {
 	const desc = getDescriptorFromProto(source, prop);
@@ -10465,20 +10509,22 @@ function createReducer(initialState, mapOrBuilderCallback) {
 		let caseReducers = [actionsMap[action.type], ...finalActionMatchers.filter(({ matcher }) => matcher(action)).map(({ reducer: reducer2 }) => reducer2)];
 		if (caseReducers.filter((cr) => !!cr).length === 0) caseReducers = [finalDefaultCaseReducer];
 		return caseReducers.reduce((previousState, caseReducer) => {
-			if (caseReducer) if (isDraft(previousState)) {
-				const result = caseReducer(previousState, action);
-				if (result === void 0) return previousState;
-				return result;
-			} else if (!isDraftable(previousState)) {
-				const result = caseReducer(previousState, action);
-				if (result === void 0) {
-					if (previousState === null) return previousState;
-					throw Error("A case reducer on a non-draftable value must not return undefined");
-				}
-				return result;
-			} else return produce(previousState, (draft) => {
-				return caseReducer(draft, action);
-			});
+			if (caseReducer) {
+				if (isDraft(previousState)) {
+					const result = caseReducer(previousState, action);
+					if (result === void 0) return previousState;
+					return result;
+				} else if (!isDraftable(previousState)) {
+					const result = caseReducer(previousState, action);
+					if (result === void 0) {
+						if (previousState === null) return previousState;
+						throw Error("A case reducer on a non-draftable value must not return undefined");
+					}
+					return result;
+				} else return produce(previousState, (draft) => {
+					return caseReducer(draft, action);
+				});
+			}
 			return previousState;
 		}, state);
 	}
@@ -10702,6 +10748,7 @@ var settingsSlice = createSlice({
 		closeTabConfirm: true,
 		terminateAIConfirm: true,
 		exitSignalConfirm: true,
+		forceReloadConfirm: true,
 		openLastSize: false,
 		updatedModules: [],
 		newModules: [],
@@ -10723,7 +10770,7 @@ var settingsSlice = createSlice({
 		setSearchValue: (state, action) => {
 			const searchValue = action.payload;
 			state.searchValue = searchValue;
-			state.searchWords = searchValue ? searchValue.split(/\s+/) : [];
+			state.searchWords = searchValue ? searchValue.split(/\s+/).filter(Boolean) : [];
 		}
 	}
 });
@@ -10877,11 +10924,12 @@ var import_main = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expor
 					if (chunk.highlight) {
 						highlightIndex++;
 						var highlightClass = void 0;
-						if (typeof highlightClassName === "object") if (!caseSensitive) {
-							highlightClassName = memoizedLowercaseProps(highlightClassName);
-							highlightClass = highlightClassName[text.toLowerCase()];
-						} else highlightClass = highlightClassName[text];
-						else highlightClass = highlightClassName;
+						if (typeof highlightClassName === "object") {
+							if (!caseSensitive) {
+								highlightClassName = memoizedLowercaseProps(highlightClassName);
+								highlightClass = highlightClassName[text.toLowerCase()];
+							} else highlightClass = highlightClassName[text];
+						} else highlightClass = highlightClassName;
 						var isActive = highlightIndex === +activeIndex;
 						highlightClassNames = highlightClass + " " + (isActive ? activeClassName : "");
 						highlightStyles = isActive === true && activeStyle != null ? Object.assign({}, highlightStyle, activeStyle) : highlightStyle;
@@ -11091,6 +11139,7 @@ var import_main = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expor
 		})
 	]);
 })))(), 1);
+var { memo } = await importShared("react");
 /**
 * Renders text matching the active settings search terminology with a highlight wrapper.
 * Will render text minimally without highlights if empty or no text provided.
@@ -11103,6 +11152,11 @@ var SettingsSearchHighlight = ({ text, children, className, highlightClassName }
 		className,
 		children: content
 	});
+	const lowerContent = content.toLowerCase();
+	if (!searchWords.some((word) => word && lowerContent.includes(word.toLowerCase()))) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className,
+		children: content
+	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_main.default, {
 		className,
 		searchWords,
@@ -11111,6 +11165,7 @@ var SettingsSearchHighlight = ({ text, children, className, highlightClassName }
 		autoEscape: true
 	});
 };
+var SettingsSearchHighlight_default = memo(SettingsSearchHighlight);
 //#endregion
 //#region src/renderer/mainWindow/components/LynxSwitch.tsx
 var { Description: Description$2, Surface, Switch: Switch$1 } = await importShared("@heroui/react");
@@ -11148,11 +11203,11 @@ function LynxSwitch({ enabled = false, onEnabledChange, title, description, isDi
 					className: "flex flex-row items-center gap-x-2",
 					children: [icon, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 						className: "text-sm cursor-pointer",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsSearchHighlight, { text: title })
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsSearchHighlight_default, { text: title })
 					})]
 				}), description && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description$2, {
 					className: "pointer-events-none p-0",
-					children: typeof description === "string" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsSearchHighlight, {
+					children: typeof description === "string" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsSearchHighlight_default, {
 						text: description,
 						className: "text-xs text-muted"
 					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -11214,7 +11269,7 @@ function ManageSourcesTab({ sources, homeView, showInHome, onToggleSource, onTog
 								type: "button",
 								onPress: () => setAddType("website"),
 								variant: addType === "website" ? "primary" : "ghost",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-4" }), " Website Blog"]
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4" }), " Website Blog"]
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$3, {
 								type: "button",
 								onPress: () => setAddType("youtube"),
@@ -11319,7 +11374,7 @@ function ManageSourcesTab({ sources, homeView, showInHome, onToggleSource, onTog
 							className: "flex items-center gap-3 min-w-0",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "size-9 rounded-full bg-surface-secondary flex items-center justify-center shrink-0",
-								children: src.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-4.5 text-red-600" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-4.5 text-accent" })
+								children: src.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-4.5 text-red-600" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4.5 text-accent" })
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "flex flex-col min-w-0",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
@@ -11341,7 +11396,7 @@ function ManageSourcesTab({ sources, homeView, showInHome, onToggleSource, onTog
 								variant: "danger-soft",
 								onPress: () => onDeleteSource(src.id),
 								isIconOnly: true,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$1, {})
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i, {})
 							})]
 						})]
 					}, src.id))
@@ -11415,7 +11470,7 @@ function NewsCard({ item, onOpenLink }) {
 			})]
 		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "w-28 h-20 bg-linear-to-br from-accent/10 to-secondary/10 rounded-xl shrink-0 flex items-center justify-center mr-4 self-center border border-border",
-			children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-7 text-red-600" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-7 text-accent" })
+			children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-7 text-red-600" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-7 text-accent" })
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex-1 flex flex-col justify-between min-w-0",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
@@ -11424,7 +11479,7 @@ function NewsCard({ item, onOpenLink }) {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 						className: "text-[9px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded bg-accent/10 text-accent select-none max-w-38.75 truncate",
 						children: item.sourceName
-					}), item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-4 text-red-600 shrink-0" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-3.5 text-accent shrink-0" })]
+					}), item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-4 text-red-600 shrink-0" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-3.5 text-accent shrink-0" })]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 					className: "text-xs font-extrabold text-foreground mt-1.5 leading-snug line-clamp-2 hover:text-accent transition-colors duration-200",
@@ -11634,7 +11689,7 @@ function NewsFeedTab({ searchQuery, setSearchQuery, typeFilter, setTypeFilter, s
 				children: filteredItems.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "h-full flex flex-col items-center justify-center p-8 text-center select-none",
 					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-12 text-muted/30 mb-2" }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-12 text-muted/30 mb-2" }),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 							className: "text-sm font-extrabold text-foreground/80",
 							children: "No stories found"
@@ -11742,7 +11797,7 @@ function RequestSourceTab() {
 				className: "flex items-center gap-3 mb-2",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "size-10 rounded-full bg-accent/10 flex items-center justify-center text-accent",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-5" })
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-5" })
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex flex-col",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
@@ -11790,7 +11845,7 @@ function RequestSourceTab() {
 						variant: "primary",
 						isDisabled: !reqName.trim() || !reqUrl.trim(),
 						className: "w-full text-xs font-bold rounded-xl mt-1 justify-center",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4 mr-2" }), " Open Request on GitHub"]
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-4 mr-2" }), " Open Request on GitHub"]
 					})
 				]
 			})]
@@ -12011,7 +12066,7 @@ function NewsPage() {
 						className: "flex flex-col",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
 							className: "text-lg font-bold tracking-tight flex items-center gap-2 text-foreground",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-5 text-accent animate-pulse" }), " AI News Hub"]
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-5 text-accent animate-pulse" }), " AI News Hub"]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, {
 							className: "text-sm",
 							children: "Your dashboard for artificial intelligence headlines, blogs, and channels."
@@ -12023,7 +12078,7 @@ function NewsPage() {
 							onPress: handleRefresh,
 							isDisabled: refreshing || loading,
 							isIconOnly: true,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$7, { className: `size-4 ${refreshing ? "animate-spin text-accent" : ""}` })
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$2, { className: `size-4 ${refreshing ? "animate-spin text-accent" : ""}` })
 						})
 					})]
 				}),
@@ -12072,21 +12127,21 @@ function NewsPage() {
 								className: "w-full text-xs font-bold justify-start",
 								variant: activeTab === "feed" ? "primary" : "ghost",
 								fullWidth: true,
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-4" }), " News Feed"]
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4" }), " News Feed"]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								onPress: () => setActiveTab("sources"),
 								className: "w-full text-xs font-bold justify-start",
 								variant: activeTab === "sources" ? "primary" : "ghost",
 								fullWidth: true,
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$3, { className: "size-4" }), " Manage Sources"]
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$1, { className: "size-4" }), " Manage Sources"]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								onPress: () => setActiveTab("request"),
 								className: "w-full text-xs font-bold justify-start",
 								variant: activeTab === "request" ? "primary" : "ghost",
 								fullWidth: true,
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4" }), " Request Source"]
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-4" }), " Request Source"]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "mt-auto p-3 bg-surface rounded-2xl flex flex-col gap-1 select-none",
@@ -12160,17 +12215,17 @@ function LynxTooltip({ children, content, delay = 300, isDisabled, triggerClassN
 	});
 }
 //#endregion
-//#region node_modules/@solar-icons/react-perf/dist/icons/video/Bold/Play.mjs
+//#region node_modules/@solar-icons/react/dist/icons/bold/play.mjs
 var { forwardRef: t } = await importShared("react");
-var r = t((t, r) => (0, import_jsx_runtime.jsx)(r$9, {
+var r = t((t, r) => (0, import_jsx_runtime.jsx)(a, {
 	ref: r,
 	...t,
+	iconName: `play-bold`,
 	children: (0, import_jsx_runtime.jsx)(`path`, {
 		d: `M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z`,
 		fill: `currentColor`
 	})
 }));
-r.displayName = `Play`;
 //#endregion
 //#region extension/src/renderer/components/quick-view/Compact.tsx
 var { ScrollShadow } = await importShared("@heroui/react");
@@ -12359,7 +12414,7 @@ function Compact() {
 				className: "flex items-center justify-between px-1",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 					className: "text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 select-none",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-3 text-accent" }), " AI NEWS"]
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-3 text-accent" }), " AI NEWS"]
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScrollShadow, {
@@ -12388,7 +12443,7 @@ function Compact() {
 								}))
 							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "absolute inset-0 bg-linear-to-br from-accent/25 via-surface-secondary to-secondary/25 flex items-center justify-center",
-								children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-9 text-red-500/70" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-9 text-accent/60" })
+								children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-9 text-red-500/70" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-9 text-accent/60" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-x-0 top-0 h-9 bg-linear-to-b from-black/60 to-transparent" }),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -12398,7 +12453,7 @@ function Compact() {
 									children: item.sourceName
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									className: "size-5 rounded-full bg-black/55 backdrop-blur-md border border-white/10 flex items-center justify-center shrink-0 shadow-sm",
-									children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-2.5 text-white" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-2.5 text-white" })
+									children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-2.5 text-white" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-2.5 text-white" })
 								})]
 							}),
 							item.type === "youtube" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -12420,7 +12475,7 @@ function Compact() {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 							className: "flex items-center gap-1 text-[8.5px] font-semibold text-muted",
 							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$2, { className: "size-2" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$7, { className: "size-2" }),
 								" ",
 								formatTimeAgo$1(item.isoDate)
 							]
@@ -12553,8 +12608,10 @@ function Default() {
 		if (!dragRef.current.active) return;
 		dragRef.current.active = false;
 		const dx = e.clientX - dragRef.current.startX;
-		if (Math.abs(dx) >= SWIPE_THRESHOLD) if (dx < 0) handleNext();
-		else handlePrev();
+		if (Math.abs(dx) >= SWIPE_THRESHOLD) {
+			if (dx < 0) handleNext();
+			else handlePrev();
+		}
 	};
 	const handleCarouselPointerLeave = () => {
 		dragRef.current.active = false;
@@ -12715,7 +12772,7 @@ function Default() {
 				className: "relative z-40 flex items-center justify-between px-6 mb-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 					className: "text-[11px] font-black text-foreground/90 uppercase tracking-[0.2em] flex items-center gap-2 select-none drop-shadow-sm",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-4 text-accent" }), " AI NEWS"]
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-4 text-accent" }), " AI NEWS"]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "flex gap-1.5 items-center bg-background/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-divider/50",
 					children: items.map((_, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -12776,7 +12833,7 @@ function Default() {
 									}))
 								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									className: "absolute inset-0 bg-linear-to-br from-accent/20 to-secondary/20 flex items-center justify-center",
-									children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-16 text-red-600/80" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-16 text-accent/80" })
+									children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiYoutube, { className: "size-16 text-red-600/80" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-16 text-accent/80" })
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-linear-to-t from-black/95 via-black/40 to-black/10 mix-blend-multiply" }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" }),
@@ -12787,7 +12844,7 @@ function Default() {
 										children: item.sourceName
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 										className: "flex items-center justify-center size-8 sm:size-9 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white shadow-lg",
-										children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i, { className: "size-3.5 sm:size-4 ml-0.5 text-red-500" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-3.5 sm:size-4 text-blue-400" })
+										children: item.type === "youtube" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$3, { className: "size-3.5 sm:size-4 ml-0.5 text-red-500" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$6, { className: "size-3.5 sm:size-4 text-blue-400" })
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -12801,7 +12858,7 @@ function Default() {
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 										className: "flex items-center gap-1.5 text-[9px] sm:text-[10px] text-white/70 font-semibold tracking-wide",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$2, { className: "size-3" }), formatTimeAgo(item.isoDate)]
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$7, { className: "size-3" }), formatTimeAgo(item.isoDate)]
 									})]
 								}),
 								isCenter && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -12854,14 +12911,17 @@ function Index() {
 //#endregion
 //#region extension/src/renderer/Extension.tsx
 function InitialExtensions(lynxAPI, rendererIpc, id) {
+	lynxAPI.initBrowserSentry(SENTRY_DSN);
 	setExtensionIpc(rendererIpc, id);
 	lynxAPI.router.addPage({
 		id: "ai-news",
 		title: "AI News",
-		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$5, { className: "size-full" }),
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(i$4, { className: "size-full" }),
 		component: NewsPage
 	});
 	lynxAPI.customizePages.home.add.scrollTop(Index);
 }
 //#endregion
 export { InitialExtensions as t };
+
+//# sourceMappingURL=Extension-BLFDFLqx.js.map
