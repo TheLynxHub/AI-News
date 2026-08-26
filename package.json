@@ -4,8 +4,8 @@
   "author": {
     "name": "KindaBrazy"
   },
-  "homepage": "https://github.com/KindaBrazy/LynxHub-AI-News",
-  "repository": "https://github.com/KindaBrazy/LynxHub-AI-News",
+  "homepage": "https://github.com/TheLynxHub/AI-News",
+  "repository": "https://github.com/TheLynxHub/AI-News",
   "type": "module",
   "dependencies": {
     "rss-parser": "^3.13.0"
