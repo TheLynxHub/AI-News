@@ -2,7 +2,7 @@ import {Button, ButtonGroup, Chip, InputGroup, ScrollShadow, Spinner, Switch, Te
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import LynxSwitch from '@lynx/components/LynxSwitch';
 import {NewsSource} from '@lynx_extension/cross/types';
-import {Earth, TrashBin2} from '@solar-icons/react-perf/BoldDuotone';
+import {EarthIcon, TrashBin2Icon} from '@solar-icons/react/bold-duotone';
 import {Plus} from 'lucide-react';
 import {SubmitEvent, useState} from 'react';
 
@@ -70,7 +70,7 @@ export default function ManageSourcesTab({
               type="button"
               onPress={() => setAddType('website')}
               variant={addType === 'website' ? 'primary' : 'ghost'}>
-              <Earth className="size-4" /> Website Blog
+              <EarthIcon className="size-4" /> Website Blog
             </Button>
             <Button
               type="button"
@@ -161,7 +161,7 @@ export default function ManageSourcesTab({
                     {src.type === 'youtube' ? (
                       <SiYoutube className="size-4.5 text-red-600" />
                     ) : (
-                      <Earth className="size-4.5 text-accent" />
+                      <EarthIcon className="size-4.5 text-accent" />
                     )}
                   </div>
                   <div className="flex flex-col min-w-0">
@@ -183,7 +183,7 @@ export default function ManageSourcesTab({
                   {/* Delete button (only show for custom sources) */}
                   {!src.isDefault && (
                     <Button size="sm" variant="danger-soft" onPress={() => onDeleteSource(src.id)} isIconOnly>
-                      <TrashBin2 />
+                      <TrashBin2Icon />
                     </Button>
                   )}
                 </div>

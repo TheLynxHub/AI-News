@@ -1,6 +1,6 @@
 import {Button, InputGroup, TextField} from '@heroui/react';
 import {SiGithub} from '@icons-pack/react-simple-icons';
-import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
+import {Plane2Icon} from '@solar-icons/react/bold-duotone';
 import {SubmitEvent, useState} from 'react';
 
 import {extensionIpc} from '../../ipc';
@@ -37,7 +37,7 @@ export default function RequestSourceTab() {
       <div className="bg-surface p-6 rounded-3xl flex flex-col">
         <div className="flex items-center gap-3 mb-2">
           <div className="size-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-            <Plain2 className="size-5" />
+            <Plane2Icon className="size-5" />
           </div>
           <div className="flex flex-col">
             <h3 className="text-sm font-extrabold text-foreground">Recommend an AI Source</h3>
@@ -80,7 +80,7 @@ export default function RequestSourceTab() {
             variant="primary"
             isDisabled={!reqName.trim() || !reqUrl.trim()}
             className="w-full text-xs font-bold rounded-xl mt-1 justify-center">
-            <Plain2 className="size-4 mr-2" /> Open Request on GitHub
+            <Plane2Icon className="size-4 mr-2" /> Open Request on GitHub
           </Button>
         </form>
       </div>

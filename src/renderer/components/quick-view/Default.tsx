@@ -2,7 +2,7 @@ import {Skeleton} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import LynxTooltip from '@lynx/components/LynxTooltip';
 import {getCacheUrl} from '@lynx_common/utils';
-import {ClockCircle, DocumentText, Plain2, Play} from '@solar-icons/react-perf/BoldDuotone';
+import {ClockCircleIcon, DocumentTextIcon, Plane2Icon, PlayIcon} from '@solar-icons/react/bold-duotone';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {NewsItem} from '../../../cross/types';
@@ -347,7 +347,7 @@ export default function Default() {
             'text-[11px] font-black text-foreground/90 uppercase tracking-[0.2em] ' +
             'flex items-center gap-2 select-none drop-shadow-sm'
           }>
-          <Plain2 className="size-4 text-accent" /> AI NEWS
+          <Plane2Icon className="size-4 text-accent" /> AI NEWS
         </span>
 
         {/* Navigation Dots */}
@@ -469,7 +469,7 @@ export default function Default() {
                   {item.type === 'youtube' ? (
                     <SiYoutube className="size-16 text-red-600/80" />
                   ) : (
-                    <DocumentText className="size-16 text-accent/80" />
+                    <DocumentTextIcon className="size-16 text-accent/80" />
                   )}
                 </div>
               )}
@@ -498,9 +498,9 @@ export default function Default() {
                     'backdrop-blur-md border border-white/10 text-white shadow-lg'
                   }>
                   {item.type === 'youtube' ? (
-                    <Play className="size-3.5 sm:size-4 ml-0.5 text-red-500" />
+                    <PlayIcon className="size-3.5 sm:size-4 ml-0.5 text-red-500" />
                   ) : (
-                    <DocumentText className="size-3.5 sm:size-4 text-blue-400" />
+                    <DocumentTextIcon className="size-3.5 sm:size-4 text-blue-400" />
                   )}
                 </div>
               </div>
@@ -519,7 +519,7 @@ export default function Default() {
                   className={
                     'flex items-center gap-1.5 text-[9px] sm:text-[10px] text-white/70 ' + 'font-semibold tracking-wide'
                   }>
-                  <ClockCircle className="size-3" />
+                  <ClockCircleIcon className="size-3" />
                   {formatTimeAgo(item.isoDate)}
                 </div>
               </div>

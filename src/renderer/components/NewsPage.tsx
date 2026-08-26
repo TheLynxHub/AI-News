@@ -1,7 +1,7 @@
 import {Button, Description, Spinner} from '@heroui/react';
 import Page from '@lynx/pages/Page';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
-import {Earth, Plain2, Refresh, Settings} from '@solar-icons/react-perf/BoldDuotone';
+import {EarthIcon, Plane2Icon, RefreshIcon, SettingsIcon} from '@solar-icons/react/bold-duotone';
 import {Info} from 'lucide-react';
 import {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -275,7 +275,7 @@ export default function NewsPage() {
         <div className="flex items-center justify-between px-4 py-4 border-b border-border shrink-0">
           <div className="flex flex-col">
             <h2 className="text-lg font-bold tracking-tight flex items-center gap-2 text-foreground">
-              <Plain2 className="size-5 text-accent animate-pulse" /> AI News Hub
+              <Plane2Icon className="size-5 text-accent animate-pulse" /> AI News Hub
             </h2>
             <Description className="text-sm">
               Your dashboard for artificial intelligence headlines, blogs, and channels.
@@ -283,7 +283,7 @@ export default function NewsPage() {
           </div>
           <div className="flex items-center gap-3">
             <Button variant="ghost" onPress={handleRefresh} isDisabled={refreshing || loading} isIconOnly>
-              <Refresh className={`size-4 ${refreshing ? 'animate-spin text-accent' : ''}`} />
+              <RefreshIcon className={`size-4 ${refreshing ? 'animate-spin text-accent' : ''}`} />
             </Button>
           </div>
         </div>
@@ -343,21 +343,21 @@ export default function NewsPage() {
               className="w-full text-xs font-bold justify-start"
               variant={activeTab === 'feed' ? 'primary' : 'ghost'}
               fullWidth>
-              <Earth className="size-4" /> News Feed
+              <EarthIcon className="size-4" /> News Feed
             </Button>
             <Button
               onPress={() => setActiveTab('sources')}
               className="w-full text-xs font-bold justify-start"
               variant={activeTab === 'sources' ? 'primary' : 'ghost'}
               fullWidth>
-              <Settings className="size-4" /> Manage Sources
+              <SettingsIcon className="size-4" /> Manage Sources
             </Button>
             <Button
               onPress={() => setActiveTab('request')}
               className="w-full text-xs font-bold justify-start"
               variant={activeTab === 'request' ? 'primary' : 'ghost'}
               fullWidth>
-              <Plain2 className="size-4" /> Request Source
+              <Plane2Icon className="size-4" /> Request Source
             </Button>
 
             <div className={'mt-auto p-3 bg-surface rounded-2xl flex flex-col gap-1 select-none'}>

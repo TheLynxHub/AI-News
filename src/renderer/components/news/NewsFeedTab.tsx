@@ -17,7 +17,7 @@ import {
   useFilter,
 } from '@heroui/react';
 import {NewsItem, NewsSource} from '@lynx_extension/cross/types';
-import {Earth} from '@solar-icons/react-perf/BoldDuotone';
+import {EarthIcon} from '@solar-icons/react/bold-duotone';
 import {Search} from 'lucide-react';
 import {useEffect, useMemo, useState} from 'react';
 
@@ -245,7 +245,7 @@ export default function NewsFeedTab({
       <ScrollShadow className="flex-1 pr-2">
         {filteredItems.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center p-8 text-center select-none">
-            <Earth className="size-12 text-muted/30 mb-2" />
+            <EarthIcon className="size-12 text-muted/30 mb-2" />
             <h3 className="text-sm font-extrabold text-foreground/80">No stories found</h3>
             <p className="text-xs text-muted mt-1 max-w-sm">Try modifying search keywords or active filters.</p>
           </div>

@@ -2,8 +2,8 @@ import {ScrollShadow} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import LynxTooltip from '@lynx/components/LynxTooltip';
 import {getCacheUrl} from '@lynx_common/utils';
-import {Play} from '@solar-icons/react-perf/Bold';
-import {ClockCircle, DocumentText, Earth, Plain2} from '@solar-icons/react-perf/BoldDuotone';
+import {PlayIcon} from '@solar-icons/react/bold';
+import {ClockCircleIcon, DocumentTextIcon, EarthIcon, Plane2Icon} from '@solar-icons/react/bold-duotone';
 import {useEffect, useRef, useState} from 'react';
 
 import {NewsItem} from '../../../cross/types';
@@ -219,7 +219,7 @@ export default function Compact() {
       <div className="flex items-center justify-between px-1">
         <span
           className={'text-[10px] font-bold text-accent uppercase tracking-widest flex items-center gap-1 select-none'}>
-          <Plain2 className="size-3 text-accent" /> AI NEWS
+          <Plane2Icon className="size-3 text-accent" /> AI NEWS
         </span>
       </div>
       <ScrollShadow
@@ -264,7 +264,7 @@ export default function Compact() {
                   {item.type === 'youtube' ? (
                     <SiYoutube className="size-9 text-red-500/70" />
                   ) : (
-                    <DocumentText className="size-9 text-accent/60" />
+                    <DocumentTextIcon className="size-9 text-accent/60" />
                   )}
                 </div>
               )}
@@ -290,7 +290,7 @@ export default function Compact() {
                   {item.type === 'youtube' ? (
                     <SiYoutube className="size-2.5 text-white" />
                   ) : (
-                    <Earth className="size-2.5 text-white" />
+                    <EarthIcon className="size-2.5 text-white" />
                   )}
                 </span>
               </div>
@@ -299,7 +299,7 @@ export default function Compact() {
               {item.type === 'youtube' && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="bg-surface/70 rounded-full p-1.5">
-                    <Play className="size-8 ml-0.5 text-red-600/90 group-hover:scale-110 transition duration-200" />
+                    <PlayIcon className="size-8 ml-0.5 text-red-600/90 group-hover:scale-110 transition duration-200" />
                   </div>
                 </div>
               )}
@@ -315,7 +315,7 @@ export default function Compact() {
                 <h4 className="text-[11px] font-bold leading-snug line-clamp-2">{item.title}</h4>
               </LynxTooltip>
               <span className="flex items-center gap-1 text-[8.5px] font-semibold text-muted">
-                <ClockCircle className="size-2" /> {formatTimeAgo(item.isoDate)}
+                <ClockCircleIcon className="size-2" /> {formatTimeAgo(item.isoDate)}
               </span>
             </div>
           </div>

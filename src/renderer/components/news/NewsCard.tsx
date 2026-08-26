@@ -2,7 +2,7 @@ import {Description, Link} from '@heroui/react';
 import {SiYoutube} from '@icons-pack/react-simple-icons';
 import {getCacheUrl} from '@lynx_common/utils';
 import {NewsItem} from '@lynx_extension/cross/types';
-import {Earth} from '@solar-icons/react-perf/BoldDuotone';
+import {EarthIcon} from '@solar-icons/react/bold-duotone';
 import {Clock, Play} from 'lucide-react';
 import {useEffect, useState} from 'react';
 
@@ -81,7 +81,7 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
           {item.type === 'youtube' ? (
             <SiYoutube className="size-7 text-red-600" />
           ) : (
-            <Earth className="size-7 text-accent" />
+            <EarthIcon className="size-7 text-accent" />
           )}
         </div>
       )}
@@ -100,7 +100,7 @@ export default function NewsCard({item, onOpenLink}: NewsCardProps) {
             {item.type === 'youtube' ? (
               <SiYoutube className="size-4 text-red-600 shrink-0" />
             ) : (
-              <Earth className="size-3.5 text-accent shrink-0" />
+              <EarthIcon className="size-3.5 text-accent shrink-0" />
             )}
           </div>
           <h3

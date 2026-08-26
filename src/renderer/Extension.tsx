@@ -2,7 +2,7 @@ import './index.css';
 
 import {ExtensionRendererApi} from '@lynx/plugins/extensions/types/api';
 import {RendererIpcApi} from '@lynx/plugins/extensions/types/ipcWrapper';
-import {Plain2} from '@solar-icons/react-perf/BoldDuotone';
+import {Plane2Icon} from '@solar-icons/react/bold-duotone';
 
 import {SENTRY_DSN} from '../cross/constants';
 import NewsPage from './components/NewsPage';
@@ -19,7 +19,7 @@ export function InitialExtensions(lynxAPI: ExtensionRendererApi, rendererIpc: Re
   lynxAPI.router.addPage({
     id: 'ai-news',
     title: 'AI News',
-    icon: <Plain2 className="size-full" />,
+    icon: <Plane2Icon className="size-full" />,
     component: NewsPage,
   });
 
