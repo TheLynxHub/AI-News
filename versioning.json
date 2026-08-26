@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "0.10.2",
+      "commit": "ca2279f",
+      "engines": {
+        "extensionApi": "^2.2.0"
+      },
+      "stage": "early_access",
+      "platforms": ["win32", "linux", "darwin"]
+    },
+    {
       "version": "0.10.1",
       "commit": "6ba2b6d",
       "engines": {
@@ -21,7 +30,16 @@
   ],
   "changes": [
     {
-      "version": "0.10.0",
+      "version": "0.10.2",
+      "date": "2026-08-28",
+      "items": [
+        {
+          "📌 Minor Changes": ["Support LynxHub v3.6."]
+        }
+      ]
+    },
+    {
+      "version": "0.10.1",
       "date": "2026-08-01",
       "items": [
         {
