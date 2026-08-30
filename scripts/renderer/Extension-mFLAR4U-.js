@@ -1,14 +1,14 @@
 (function() {
 	try {
 		var e = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof globalThis ? globalThis : "undefined" != typeof self ? self : {};
-		e.SENTRY_RELEASE = { id: "c7bb908a43660e5a85e91aad0c631c812f339fb4" };
+		e.SENTRY_RELEASE = { id: "f9f2e045fae8353a4c8417903eeca14e9c7534d6" };
 		var n = new e.Error().stack;
 		n && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[n] = "ee524ee7-f860-404c-896f-cddddcb4ac3b", e._sentryDebugIdIdentifier = "sentry-dbid-ee524ee7-f860-404c-896f-cddddcb4ac3b");
 	} catch (e) {}
 })();
-import { n as __commonJSMin, r as __toESM, t as require_react } from "./react-vn4hjppW.js";
-import { r as importShared } from "./_virtual___federation_fn_import-CfihF-4P.js";
-import { t as require_jsx_runtime } from "./jsx-runtime-DzUQKA3j.js";
+import { n as __commonJSMin, r as __toESM, t as require_react } from "./react-CAs43U7w.js";
+import { r as importShared } from "./_virtual___federation_fn_import-DeyyGZp8.js";
+import { t as require_jsx_runtime } from "./jsx-runtime-Cm1I7RBM.js";
 //#region node_modules/@solar-icons/react/dist/lib/IconBase.mjs
 var import_jsx_runtime = require_jsx_runtime();
 var { forwardRef: e } = await importShared("react");
@@ -12924,4 +12924,4 @@ function InitialExtensions(lynxAPI, rendererIpc, id) {
 //#endregion
 export { InitialExtensions as t };
 
-//# sourceMappingURL=Extension-BLFDFLqx.js.map
+//# sourceMappingURL=Extension-mFLAR4U-.js.map
